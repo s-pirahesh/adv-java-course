@@ -1,0 +1,293 @@
+/* Import Google Font - Vazirmatn */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --font-sans: "Vazirmatn", sans-serif;
+    --code-font: 'SFMono-Regular', Consolas, Menlo, monospace;
+}
+
+/* =================================== */
+/* Theme Definitions using CSS Variables */
+/* =================================== */
+
+/* Chapter 1: Transition to OOP (Teal/Mint Theme) */
+body.theme-transition {
+    --primary-color: #0D9488; --secondary-color: #14B8A6; --border-color: #5EEAD4;
+    --background-color: #F0FDFA; --text-color: #1F2937;
+    --sidebar-bg: linear-gradient(180deg, #134E4A 0%, #115E59 100%);
+    --sidebar-text: #CCFBF1; --sidebar-link-text: #99F6E4;
+    --sidebar-link-active-bg: #14B8A6; --sidebar-link-active-text: #064E3B;
+    --sidebar-header-border: #115E59;
+}
+
+/* Chapter 2: Java Basics (Amber/Orange Theme) */
+body.theme-basics {
+    --primary-color: #D97706; --secondary-color: #F59E0B; --border-color: #FBBF24;
+    --background-color: #FFFBEB; --text-color: #44403C;
+    --sidebar-bg: linear-gradient(180deg, #78350F 0%, #92400E 100%);
+    --sidebar-text: #FEF3C7; --sidebar-link-text: #FDE68A;
+    --sidebar-link-active-bg: #F59E0B; --sidebar-link-active-text: #78350F;
+    --sidebar-header-border: #92400E;
+}
+
+/* Chapter 3: Setup & First Program (Sky Blue Theme) */
+body.theme-setup {
+    --primary-color: #0284C7; --secondary-color: #0EA5E9; --border-color: #7DD3FC;
+    --background-color: #F0F9FF; --text-color: #1E293B;
+    --sidebar-bg: linear-gradient(180deg, #0C4A6E 0%, #075985 100%);
+    --sidebar-text: #E0F2FE; --sidebar-link-text: #BAE6FD;
+    --sidebar-link-active-bg: #0EA5E9; --sidebar-link-active-text: #082F49;
+    --sidebar-header-border: #075985;
+}
+
+/* Chapter 4: Core OOP Concepts (Indigo/Violet Theme) */
+body.theme-core-oop {
+    --primary-color: #4F46E5; --secondary-color: #6366F1; --border-color: #A5B4FC;
+    --background-color: #EEF2FF; --text-color: #1E1B4B;
+    --sidebar-bg: linear-gradient(180deg, #312E81 0%, #4338CA 100%);
+    --sidebar-text: #E0E7FF; --sidebar-link-text: #C7D2FE;
+    --sidebar-link-active-bg: #6366F1; --sidebar-link-active-text: #1E1B4B;
+    --sidebar-header-border: #4338CA;
+}
+
+/* Chapter 5: Design & Diagrams (Slate Gray Theme) */
+body.theme-design {
+    --primary-color: #475569; --secondary-color: #64748B; --border-color: #CBD5E1;
+    --background-color: #F8FAFC; --text-color: #1E293B;
+    --sidebar-bg: linear-gradient(180deg, #1E293B 0%, #334155 100%);
+    --sidebar-text: #F1F5F9; --sidebar-link-text: #E2E8F0;
+    --sidebar-link-active-bg: #64748B; --sidebar-link-active-text: #0F172A;
+    --sidebar-header-border: #475569;
+}
+
+/* Chapter 6: Data Structures (Lime/Green Theme) */
+body.theme-datastruct {
+    --primary-color: #4D7C0F; --secondary-color: #65A30D; --border-color: #A3E635;
+    --background-color: #F7FEE7; --text-color: #1A2E05;
+    --sidebar-bg: linear-gradient(180deg, #365314 0%, #4D7C0F 100%);
+    --sidebar-text: #ECFCCB; --sidebar-link-text: #D9F99D;
+    --sidebar-link-active-bg: #84CC16; --sidebar-link-active-text: #1A2E05;
+    --sidebar-header-border: #4D7C0F;
+}
+
+/* Chapter 7: Advanced OOP (Rose/Purple Theme) */
+body.theme-advanced-oop {
+    --primary-color: #9D174D; --secondary-color: #BE185D; --border-color: #F472B6;
+    --background-color: #FFF1F2; --text-color: #500724;
+    --sidebar-bg: linear-gradient(180deg, #831843 0%, #9D174D 100%);
+    --sidebar-text: #FCE7F3; --sidebar-link-text: #FBCFE8;
+    --sidebar-link-active-bg: #EC4899; --sidebar-link-active-text: #500724;
+    --sidebar-header-border: #9D174D;
+}
+
+/* Chapter 8: Exceptions & More (Red/Stone Theme) */
+body.theme-exceptions {
+    --primary-color: #B91C1C; --secondary-color: #DC2626; --border-color: #F87171;
+    --background-color: #FEF2F2; --text-color: #450A0A;
+    --sidebar-bg: linear-gradient(180deg, #7F1D1D 0%, #991B1B 100%);
+    --sidebar-text: #FEE2E2; --sidebar-link-text: #FECACA;
+    --sidebar-link-active-bg: #EF4444; --sidebar-link-active-text: #450A0A;
+    --sidebar-header-border: #991B1B;
+}
+
+/* =================================== */
+/* Common & Structural Styles */
+/* =================================== */
+
+body {
+    font-family: var(--font-sans);
+    line-height: 1.8;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+#sidebar {
+    width: 300px;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    overflow-y: auto;
+    transition: transform .3s ease-in-out;
+    z-index: 1000;
+}
+
+#main-content {
+    margin-right: 300px;
+    padding: 2rem 3rem;
+    transition: margin-right .3s ease-in-out;
+}
+
+/* =================================== */
+/* Sidebar Menu Styles */
+/* =================================== */
+
+#sidebar header {
+    padding: 1.25rem 1rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    border-bottom: 1px solid var(--sidebar-header-border);
+    text-align: center;
+}
+
+.nav-menu, .submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu a, .nav-header {
+    display: block;
+    padding: .6rem 1.5rem;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection on click */
+}
+
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Level 1 */
+.nav-header.level-1 {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--sidebar-text);
+}
+.nav-header.level-1:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Level 2 */
+.nav-header.level-2 {
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding-right: 2.5rem;
+    color: var(--sidebar-link-text);
+}
+
+/* Level 3 */
+.nav-menu .nav-link {
+    font-size: 0.9rem;
+    padding-right: 3.5rem;
+    color: var(--sidebar-link-text);
+}
+
+.nav-menu a.active, .nav-menu a:hover {
+    background: var(--sidebar-link-active-bg);
+    color: var(--sidebar-link-active-text);
+}
+
+/* Collapsible Submenu Logic */
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.submenu.open {
+    max-height: 1000px; /* Should be larger than any possible submenu height */
+}
+
+.nav-header::after {
+    content: '◀';
+    transition: transform .2s;
+    font-size: 0.8em;
+}
+
+.nav-header.open::after {
+    transform: rotate(-90deg);
+}
+
+/* =================================== */
+/* Mobile & Responsive Styles */
+/* =================================== */
+
+#mobile-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    padding: 1rem;
+    z-index: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    align-items: center;
+}
+
+#menu-toggle {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+@media (max-width: 1024px) {
+    #sidebar {
+        transform: translateX(300px);
+    }
+    #sidebar.open {
+        transform: translateX(0);
+    }
+    #main-content {
+        margin-right: 0;
+        padding-top: 6rem; /* Space for mobile header */
+    }
+    #mobile-header {
+        display: flex;
+        gap: 1rem;
+    }
+    #overlay.open {
+        display: block;
+    }
+}
+
+/* =================================== */
+/* Print Styles */
+/* =================================== */
+
+@media print {
+    body {
+        --background-color: #fff;
+        --text-color: #000;
+        display: block;
+    }
+    #sidebar, #mobile-header, .copy-button {
+        display: none !important;
+    }
+    #main-content {
+        margin-right: 0 !important;
+        width: 100% !important;
+        padding: 1cm !important;
+    }
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    .code-block-container {
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+    }
+}
