@@ -3,41 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فصل X: عنوان فصل - جزوه برنامه سازی پیشرفته</title>
-    <link rel="stylesheet" href="style.css">
+    <title>فصل ۱: گذار به شیءگرایی - جزوه برنامه سازی پیشرفته</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
 </head>
-<body class="theme-java"> <nav id="sidebar">
-    <header>برنامه سازی پیشرفته</header>
+<body class="theme-transition">
+
+<div id="mobile-header">
+    <button id="menu-toggle">☰</button>
+    <h1 class="course-title" style="font-size: 1.1rem; color: inherit; font-weight: 600;">برنامه‌سازی پیشرفته (جاوا)</h1>
+</div>
+<div id="overlay"></div>
+
+<nav id="sidebar">
+    <div class="sidebar-profile">
+        <a href="../index.html">
+            <img src="../assets/images/university_logo.png" alt="آرم دانشگاه - بازگشت به صفحه اصلی">
+        </a>
+        <h2 class="course-title">برنامه‌سازی پیشرفته (جاوا)</h2>
+        <p class="instructor-name">مدرس: سید سجاد پیراهش</p>
+    </div>
+
     <ul class="nav-menu">
         <li>
-            <div class="nav-header level-1">فصل ۱: گذار به شی گرایی</div>
-            <ul class="submenu">
-                <li><a href="chapter1.html#section1-1" class="nav-link">۱-۱: مرور پارادایم ها</a></li>
-                <li><a href="chapter1.html#section1-2" class="nav-link">۱-۲: معرفی شی گرایی</a></li>
-            </ul>
-        </li>
-        <li>
-            <div class="nav-header level-1">فصل ۲: مقدمات جاوا</div>
-            <ul class="submenu">
-                <li><a href="chapter2.html#section2-1" class="nav-link">۲-۱: معرفی زبان جاوا</a></li>
-                <li><a href="chapter2.html#section2-2" class="nav-link">۲-۲: مفاهیم کلیدی</a></li>
+            <header>فصل ۱: گذار به شیءگرایی</header>
+            <ul class="submenu open">
+                <li><a href="#section1-1" class="nav-link active">۱-۱: اهمیت پارادایم‌ها</a></li>
+                <li><a href="#section1-2" class="nav-link">۱-۲: مرور پارادایم‌های ساخت‌یافته</a></li>
+                <li><a href="#section1-3" class="nav-link">۱-۳: معرفی پارادایم شیءگرایی</a></li>
             </ul>
         </li>
     </ul>
 </nav>
 
 <main id="main-content">
+
+    <h1>فصل ۱: گذار از برنامه‌نویسی ساخت‌یافته به شیءگرایی</h1>
+
     <section id="section1-1">
-        <h1>فصل ۱: گذار از برنامه نویسی ساخت یافته به شی گرایی</h1>
-        <p>محتوای این بخش در اینجا قرار می گیرد...</p>
+        <h2>۱-۱: چرا پارادایم‌ها اهمیت دارند؟</h2>
+        <p>هر زبان برنامه‌نویسی، یک "جهان‌بینی" یا سبک خاص برای حل مسائل ارائه می‌دهد. به این جهان‌بینی یا رویکرد، <strong>پارادایم برنامه‌نویسی (Programming Paradigm)</strong> می‌گوییم. پارادایم، فقط مجموعه‌ای از دستورات و سینتکس نیست؛ بلکه یک مدل فکری است که نحوه ساختاربندی کد، مدیریت داده‌ها و کنترل پیچیدگی برنامه را تعیین می‌کند.</p>
+        <p>انتخاب پارادایم مناسب، مانند انتخاب ابزار مناسب برای یک کار است. همانطور که نمی‌توان با چکش پیچ را بست، حل مسائل پیچیده امروزی نیز با پارادایم‌های قدیمی‌تر دشوار و ناکارآمد است. درک پارادایم‌های مختلف به ما کمک می‌کند تا بفهمیم چرا زبانی مانند جاوا به این شکل طراحی شده و چگونه می‌توانیم از قدرت واقعی آن برای نوشتن برنامه‌های بهتر، خواناتر و قابل نگهداری‌تر استفاده کنیم.</p>
     </section>
 
     <section id="section1-2">
-        <h2>۱-۲: معرفی پارادایم شی گرایی</h2>
-        <p>محتوای این بخش نیز در اینجا قرار می گیرد...</p>
+        <h2>۱-۲: مروری بر پارادایم‌های ساخت‌یافته</h2>
+        <p>در ترم‌های گذشته، شما با رویکردهایی آشنا شدید که زیرمجموعه <strong>برنامه‌نویسی ساخت‌یافته (Structured Programming)</strong> هستند. هدف اصلی این رویکردها، کنترل جریان اجرای برنامه با استفاده از ساختارهای منطقی و تقسیم برنامه به بخش‌های کوچک‌تر بود.</p>
+
+        <h3>برنامه‌نویسی خطی (Linear Programming)</h3>
+        <p>ساده‌ترین شکل برنامه‌نویسی که در آن، دستورات برنامه به ترتیب از بالا به پایین، خط به خط اجرا می‌شوند.</p>
+
+        <h3>برنامه‌نویسی ماژولار (Modular Programming)</h3>
+        <p>در این رویکرد، برنامه به واحدهای کوچک‌تر و مستقل به نام <strong>ماژول</strong> یا <strong>تابع (Function)</strong> تقسیم می‌شود. در این پارادایم، <strong>داده‌ها</strong> و <strong>توابعی</strong> که روی آن داده‌ها کار می‌کنند، از یکدیگر <strong>جدا</strong> هستند.</p>
     </section>
+
+    <section id="section1-3">
+        <h2>۱-۳: معرفی پارادایم شیءگرایی (OOP)</h2>
+        <p>پارادایم <strong>شیءگرایی (Object-Oriented Programming)</strong> یک انقلاب در دنیای نرم‌افزار بود. ایده اصلی و بنیادین در این رویکرد، ترکیب <strong>داده‌ها (Data)</strong> و <strong>رفتارهایی (Behaviors)</strong> که روی آن داده‌ها کار می‌کنند، در یک واحد واحد به نام <strong>شیء (Object)</strong> است.</p>
+
+        <h3>مفاهیم بنیادی: شیء (Object) و کلاس (Class)</h3>
+        <ul>
+            <li><strong>کلاس (Class):</strong> نقشه یا الگوی ساخت یک شیء است. کلاس مانند یک <strong>نقشه ساختمان</strong> است. این نقشه مشخص می‌کند که ساختمان چه ویژگی‌هایی (تعداد اتاق، متراژ) و چه قابلیت‌هایی (باز کردن در، روشن کردن چراغ) خواهد داشت.</li>
+            <li><strong>شیء (Object):</strong> یک نمونه واقعی است که از روی کلاس ساخته می‌شود. با استفاده از همان نقشه ساختمان (کلاس)، می‌توانیم <strong>ساختمان‌های متعددی (اشیاء)</strong> بسازیم که هر کدام ویژگی‌های خاص خود را دارند (یکی آبی، دیگری قرمز).</li>
+        </ul>
+
+        <div class="diagram-container">
+            <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" font-family="Vazirmatn, sans-serif">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto" fill="#0D9488"><polygon points="0 0, 10 3.5, 0 7"/></marker>
+                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feOffset dx="2" dy="2" result="offsetblur"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+
+                <g transform="translate(50, 40)">
+                    <rect x="0" y="0" width="250" height="220" fill="#E0F2F1" stroke="#14B8A6" stroke-width="2" rx="8" filter="url(#shadow)"/>
+                    <text x="125" y="30" font-size="20" font-weight="bold" text-anchor="middle" fill="#0F766E">کلاس Car (نقشه)</text>
+                    <line x1="10" y1="45" x2="240" y2="45" stroke="#14B8A6"/>
+                    <text x="20" y="70" font-size="16" font-weight="600" fill="#134E4A">مشخصات (فیلدها):</text>
+                    <text x="30" y="100" font-size="15" fill="#115E59">- String color</text>
+                    <text x="30" y="125" font-size="15" fill="#115E59">- String model</text>
+                    <line x1="10" y1="145" x2="240" y2="145" stroke="#A7F3D0" stroke-dasharray="4"/>
+                    <text x="20" y="170" font-size="16" font-weight="600" fill="#134E4A">رفتارها (متدها):</text>
+                    <text x="30" y="200" font-size="15" fill="#115E59">- ()startEngine</text>
+                </g>
+
+                <line x1="310" y1="100" x2="380" y2="100" stroke="#0D9488" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <text x="320" y="90" font-size="12">ساخت نمونه</text>
+
+                <g transform="translate(400, 20)">
+                    <rect x="0" y="0" width="180" height="110" fill="#fff" stroke="#4B5563" stroke-width="2" rx="8" filter="url(#shadow)"/>
+                    <text x="90" y="25" font-size="16" font-weight="bold" text-anchor="middle" fill="#1F2937">آبجکت ۱ (خودرو)</text>
+                    <line x1="5" y1="35" x2="175" y2="35" stroke="#9CA3AF"/>
+                    <text x="15" y="60" font-size="14" fill="#374151">color: "قرمز"</text>
+                    <text x="15" y="85" font-size="14" fill="#374151">model: "پراید"</text>
+                </g>
+
+                <line x1="310" y1="200" x2="380" y2="200" stroke="#0D9488" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <text x="320" y="190" font-size="12">ساخت نمونه</text>
+
+                <g transform="translate(400, 170)">
+                    <rect x="0" y="0" width="180" height="110" fill="#fff" stroke="#4B5563" stroke-width="2" rx="8" filter="url(#shadow)"/>
+                    <text x="90" y="25" font-size="16" font-weight="bold" text-anchor="middle" fill="#1F2937">آبجکت ۲ (خودرو)</text>
+                    <line x1="5" y1="35" x2="175" y2="35" stroke="#9CA3AF"/>
+                    <text x="15" y="60" font-size="14" fill="#374151">color: "آبی"</text>
+                    <text x="15" y="85" font-size="14" fill="#374151">model: "پژو"</text>
+                </g>
+            </svg>
+        </div>
+
+        <h3>اولین نگاه به یک کلاس در عمل</h3>
+        <p>بیایید مفهوم "ترکیب داده و رفتار" را با یک مثال ساده ببینیم. فرض کنید می‌خواهیم یک "خودرو" را مدل‌سازی کنیم.</p>
+        <ul>
+            <li><strong>داده‌ها (مشخصات):</strong> رنگ، مدل، سرعت فعلی.</li>
+            <li><strong>رفتارها (توانایی‌ها):</strong> روشن شدن، گاز دادن، ترمز کردن.</li>
+        </ul>
+        <p>در پارادایم شیءگرایی، ما این موارد را در یک کلاس به نام <code>Car</code> کپسوله می‌کنیم:</p>
+        <div class="code-block-container" style="direction: ltr;">
+            <button class="copy-button">کپی</button>
+            <pre><code class="language-java">
+// این یک مثال ساده برای درک مفهوم است
+class Car {
+
+    // ۱. داده‌ها (فیلدها)
+    String color;
+    String model;
+    int currentSpeed;
+
+    // ۲. رفتارها (متدها)
+    void startEngine() {
+        // کدهایی برای روشن کردن موتور
+        System.out.println("موتور روشن شد!");
+    }
+
+    void accelerate() {
+        // کدهایی برای افزایش سرعت
+        currentSpeed += 10;
+    }
+
+    void brake() {
+        // کدهایی برای کاهش سرعت
+        currentSpeed -= 10;
+    }
+}
+            </code></pre>
+        </div>
+        <p>همانطور که می‌بینید، تمام ویژگی‌ها و قابلیت‌های مربوط به "خودرو" در یک بلوک واحد و مستقل قرار گرفته‌اند. این اساس و شالوده پارادایم شیءگرایی است که در فصل‌های آینده به صورت کامل و عملی آن را در جاوا پیاده‌سازی خواهیم کرد.</p>
+
+        <div class="chapter-nav">
+            <a href="chapter2.html">رفتن به فصل بعد: مقدمات جاوا ←</a>
+        </div>
+    </section>
+
+<!--    <div class="chapter-nav">-->
+<!--        <a href="../index.html" class="back-link">→ بازگشت به فهرست</a>-->
+<!--        <a href="chapter2.html">رفتن به فصل بعد: مقدمات جاوا ←</a>-->
+<!--    </div>-->
 </main>
 
-<script src="main.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
 </html>
