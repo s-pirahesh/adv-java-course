@@ -9,36 +9,37 @@
 </head>
 <body class="theme-transition">
 
-<div id="mobile-header">
+<div id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1 class="course-title" style="font-size: 1.1rem; color: inherit; font-weight: 600;">برنامه‌سازی پیشرفته (جاوا)</h1>
+    <h1 class="course-title" style="font-size: 1.1rem; color: inherit; font-weight: 600;">فصل ۱: گذار از برنامه‌نویسی ساخت‌یافته به شیءگرایی</h1>
 </div>
 <div id="overlay"></div>
 
 <nav id="sidebar">
     <div class="sidebar-profile">
-        <a href="../index.html">
+        <a href="../index.html" title="بازگشت به صفحه اصلی">
             <img src="../assets/images/university_logo.png" alt="آرم دانشگاه - بازگشت به صفحه اصلی">
         </a>
         <h2 class="course-title">برنامه‌سازی پیشرفته (جاوا)</h2>
         <p class="instructor-name">مدرس: سید سجاد پیراهش</p>
     </div>
-
     <ul class="nav-menu">
         <li>
-            <header>فصل ۱: گذار به شیءگرایی</header>
+            <header>فهرست فصل ۱</header>
             <ul class="submenu open">
-                <li><a href="#section1-1" class="nav-link active">۱-۱: اهمیت پارادایم‌ها</a></li>
+                <li><a href="#section1-1" class="nav-link active">۱-۱: چرا پارادایم‌ها اهمیت دارند؟</a></li>
                 <li><a href="#section1-2" class="nav-link">۱-۲: مرور پارادایم‌های ساخت‌یافته</a></li>
                 <li><a href="#section1-3" class="nav-link">۱-۳: معرفی پارادایم شیءگرایی</a></li>
             </ul>
         </li>
     </ul>
+    <div class="sidebar-footer">
+        <a href="../index.html">→ بازگشت به فهرست اصلی</a>
+    </div>
 </nav>
 
-<main id="main-content">
 
-    <h1>فصل ۱: گذار از برنامه‌نویسی ساخت‌یافته به شیءگرایی</h1>
+<main id="main-content">
 
     <section id="section1-1">
         <h2>۱-۱: چرا پارادایم‌ها اهمیت دارند؟</h2>
@@ -51,15 +52,76 @@
         <p>در ترم‌های گذشته، شما با رویکردهایی آشنا شدید که زیرمجموعه <strong>برنامه‌نویسی ساخت‌یافته (Structured Programming)</strong> هستند. هدف اصلی این رویکردها، کنترل جریان اجرای برنامه با استفاده از ساختارهای منطقی و تقسیم برنامه به بخش‌های کوچک‌تر بود.</p>
 
         <h3>برنامه‌نویسی خطی (Linear Programming)</h3>
-        <p>ساده‌ترین شکل برنامه‌نویسی که در آن، دستورات برنامه به ترتیب از بالا به پایین، خط به خط اجرا می‌شوند.</p>
+        <p>ساده‌ترین شکل برنامه‌نویسی که در آن، دستورات برنامه به ترتیب از بالا به پایین، خط به خط اجرا می‌شوند. این روش برای الگوریتم‌های کوتاه و وظایف ساده مناسب است.</p>
+        <div class="code-block-container" style="direction: ltr;">
+            <button class="copy-button">کپی</button>
+            <pre><code class="language-java">
+// مثال: محاسبه مساحت مستطیل به روش خطی
+int length = 10;
+int width = 5;
+int area = length * width;
+System.out.println("مساحت: " + area);
+            </code></pre>
+        </div>
 
         <h3>برنامه‌نویسی ماژولار (Modular Programming)</h3>
-        <p>در این رویکرد، برنامه به واحدهای کوچک‌تر و مستقل به نام <strong>ماژول</strong> یا <strong>تابع (Function)</strong> تقسیم می‌شود. در این پارادایم، <strong>داده‌ها</strong> و <strong>توابعی</strong> که روی آن داده‌ها کار می‌کنند، از یکدیگر <strong>جدا</strong> هستند.</p>
+        <p>با بزرگ‌تر شدن برنامه‌ها، رویکرد خطی باعث ایجاد کدهای تکراری و غیرقابل مدیریت می‌شد. در رویکرد ماژولار، برنامه به واحدهای کوچک‌تر و مستقل به نام <strong>ماژول</strong> یا <strong>تابع (Function)</strong> تقسیم می‌شود. این کار باعث افزایش خوانایی و استفاده مجدد از کد می‌شود. با این حال، در این پارادایم، <strong>داده‌ها</strong> (مانند `length` و `width`) و <strong>توابعی</strong> که روی آن داده‌ها کار می‌کنند (مانند `calculateArea`)، از یکدیگر <strong>جدا</strong> هستند.</p>
+        <div class="code-block-container" style="direction: ltr;">
+            <button class="copy-button">کپی</button>
+            <pre><code class="language-java">
+// مثال: محاسبه مساحت مستطیل به روش ماژولار
+public static int calculateArea(int length, int width) {
+    return length * width;
+}
+
+// ... در جایی دیگر از برنامه
+int area = calculateArea(10, 5);
+System.out.println("مساحت: " + area);
+            </code></pre>
+        </div>
+
+        <h3 style="text-align: center; margin-top: 2rem;">مقایسه بصری پارادایم‌های ساخت‌یافته</h3>
+        <div class="diagram-container">
+            <svg width="100%" height="250" viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg" font-family="Vazirmatn, sans-serif">
+                <defs>
+                    <marker id="arrowhead-gray" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto" fill="#4B5563"><polygon points="0 0, 10 3.5, 0 7"/></marker>
+                    <filter id="shadow-light" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="1" dy="1" result="offsetblur"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+
+                <g transform="translate(520, 20)">
+                    <rect x="0" y="0" width="220" height="210" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="2" rx="8" filter="url(#shadow-light)"/>
+                    <text x="110" y="30" font-size="18" font-weight="bold" text-anchor="middle" fill="#1F2937">برنامه نویسی خطی</text>
+                    <line x1="10" y1="45" x2="210" y2="45" stroke="#D1D5DB"/>
+                    <text x="110" y="75" font-size="14" fill="#374151" text-anchor="middle">دستور ۱</text>
+                    <text x="110" y="105" font-size="14" fill="#374151" text-anchor="middle">دستور ۲</text>
+                    <text x="110" y="135" font-size="14" fill="#374151" text-anchor="middle">دستور ۳</text>
+                    <text x="110" y="165" font-size="14" fill="#374151" text-anchor="middle">...</text>
+                    <text x="110" y="195" font-size="14" fill="#374151" text-anchor="middle">دستور n</text>
+                </g>
+
+                <line x1="400" y1="10" x2="400" y2="240" stroke="#E5E7EB" stroke-width="2" stroke-dasharray="8 4"/>
+
+                <g transform="translate(30, 20)">
+                    <rect x="0" y="0" width="220" height="120" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="2" rx="8" filter="url(#shadow-light)"/>
+                    <text x="110" y="30" font-size="18" font-weight="bold" text-anchor="middle" fill="#1F2937">برنامه نویسی ماژولار</text>
+                    <line x1="10" y1="45" x2="210" y2="45" stroke="#D1D5DB"/>
+                    <text x="110" y="75" font-size="14" fill="#374151" text-anchor="middle">برنامه اصلی</text>
+                    <text x="110" y="100" font-size="14" fill="#374151" text-anchor="middle">فراخوانی تابع...</text>
+                </g>
+                <g transform="translate(180, 150)">
+                    <rect x="0" y="0" width="150" height="90" fill="#FEF2F2" stroke="#F87171" stroke-width="2" rx="8" filter="url(#shadow-light)"/>
+                    <text x="75" y="30" font-size="16" font-weight="600" text-anchor="middle" fill="#991B1B">تابع ()</text>
+                    <line x1="10" y1="45" x2="140" y2="45" stroke="#FECACA"/>
+                    <text x="75" y="70" font-size="14" fill="#B91C1C" text-anchor="middle">منطق تابع...</text>
+                </g>
+                <path d="M 180 110 C 220 120, 220 140, 255 150" stroke="#4B5563" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-gray)"/>
+            </svg>
+        </div>
     </section>
 
     <section id="section1-3">
         <h2>۱-۳: معرفی پارادایم شیءگرایی (OOP)</h2>
-        <p>پارادایم <strong>شیءگرایی (Object-Oriented Programming)</strong> یک انقلاب در دنیای نرم‌افزار بود. ایده اصلی و بنیادین در این رویکرد، ترکیب <strong>داده‌ها (Data)</strong> و <strong>رفتارهایی (Behaviors)</strong> که روی آن داده‌ها کار می‌کنند، در یک واحد واحد به نام <strong>شیء (Object)</strong> است.</p>
+        <p>پارادایم <strong>شیءگرایی (Object-Oriented Programming)</strong> یک انقلاب در دنیای نرم‌افزار بود. ایده اصلی و بنیادین در این رویکرد، ترکیب <strong>داده‌ها (Data)</strong> و <strong>رفتارهایی (Behaviors)</strong> که روی آن داده‌ها کار می‌کنند، در یک واحد یکپارچه به نام <strong>شیء (Object)</strong> است.</p>
 
         <h3>مفاهیم بنیادی: شیء (Object) و کلاس (Class)</h3>
         <ul>
@@ -74,38 +136,38 @@
                     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feOffset dx="2" dy="2" result="offsetblur"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
                 </defs>
 
-                <g transform="translate(50, 40)">
-                    <rect x="0" y="0" width="250" height="220" fill="#E0F2F1" stroke="#14B8A6" stroke-width="2" rx="8" filter="url(#shadow)"/>
-                    <text x="125" y="30" font-size="20" font-weight="bold" text-anchor="middle" fill="#0F766E">کلاس Car (نقشه)</text>
-                    <line x1="10" y1="45" x2="240" y2="45" stroke="#14B8A6"/>
-                    <text x="20" y="70" font-size="16" font-weight="600" fill="#134E4A">مشخصات (فیلدها):</text>
-                    <text x="30" y="100" font-size="15" fill="#115E59">- String color</text>
-                    <text x="30" y="125" font-size="15" fill="#115E59">- String model</text>
-                    <line x1="10" y1="145" x2="240" y2="145" stroke="#A7F3D0" stroke-dasharray="4"/>
-                    <text x="20" y="170" font-size="16" font-weight="600" fill="#134E4A">رفتارها (متدها):</text>
-                    <text x="30" y="200" font-size="15" fill="#115E59">- ()startEngine</text>
+                <g transform="translate(20, 40)">
+                    <rect x="0" y="0" width="280" height="220" fill="#E0F2F1" stroke="#14B8A6" stroke-width="2" rx="8" filter="url(#shadow)"/>
+                    <text x="140" y="35" font-size="20" font-weight="bold" text-anchor="middle" fill="#0F766E">کلاس Car (نقشه)</text>
+                    <line x1="10" y1="50" x2="270" y2="50" stroke="#14B8A6"/>
+                    <text x="260" y="80" font-size="16" font-weight="600" fill="#134E4A" text-anchor="end">مشخصات (فیلدها):</text>
+                    <text x="250" y="110" font-size="15" fill="#115E59" text-anchor="end">- String color</text>
+                    <text x="250" y="135" font-size="15" fill="#115E59" text-anchor="end">- String model</text>
+                    <line x1="10" y1="155" x2="270" y2="155" stroke="#A7F3D0" stroke-dasharray="4"/>
+                    <text x="260" y="180" font-size="16" font-weight="600" fill="#134E4A" text-anchor="end">رفتارها (متدها):</text>
+                    <text x="250" y="205" font-size="15" fill="#115E59" text-anchor="end">- startEngine()</text>
                 </g>
 
                 <line x1="310" y1="100" x2="380" y2="100" stroke="#0D9488" stroke-width="2" marker-end="url(#arrowhead)"/>
-                <text x="320" y="90" font-size="12">ساخت نمونه</text>
+                <text x="345" y="90" font-size="12" text-anchor="middle">ساخت نمونه</text>
 
                 <g transform="translate(400, 20)">
-                    <rect x="0" y="0" width="180" height="110" fill="#fff" stroke="#4B5563" stroke-width="2" rx="8" filter="url(#shadow)"/>
-                    <text x="90" y="25" font-size="16" font-weight="bold" text-anchor="middle" fill="#1F2937">آبجکت ۱ (خودرو)</text>
-                    <line x1="5" y1="35" x2="175" y2="35" stroke="#9CA3AF"/>
-                    <text x="15" y="60" font-size="14" fill="#374151">color: "قرمز"</text>
-                    <text x="15" y="85" font-size="14" fill="#374151">model: "پراید"</text>
+                    <rect x="0" y="0" width="220" height="110" fill="#fff" stroke="#4B5563" stroke-width="2" rx="8" filter="url(#shadow)"/>
+                    <text x="110" y="30" font-size="16" font-weight="bold" text-anchor="middle" fill="#1F2937">آبجکت ۱ (خودرو)</text>
+                    <line x1="5" y1="40" x2="215" y2="40" stroke="#9CA3AF"/>
+                    <text x="200" y="68" font-size="14" fill="#374151" text-anchor="end">color: "قرمز"</text>
+                    <text x="200" y="93" font-size="14" fill="#374151" text-anchor="end">model: "پراید"</text>
                 </g>
 
                 <line x1="310" y1="200" x2="380" y2="200" stroke="#0D9488" stroke-width="2" marker-end="url(#arrowhead)"/>
-                <text x="320" y="190" font-size="12">ساخت نمونه</text>
+                <text x="345" y="190" font-size="12" text-anchor="middle">ساخت نمونه</text>
 
                 <g transform="translate(400, 170)">
-                    <rect x="0" y="0" width="180" height="110" fill="#fff" stroke="#4B5563" stroke-width="2" rx="8" filter="url(#shadow)"/>
-                    <text x="90" y="25" font-size="16" font-weight="bold" text-anchor="middle" fill="#1F2937">آبجکت ۲ (خودرو)</text>
-                    <line x1="5" y1="35" x2="175" y2="35" stroke="#9CA3AF"/>
-                    <text x="15" y="60" font-size="14" fill="#374151">color: "آبی"</text>
-                    <text x="15" y="85" font-size="14" fill="#374151">model: "پژو"</text>
+                    <rect x="0" y="0" width="220" height="110" fill="#fff" stroke="#4B5563" stroke-width="2" rx="8" filter="url(#shadow)"/>
+                    <text x="110" y="30" font-size="16" font-weight="bold" text-anchor="middle" fill="#1F2937">آبجکت ۲ (خودرو)</text>
+                    <line x1="5" y1="40" x2="215" y2="40" stroke="#9CA3AF"/>
+                    <text x="200" y="68" font-size="14" fill="#374151" text-anchor="end">color: "آبی"</text>
+                    <text x="200" y="93" font-size="14" fill="#374151" text-anchor="end">model: "پژو"</text>
                 </g>
             </svg>
         </div>
@@ -153,10 +215,6 @@ class Car {
         </div>
     </section>
 
-<!--    <div class="chapter-nav">-->
-<!--        <a href="../index.html" class="back-link">→ بازگشت به فهرست</a>-->
-<!--        <a href="chapter2.html">رفتن به فصل بعد: مقدمات جاوا ←</a>-->
-<!--    </div>-->
 </main>
 
 <script src="../assets/js/main.js"></script>

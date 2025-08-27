@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فصل ۲: مقدمات و مفاهیم کلیدی جاوا - جزوه برنامه سازی پیشرفته</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+</head>
+<body class="theme-basics">
+
+<div id="top-header">
+    <button id="menu-toggle">☰</button>
+    <h1 class="course-title" style="font-size: 1.1rem; color: inherit; font-weight: 600;">فصل ۲: مقدمات و مفاهیم کلیدی
+        جاوا</h1>
+</div>
+<div id="overlay"></div>
+
+<nav id="sidebar">
+    <div class="sidebar-profile">
+        <a href="../index.html" title="بازگشت به صفحه اصلی">
+            <img src="../assets/images/university_logo.png" alt="آرم دانشگاه - بازگشت به صفحه اصلی">
+        </a>
+        <h2 class="course-title">برنامه‌سازی پیشرفته (جاوا)</h2>
+        <p class="instructor-name">مدرس: سید سجاد پیراهش</p>
+    </div>
+    <ul class="nav-menu">
+        <li>
+            <header>فهرست فصل ۲</header>
+            <ul class="submenu open">
+                <li><a href="#section2-1" class="nav-link active">۲-۱: اکوسیستم جاوا</a></li>
+                <li><a href="#section2-2" class="nav-link">۲-۲: اولین برنامه: Hello, World!</a></li>
+                <li><a href="#section2-3" class="nav-link">۲-۳: قواعد نام‌گذاری</a></li>
+                <li><a href="#section2-4" class="nav-link">۲-۴: آناتومی یک فایل جاوا</a></li>
+                <li><a href="#section2-5" class="nav-link">۲-۵: مدیریت پروژه با پکیج‌ها</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="sidebar-footer">
+        <a href="../index.html">→ بازگشت به فهرست اصلی</a>
+    </div>
+</nav>
+
+<main id="main-content">
+
+    <section id="section2-1">
+        <h2>۲-۱: اکوسیستم جاوا و راه‌اندازی محیط</h2>
+        <p>برای شروع ماجراجویی با جاوا، ابتدا باید ابزارهای لازم را بشناسیم و محیط کاری خود را آماده کنیم. اکوسیستم جاوا
+            از سه جزء کلیدی تشکیل شده است که درک نقش هر کدام برای هر توسعه‌دهنده‌ای ضروری است.</p>
+
+        <h3>اکوسیستم جاوا: JDK، JRE و JVM</h3>
+        <p>این سه جزء اصلی اغلب با هم اشتباه گرفته می‌شوند، اما هر کدام نقش منحصربه‌فرد و مشخصی دارند:</p>
+        <ul>
+            <li><strong>کیت توسعه جاوا (JDK - Java Development Kit):</strong> این مجموعه ابزار کامل برای <strong>توسعه‌دهندگان</strong>
+                جاوا است. JDK شامل همه چیزهایی است که برای نوشتن، کامپایل کردن (`javac`) و خطایابی (دیباگ) برنامه‌های
+                جاوا نیاز دارید. <strong>برای برنامه‌نویسی به زبان جاوا، حتماً باید JDK روی سیستم شما نصب باشد.</strong>
+            </li>
+            <li><strong>محیط اجرای جاوا (JRE - Java Runtime Environment):</strong> این مجموعه، حداقل نرم‌افزار مورد نیاز
+                برای <strong>اجرای</strong> برنامه‌های جاوایی است که قبلاً کامپایل شده‌اند. JRE شامل ماشین مجازی جاوا و
+                کتابخانه‌های اصلی است اما ابزارهای توسعه را ندارد.
+            </li>
+            <li><strong>ماشین مجازی جاوا (JVM - Java Virtual Machine):</strong> می‌توان آن را قلب تپنده جاوا دانست. JVM
+                یک "کامپیوتر مجازی" است که بایت‌کد (Bytecode) جاوا را اجرا کرده و شعار معروف جاوا یعنی <strong>"یک بار
+                    بنویس، همه‌جا اجرا کن"</strong> را تحقق می‌بخشد.
+            </li>
+        </ul>
+
+        <div class="diagram-container">
+            <svg width="100%" height="250" viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg"
+                 font-family="Vazirmatn, sans-serif">
+                <defs>
+                    <filter id="shadow-box" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+                        <feOffset dx="3" dy="3" result="offsetblur"/>
+                        <feMerge>
+                            <feMergeNode/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <g transform="translate(100, 20)">
+                    <rect x="0" y="0" width="600" height="210" fill="#FFFBEB" stroke="#FBBF24" stroke-width="2" rx="15"
+                          filter="url(#shadow-box)"/>
+                    <text x="570" y="40" font-size="22" font-weight="bold" fill="#B45309" text-anchor="end">JDK (کیت
+                        توسعه جاوا)
+                    </text>
+                    <text x="570" y="70" font-size="14" fill="#D97706" text-anchor="end">ابزارهای توسعه (مانند کامپایلر
+                        javac)
+                    </text>
+                </g>
+
+                <g transform="translate(120, 90)">
+                    <rect x="0" y="0" width="560" height="130" fill="#FEF3C7" stroke="#FDE68A" stroke-width="2"
+                          rx="10"/>
+                    <text x="530" y="30" font-size="20" font-weight="bold" fill="#92400E" text-anchor="end">JRE (محیط
+                        اجرای جاوا)
+                    </text>
+                    <text x="530" y="55" font-size="14" fill="#B45309" text-anchor="end">کتابخانه‌های زمان اجرا</text>
+                </g>
+
+                <g transform="translate(140, 140)">
+                    <rect x="0" y="0" width="520" height="70" fill="#FFedd5" stroke="#FDba74" stroke-width="2" rx="5"/>
+                    <text x="260" y="45" font-size="18" font-weight="bold" text-anchor="middle" fill="#78350F">JVM
+                        (ماشین مجازی جاوا)
+                    </text>
+                </g>
+            </svg>
+        </div>
+
+        <h3>نصب JDK</h3>
+        <p>برای شروع برنامه‌نویسی، اولین قدم نصب JDK است. نسخه‌های مختلفی از جاوا وجود دارد که مهم‌ترین آن‌ها نسخه‌های
+            <strong>پشتیبانی بلندمدت (LTS - Long-Term Support)</strong> مانند نسخه‌های ۸، ۱۱، ۱۷ و ۲۱ هستند. این نسخه‌ها
+            برای محیط‌های تجاری و پروژه‌های بزرگ توصیه می‌شوند. همیشه می‌توانید آخرین نسخه پایدار را نیز نصب کنید.</p>
+        <p>شما می‌توانید JDK را از وب‌سایت رسمی Oracle یا توزیع‌های دیگر مانند AdoptOpenJDK دانلود کنید. پس از نصب،
+            دستورات `java` و `javac` باید از طریق خط فرمان (Terminal یا CMD) در دسترس باشند.</p>
+        <div class="chapter-nav" style="justify-content: center; margin-top: 1rem; margin-bottom: 2rem;">
+            <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank">دانلود آخرین نسخه JDK از سایت
+                Oracle</a>
+        </div>
+
+
+        <h3>محیط‌های توسعه یکپارچه (IDE)</h3>
+        <p>اگرچه می‌توان برنامه‌های جاوا را در یک ویرایشگر متن ساده نوشت، اما استفاده از یک IDE فرآیند توسعه را بسیار
+            ساده‌تر و سریع‌تر می‌کند. IDEها امکاناتی مانند تکمیل خودکار کد، خطایابی پیشرفته و مدیریت پروژه را فراهم
+            می‌کنند. برخی از محبوب‌ترین IDEها برای جاوا عبارتند از:</p>
+        <ul>
+            <li><strong>IntelliJ IDEA:</strong> ساخته شرکت JetBrains، بسیار هوشمند و قدرتمند است و در دو نسخه ارائه
+                می‌شود: Community (رایگان و متن‌باز) و Ultimate (تجاری با امکانات کامل برای توسعه وب و سازمانی).
+            </li>
+            <li><strong>Eclipse:</strong> یک IDE کلاسیک، رایگان و متن‌باز که سال‌هاست توسط جامعه بزرگی از توسعه‌دهندگان
+                پشتیبانی می‌شود.
+            </li>
+            <li><strong>Apache NetBeans:</strong> پروژه‌ای متن‌باز و رایگان که امکانات کاملی برای توسعه جاوا و سایر
+                زبان‌ها فراهم می‌کند.
+            </li>
+            <li><strong>Oracle JDeveloper:</strong> IDE رسمی شرکت اوراکل که تمرکز ویژه‌ای بر توسعه برنامه‌های سازمانی و
+                یکپارچگی با سایر محصولات اوراکل دارد.
+            </li>
+            <li><strong>Visual Studio Code:</strong> یک ویرایشگر کد سبک و بسیار محبوب از مایکروسافت که با نصب افزونه‌های
+                مخصوص جاوا (Java Extension Pack)، به یک محیط توسعه قدرتمند تبدیل می‌شود.
+            </li>
+        </ul>
+        <p>همچنین، همانطور که اشاره شد، برای شروع یادگیری و درک بهتر فرآیند کامپایل، می‌توانید از ویرایشگرهای متن ساده
+            مانند <strong>Notepad++</strong>، <strong>Sublime Text</strong> یا <strong>Vim</strong> نیز استفاده کرده و
+            برنامه‌های خود را به صورت دستی از طریق خط فرمان کامپایل و اجرا کنید.</p>
+    </section>
+
+    <section id="section2-2">
+        <h2>۲-۲: از کد تا اجرا و اولین برنامه !Hello, World</h2>
+        <p>یکی از قدرتمندترین ویژگی‌های جاوا، <strong>استقلال از پلتفرم (Platform Independence)</strong> است. این یعنی
+            شما کد خود را یک بار می‌نویسید و فایل کامپایل شده آن می‌تواند بدون هیچ تغییری روی ویندوز، مک یا لینوکس اجرا
+            شود. این جادو از طریق <strong>بایت‌کد (Bytecode)</strong> و JVM انجام می‌شود.</p>
+        <p>این فرآیند در دو مرحله اصلی صورت می‌گیرد:</p>
+        <ol>
+            <li><strong>کامپایل (Compilation):</strong> شما یک فایل متنی با پسوند <code>.java</code> می‌نویسید. کامپایلر
+                جاوا (<code>javac</code>) این کد خوانا برای انسان را به یک زبان میانی به نام <strong>بایت‌کد</strong>
+                تبدیل کرده و در فایلی با پسوند <code>.class</code> ذخیره می‌کند.
+            </li>
+            <li><strong>اجرا (Execution):</strong> ماشین مجازی جاوا (JVM) فایل <code>.class</code> را گرفته، بایت‌کد را
+                برای سیستم‌عامل و سخت‌افزار مقصد تفسیر و اجرا می‌کند.
+            </li>
+        </ol>
+
+        <div class="diagram-container">
+            <svg width="100%" height="250" viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg"
+                 font-family="Vazirmatn, sans-serif">
+                <defs>
+                    <marker id="arrowhead-orange" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto"
+                            fill="#D97706">
+                        <polygon points="0 0, 10 3.5, 0 7"/>
+                    </marker>
+                </defs>
+
+                <g transform="translate(620, 80)">
+                    <rect x="0" y="0" width="160" height="90" fill="#FEF3C7" stroke="#FDE68A" rx="8"/>
+                    <text x="80" y="40" font-size="16" font-weight="600" text-anchor="middle" fill="#92400E">Source
+                        Code
+                    </text>
+                    <text x="80" y="70" font-size="14" text-anchor="middle" fill="#B45309"
+                          style="font-family: var(--code-font);">HelloWorld.java
+                    </text>
+                </g>
+
+                <path d="M 610 125 L 550 125" stroke="#D97706" stroke-width="2.5" marker-end="url(#arrowhead-orange)"/>
+                <text x="580" y="115" font-size="14" text-anchor="middle" fill="#78350F">javac</text>
+
+                <g transform="translate(380, 80)">
+                    <rect x="0" y="0" width="160" height="90" fill="#FEF3C7" stroke="#FDE68A" rx="8"/>
+                    <text x="80" y="40" font-size="16" font-weight="600" text-anchor="middle" fill="#92400E">Bytecode
+                    </text>
+                    <text x="80" y="70" font-size="14" text-anchor="middle" fill="#B45309"
+                          style="font-family: var(--code-font);">HelloWorld.class
+                    </text>
+                </g>
+
+                <path d="M 370 125 L 310 125" stroke="#D97706" stroke-width="2.5" marker-end="url(#arrowhead-orange)"/>
+                <text x="340" y="115" font-size="14" text-anchor="middle" fill="#78350F">java</text>
+
+                <g transform="translate(140, 80)">
+                    <rect x="0" y="0" width="160" height="90" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2" rx="8"/>
+                    <text x="80" y="55" font-size="20" font-weight="bold" text-anchor="middle" fill="#78350F">JVM</text>
+                </g>
+
+                <path d="M 130 125 C 80 125, 80 25, 30 25" stroke="#D97706" stroke-width="2" fill="none"
+                      marker-end="url(#arrowhead-orange)"/>
+                <path d="M 130 125 C 80 125, 80 125, 30 125" stroke="#D97706" stroke-width="2" fill="none"
+                      marker-end="url(#arrowhead-orange)"/>
+                <path d="M 130 125 C 80 125, 80 225, 30 225" stroke="#D97706" stroke-width="2" fill="none"
+                      marker-end="url(#arrowhead-orange)"/>
+
+                <text x="15" y="25" font-size="14" text-anchor="middle" fill="#44403C">Windows</text>
+                <text x="15" y="125" font-size="14" text-anchor="middle" fill="#44403C">macOS</text>
+                <text x="15" y="225" font-size="14" text-anchor="middle" fill="#44403C">Linux</text>
+
+            </svg>
+        </div>
+
+        <h3>یک شروع کلاسیک: !Hello, World</h3>
+        <p>طبق یک سنت قدیمی در برنامه‌نویسی، یادگیری هر زبان جدیدی با نوشتن برنامه‌ای شروع می‌شود که عبارت "!Hello,
+            World" را چاپ کند. این مثال ساده، ساختار اصلی یک برنامه قابل اجرای جاوا را به خوبی نشان می‌دهد.</p>
+
+        <div class="code-block-container" style="direction: ltr;">
+            <button class="copy-button">کپی</button>
+            <pre><code class="language-java">
+// File name must be: HelloWorld.java
+public class HelloWorld {
+    // This is the main entry point of the program
+    public static void main(String[] args) {
+        // This line prints the text to the console
+        System.out.println("Hello, World!");
+    }
+}
+        </code></pre>
+        </div>
+
+        <h4>کامپایل و اجرای دستی</h4>
+        <p>برای اجرای این برنامه، ابتدا باید آن را با کامپایلر جاوا به بایت‌کد تبدیل کنیم. فرض کنید فایل بالا را با نام
+            <code>HelloWorld.java</code> ذخیره کرده‌اید. خط فرمان (Terminal یا CMD) را باز کرده و دستورات زیر را وارد
+            کنید:</p>
+
+        <p><strong>۱. دستور کامپایل:</strong></p>
+        <div class="code-block-container" style="direction: ltr;">
+        <pre><code class="language-bash">
+javac HelloWorld.java
+        </code></pre>
+        </div>
+        <p>اگر هیچ خطایی رخ ندهد، این دستور فایلی به نام <code>HelloWorld.class</code> در کنار فایل اصلی شما ایجاد
+            می‌کند. این فایل حاوی بایت‌کد برنامه شماست.</p>
+
+        <p><strong>۲. دستور اجرا:</strong></p>
+        <div class="code-block-container" style="direction: ltr;">
+        <pre><code class="language-bash">
+java HelloWorld
+        </code></pre>
+        </div>
+        <p>توجه کنید که هنگام اجرا، نام کلاس را بدون پسوند <code>.class</code> می‌نویسیم. با اجرای این دستور، JVM برنامه
+            را اجرا کرده و نتیجه زیر را در خروجی نمایش می‌دهد:</p>
+        <div class="code-block-container" style="direction: ltr;">
+        <pre><code class="language-text">
+Hello, World!
+        </code></pre>
+        </div>
+
+        <h3>تعامل با ورودی: آرگومان‌های خط فرمان</h3>
+        <p>حالا بیایید برنامه را کمی هوشمندتر کنیم. متد <code>main</code> یک پارامتر به نام <code>String[] args</code>
+            دارد. این پارامتر یک <strong>آرایه از رشته‌ها</strong> است که مقادیری را که شما هنگام اجرای برنامه در خط
+            فرمان وارد می‌کنید، در خود ذخیره می‌کند. می‌توانیم از این قابلیت برای دریافت ورودی از کاربر استفاده کنیم.
+        </p>
+
+        <div class="code-block-container" style="direction: ltr;">
+            <button class="copy-button">کپی</button>
+            <pre><code class="language-java">
+// File name must be: Greeting.java
+public class Greeting {
+    public static void main(String[] args) {
+        // The 'args' array holds command-line arguments.
+        // We check if the array has at least one element.
+        if (args.length > 0) {
+            // If a name was provided, use the first one.
+            String name = args[0];
+            System.out.println("Hello, " + name + "!");
+        } else {
+            // Otherwise, show a generic message.
+            System.out.println("Hello, guest! Please provide a name when you run the program.");
+        }
+    }
+}
+        </code></pre>
+        </div>
+
+        <h4>اجرای برنامه با ورودی و بدون ورودی</h4>
+        <p>ابتدا فایل <code>Greeting.java</code> را کامپایل می‌کنیم: <code>javac Greeting.java</code>. سپس می‌توانیم آن
+            را به دو صورت اجرا کنیم:</p>
+
+        <p><strong>۱. اجرا با یک آرگومان ورودی:</strong></p>
+        <div class="code-block-container" style="direction: ltr;">
+        <pre><code class="language-bash">
+java Greeting Sajjad
+        </code></pre>
+        </div>
+        <p>در اینجا، کلمه "Sajjad" به عنوان اولین عنصر (ایندکس ۰) در آرایه <code>args</code> قرار می‌گیرد. در نتیجه، شرط
+            <code>args.length > 0</code> درست بوده و خروجی زیر چاپ می‌شود:</p>
+        <div class="code-block-container" style="direction: ltr;">
+        <pre><code class="language-text">
+Hello, Sajjad!
+        </code></pre>
+        </div>
+
+        <p><strong>۲. اجرا بدون آرگومان ورودی:</strong></p>
+        <div class="code-block-container" style="direction: ltr;">
+        <pre><code class="language-bash">
+java Greeting
+        </code></pre>
+        </div>
+        <p>در این حالت، آرایه <code>args</code> خالی است و طول آن صفر است. بنابراین، برنامه وارد بلوک <code>else</code>
+            شده و خروجی زیر را نمایش می‌دهد:</p>
+        <div class="code-block-container" style="direction: ltr;">
+        <pre><code class="language-text">
+Hello, guest! Please provide a name when you run the program.
+        </code></pre>
+        </div>
+    </section>
+
+    <section id="section2-3">
+        <h2>۲-۳: قواعد نام‌گذاری (Naming Conventions)</h2>
+        <p>در جاوا، برای نام‌گذاری متغیرها، متدها، کلاس‌ها و... از <strong>شناسه‌ها (Identifiers)</strong> استفاده
+            می‌کنیم. این نام‌ها علاوه بر قواعد فنی (مانند شروع نشدن با عدد)، از یک سری قراردادهای نوشتاری پیروی می‌کنند
+            که رعایت آن‌ها برای نوشتن کدهای تمیز، خوانا و حرفه‌ای ضروری است.</p>
+
+        <h3>قواعد فنی شناسه‌ها</h3>
+        <ul>
+
+            <li>شناسه‌ها می‌توانند شامل حروف (<code>a-z</code>, <code>A-Z</code>)، اعداد (<code>0-9</code>)، آندرلاین
+                (<code>_</code>) و علامت دلار (<code>$</code>) باشند.
+            </li>
+            <li>یک شناسه <strong>نباید</strong> با یک عدد شروع شود.</li>
+            <li>جاوا به بزرگی و کوچکی حروف حساس است (<strong>Case-Sensitive</strong>). یعنی <code>totalPrice</code> با
+                <code>totalprice</code> دو شناسه متفاوت هستند.
+            </li>
+            <li>نمی‌توان از کلمات کلیدی رزرو شده جاوا (مانند <code>public</code>, <code>class</code>, <code>int</code>)
+                به عنوان شناسه استفاده کرد.
+            </li>
+        </ul>
+
+        <h3>قراردادهای نوشتاری: کلید خوانایی کد</h3>
+        <p>قراردادهای زیر به شما و دیگر توسعه‌دهندگان کمک می‌کنند تا تنها با نگاه کردن به یک نام، نوع و نقش آن را در
+            برنامه حدس بزنید. این موضوع خوانایی و نگهداری کد را به شدت بهبود می‌بخشد.</p>
+
+        <div class="diagram-container">
+            <svg width="100%" height="220" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg"
+                 font-family="Vazirmatn, sans-serif">
+                <g transform="translate(550, 30)">
+                    <rect x="0" y="0" width="220" height="160" fill="#FFFBEB" stroke="#FBBF24" stroke-width="2" rx="8"/>
+                    <text x="110" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#B45309">
+                        PascalCase
+                    </text>
+                    <line x1="10" y1="50" x2="210" y2="50" stroke="#FDE68A"/>
+                    <text x="110" y="80" font-size="14" fill="#92400E" text-anchor="middle">برای کلاس‌ها و اینترفیس‌ها
+                    </text>
+                    <text x="110" y="125" font-size="15" font-weight="600" text-anchor="middle" dir="ltr"
+                          style="font-family: var(--code-font);">public class Student { ... }
+                    </text>
+                </g>
+                <g transform="translate(290, 30)">
+                    <rect x="0" y="0" width="220" height="160" fill="#FFFBEB" stroke="#FBBF24" stroke-width="2" rx="8"/>
+                    <text x="110" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#B45309">
+                        camelCase
+                    </text>
+                    <line x1="10" y1="50" x2="210" y2="50" stroke="#FDE68A"/>
+                    <text x="110" y="80" font-size="14" fill="#92400E" text-anchor="middle">برای متدها و متغیرها</text>
+                    <text x="110" y="115" font-size="15" font-weight="600" text-anchor="middle" dir="ltr"
+                          style="font-family: var(--code-font);">String studentName;
+                    </text>
+                    <text x="110" y="140" font-size="15" font-weight="600" text-anchor="middle" dir="ltr"
+                          style="font-family: var(--code-font);">double calculateAvg() { ... }
+                    </text>
+                </g>
+                <g transform="translate(30, 30)">
+                    <rect x="0" y="0" width="220" height="160" fill="#FFFBEB" stroke="#FBBF24" stroke-width="2" rx="8"/>
+                    <text x="110" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#B45309">
+                        UPPER_CASE
+                    </text>
+                    <line x1="10" y1="50" x2="210" y2="50" stroke="#FDE68A"/>
+                    <text x="110" y="80" font-size="14" fill="#92400E" text-anchor="middle">برای مقادیر ثابت
+                        (Constants)
+                    </text>
+                    <text x="110" y="125" font-size="15" font-weight="600" text-anchor="middle" dir="ltr"
+                          style="font-family: var(--code-font);">final int MAX_SIZE = 100;
+                    </text>
+                </g>
+            </svg>
+        </div>
+
+        <h4>چگونه این قراردادها به ما کمک می‌کنند؟</h4>
+        <p>وقتی در حال خواندن کد هستید، این سبک‌های نوشتاری مانند یک راهنما عمل می‌کنند:</p>
+        <ul>
+            <li>اگر نامی با حرف بزرگ شروع شده باشد (مانند <code>Student</code> یا <code>Greeting</code>)، فوراً متوجه
+                می‌شوید که این یک <strong>کلاس</strong> (یک نقشه یا الگو) است.
+            </li>
+            <li>اگر نامی با حرف کوچک شروع شده باشد (مانند <code>studentName</code> یا <code>calculateAvg</code>)،
+                می‌دانید که با یک <strong>متغیر</strong> یا یک <strong>متد</strong> سروکار دارید. حالا چگونه این دو را
+                از هم تشخیص دهیم؟
+            </li>
+            <ul>
+                <li>اگر بعد از نام، پرانتز <code>()</code> وجود داشته باشد، قطعاً یک <strong>متد</strong> است: <code>calculateAvg()</code>.
+                </li>
+                <li>اگر پرانتزی وجود نداشته باشد، یک <strong>متغیر</strong> (یا فیلد) است: <code>studentName</code>.
+                </li>
+            </ul>
+            <li>اگر نامی با حروف بزرگ و آندرلاین نوشته شده باشد (مانند <code>MAX_SIZE</code>)، فوراً می‌فهمید که این یک
+                <strong>مقدار ثابت</strong> است که مقدار آن در طول برنامه تغییر نخواهد کرد.
+            </li>
+        </ul>
+        <p>رعایت این قراردادها نه تنها کد شما را برای دیگران خواناتر می‌کند، بلکه به خود شما نیز کمک می‌کند تا با سرعت و
+            دقت بیشتری کد خود را توسعه داده و خطایابی کنید.</p>
+    </section>
+
+    <section id="section2-4">
+        <h2>۲-۴: آناتومی یک فایل جاوا</h2>
+        <p>هر فایل با پسوند <code>.java</code> یک واحد کامپایل در زبان جاوا است و ساختار مشخصی دارد. این ساختار می‌تواند
+            از سه بخش اصلی و به ترتیب زیر تشکیل شود. البته فقط بخش سوم (تعریف کلاس) اجباری است.</p>
+
+        <div class="diagram-container">
+            <svg width="100%" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"
+                 font-family="Vazirmatn, sans-serif">
+                <rect x="10" y="10" width="580" height="380" fill="#FEF3C7" stroke="#FDE68A" stroke-width="2" rx="10"/>
+                <text x="300" y="45" font-size="20" font-weight="bold" fill="#78350F" text-anchor="middle">ساختار فایل
+                    MyFile.java
+                </text>
+
+                <g>
+                    <rect x="20" y="70" width="560" height="70" fill="#FFFBEB" stroke="#FBBF24" stroke-width="1.5"
+                          rx="5"/>
+                    <text x="570" y="100" font-size="16" font-weight="bold" fill="#B45309" text-anchor="end">۱. تعریف
+                        بسته (اختیاری)
+                    </text>
+                    <text x="570" y="125" font-size="14" font-style="italic" fill="#92400E" text-anchor="end" dir="ltr">
+                        package com.pirahesh.utils;
+                    </text>
+                </g>
+
+                <g>
+                    <rect x="20" y="150" width="560" height="90" fill="#FFFBEB" stroke="#FBBF24" stroke-width="1.5"
+                          rx="5"/>
+                    <text x="570" y="180" font-size="16" font-weight="bold" fill="#B45309" text-anchor="end">۲. وارد
+                        کردن کلاس‌ها (اختیاری)
+                    </text>
+                    <text x="570" y="205" font-size="14" font-style="italic" fill="#92400E" text-anchor="end" dir="ltr">
+                        import java.util.Scanner;
+                    </text>
+                    <text x="570" y="225" font-size="14" font-style="italic" fill="#92400E" text-anchor="end" dir="ltr">
+                        import java.time.*; // Wildcard
+                    </text>
+                </g>
+
+                <g>
+                    <rect x="20" y="250" width="560" height="130" fill="#FFFBEB" stroke="#FBBF24" stroke-width="1.5"
+                          rx="5"/>
+                    <text x="570" y="280" font-size="16" font-weight="bold" fill="#B45309" text-anchor="end">۳. تعریف
+                        کلاس‌ها (اجباری)
+                    </text>
+                    <text x="570" y="305" font-size="14" font-style="italic" fill="#92400E" text-anchor="end" dir="ltr">
+                        public class MyFile { ... }
+                    </text>
+                    <text x="570" y="330" font-size="14" font-style="italic" fill="#92400E" text-anchor="end" dir="ltr">
+                        class AnotherClass { ... }
+                    </text>
+                    <text x="570" y="355" font-size="14" font-style="italic" fill="#92400E" text-anchor="end" dir="ltr">
+                        class HelperClass { ... }
+                    </text>
+                </g>
+            </svg>
+        </div>
+
+        <h3>بخش ۱: `package`</h3>
+        <p>این دستور (در صورت وجود) باید اولین خط کد در فایل باشد و مشخص می‌کند که تمام کلاس‌های تعریف شده در این فایل،
+            به کدام بسته تعلق دارند. در مورد پکیج‌ها در بخش بعدی بیشتر صحبت خواهیم کرد.</p>
+
+        <h3>بخش ۲: `import`</h3>
+        <p>برای استفاده از کلاسی که در یک پکیج دیگر قرار دارد، باید آن را به فایل خود "وارد" یا <code>import</code>
+            کنیم. این کار به کامپایلر می‌گوید که کلاس مورد نظر را از کجا پیدا کند.</p>
+        <ul>
+            <li><strong>وارد کردن یک کلاس مشخص:</strong> برای این کار، از <strong>نام کامل کلاس (Fully Qualified
+                Name)</strong> استفاده می‌کنیم که از ترکیب <code>نام بسته + . + نام کلاس</code> تشکیل شده است.
+                <div class="code-block-container" style="direction: ltr;">
+                    <pre><code class="language-java">import java.util.Scanner; // فقط کلاس Scanner را وارد می‌کند</code></pre>
+                </div>
+            </li>
+            <li><strong>وارد کردن تمام کلاس‌های یک پکیج:</strong> گاهی نیاز به استفاده از چندین کلاس از یک پکیج داریم.
+                در این حالت، می‌توانیم از علامت ستاره (<code>*</code>) یا Wildcard استفاده کنیم تا تمام کلاس‌های
+                <strong>عمومی (public)</strong> آن پکیج را یکجا وارد کنیم.
+                <div class="code-block-container" style="direction: ltr;">
+                    <pre><code
+                            class="language-java">import java.time.*; // تمام کلاس‌های عمومی پکیج time را وارد می‌کند</code></pre>
+                </div>
+                <p><strong>نکته:</strong> این کار باعث کندی برنامه نمی‌شود، بلکه فقط به کامپایلر اجازه دسترسی به آن
+                    کلاس‌ها را می‌دهد.</p>
+            </li>
+            <li><strong>پکیج `java.lang`:</strong> این پکیج شامل کلاس‌های بنیادی و بسیار پرکاربرد جاوا مانند <code>String</code>،
+                <code>System</code>، <code>Integer</code> و <code>Object</code> است. به دلیل اهمیت بالای این پکیج، جاوا
+                آن را به صورت <strong>ضمنی (Implicitly)</strong> برای شما در تمام فایل‌ها <code>import</code> می‌کند. به
+                همین دلیل ما در مثال `HelloWorld` نیازی به نوشتن <code>import java.lang.System;</code> نداشتیم.
+            </li>
+        </ul>
+
+        <h3>بخش ۳: تعریف کلاس‌ها</h3>
+        <p>قلب هر فایل جاوا، تعریف کلاس‌های آن است. در این مورد دو قانون بسیار مهم وجود دارد:</p>
+        <ol>
+            <li>یک فایل <code>.java</code> می‌تواند شامل <strong>هر تعداد کلاس غیرعمومی (non-public)</strong> باشد. این
+                کلاس‌ها معمولاً کلاس‌های کمکی هستند که فقط در همان فایل استفاده می‌شوند.
+            </li>
+            <li>در هر فایل <code>.java</code>، <strong>حداکثر یک کلاس</strong> می‌تواند از نوع
+                <strong><code>public</code></strong> باشد.
+            </li>
+        </ol>
+        <div class="info-box">
+            <h4>قانون طلایی جاوا: تناظر کلاس Public و نام فایل</h4>
+            <p>اگر کلاسی را به صورت <code>public</code> تعریف کنید، نام آن کلاس <strong>باید دقیقاً با نام فایل</strong>
+                (بدون پسوند <code>.java</code>) یکسان باشد. این یک قانون اجباری است و در صورت عدم رعایت، کد شما کامپایل
+                نخواهد شد. این قانون به JVM کمک می‌کند تا کلاس‌های عمومی را به سرعت و بدون ابهام در پروژه پیدا کند.</p>
+            <p>برای مثال، اگر کدی حاوی <code>public class Student { ... }</code> باشد، باید حتماً در فایلی به نام <code>Student.java</code>
+                ذخیره شود.</p>
+        </div>
+    </section>
+
+    <section id="section2-5">
+        <h2>۲-۵: مدیریت پروژه با پکیج‌ها</h2>
+        <p>وقتی تعداد فایل‌ها و کلاس‌ها در یک پروژه زیاد می‌شود، مدیریت آن‌ها بدون یک ساختار منظم تقریباً غیرممکن است.
+            پکیج‌ها در جاوا، مکانیزم اصلی برای سازماندهی کلاس‌ها در گروه‌های منطقی و مدیریت پیچیدگی پروژه‌های بزرگ
+            هستند.</p>
+
+        <h3>چرا به پکیج‌بندی نیاز داریم؟ استفاده مجدد از نرم‌افزار</h3>
+        <p>یکی از اهداف اصلی مهندسی نرم‌افزار، **استفاده مجدد از کد (Code Reusability)** است. ما نمی‌خواهیم چرخ را از
+            اول اختراع کنیم. اگر یک تیم کلاسی برای کار با تاریخ شمسی نوشته است، تیم‌های دیگر نیز باید بتوانند به سادگی
+            از آن استفاده کنند.</p>
+
+        <div class="diagram-container">
+            <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg"
+                 font-family="Vazirmatn, sans-serif">
+                <defs>
+                    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"
+                            fill="#B91C1C">
+                        <polygon points="0 0, 8 3, 0 6"/>
+                    </marker>
+                    <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"
+                            fill="#075985">
+                        <polygon points="0 0, 8 3, 0 6"/>
+                    </marker>
+                </defs>
+                <g transform="translate(450, 40)">
+                    <rect x="0" y="0" width="320" height="220" fill="#FEF2F2" stroke="#F87171" stroke-width="2"
+                          rx="10"/>
+                    <text x="160" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#991B1B">روش بد:
+                        کپی-پیست 👎
+                    </text>
+                    <rect x="20" y="70" width="120" height="50" fill="#fff" stroke="#FECACA" rx="5"/>
+                    <text x="80" y="100" text-anchor="middle">پروژه ۱</text>
+                    <rect x="180" y="70" width="120" height="50" fill="#fff" stroke="#FECACA" rx="5"/>
+                    <text x="240" y="100" text-anchor="middle">پروژه ۲</text>
+                    <path d="M 140 95 L 180 95" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arrowhead-red)"/>
+                    <text x="160" y="85" font-size="12" fill="#B91C1C" text-anchor="middle">کپی کردن فایل</text>
+                    <text x="160" y="160" font-size="14" fill="#7F1D1D" text-anchor="middle">- ایجاد کد تکراری</text>
+                    <text x="160" y="190" font-size="14" fill="#7F1D1D" text-anchor="middle">- عدم به‌روزرسانی کد</text>
+                </g>
+
+                <g transform="translate(30, 40)">
+                    <rect x="0" y="0" width="320" height="220" fill="#F0F9FF" stroke="#7DD3FC" stroke-width="2"
+                          rx="10"/>
+                    <text x="160" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#075985">روش خوب:
+                        استفاده مجدد 👍
+                    </text>
+                    <rect x="20" y="150" width="120" height="50" fill="#fff" stroke="#BAE6FD" rx="5"/>
+                    <text x="80" y="180" text-anchor="middle">پروژه ۱</text>
+                    <rect x="180" y="150" width="120" height="50" fill="#fff" stroke="#BAE6FD" rx="5"/>
+                    <text x="240" y="180" text-anchor="middle">پروژه ۲</text>
+                    <rect x="100" y="60" width="120" height="50" fill="#E0F2FE" stroke="#0EA5E9" rx="5"/>
+                    <text x="160" y="90" text-anchor="middle">کتابخانه (پکیج)</text>
+                    <path d="M 80 150 L 130 110" stroke="#0284C7" stroke-width="2" marker-end="url(#arrowhead-blue)"/>
+                    <path d="M 240 150 L 190 110" stroke="#0284C7" stroke-width="2" marker-end="url(#arrowhead-blue)"/>
+                    <text x="160" y="130" font-size="12" fill="#0369A1">import</text>
+                </g>
+            </svg>
+        </div>
+
+        <h3>مفهوم کارخانه نرم‌افزار (Software Factory)</h3>
+        <p>پکیج‌ها به ما این امکان را می‌دهند که به تدریج یک "کارخانه نرم‌افزار" برای خود یا سازمانمان بسازیم. در این
+            دیدگاه، هر پکیج مانند یک قطعه استاندارد و تست‌شده در یک کارخانه است (مثلاً پکیج کار با دیتابیس، پکیج محاسبات
+            ریاضی، پکیج تاریخ شمسی). برای ساخت یک برنامه جدید، به جای شروع از صفر، این قطعات آماده را از قفسه برداشته و
+            با کنار هم قرار دادن آن‌ها، محصول نهایی را با سرعت، کیفیت و هزینه بسیار کمتری تولید می‌کنیم.</p>
+
+        <div class="info-box">
+            <h4>قانون طلایی پکیج‌ها: تناظر پکیج و پوشه</h4>
+            <p>جاوا برای پیدا کردن کلاس‌ها، یک قانون ساده و سخت‌گیرانه دارد: ساختار پکیج در کد شما (<code>package
+                com.pirahesh.utils;</code>) <strong>باید دقیقاً با ساختار پوشه‌ها</strong> در پروژه شما مطابقت داشته
+                باشد. یعنی فایل‌های این پکیج باید در مسیر فیزیکی <code>.../com/pirahesh/utils/</code> قرار داشته باشند.
+            </p>
+        </div>
+
+        <h3>قرارداد نام‌گذاری پکیج‌ها</h3>
+        <p>برای جلوگیری از تداخل نام پکیج‌ها در سطح جهانی (مثلاً دو شرکت مختلف پکیجی به نام <code>utils</code> بسازند)،
+            یک قرارداد جهانی وجود دارد: از <strong>نام دامنه اینترنتی معکوس</strong> به عنوان پیشوند نام پکیج استفاده
+            کنید.</p>
+        <ul>
+            <li>اگر دامنه شما <code>pirahesh.com</code> است، نام پکیج‌های شما با <code>com.pirahesh</code> شروع می‌شود
+                (مانند: <code>com.pirahesh.utils</code>, <code>com.pirahesh.models</code>).
+            </li>
+        </ul>
+        <p>این قرارداد تضمین می‌کند که نام پکیج شما در سطح جهانی یکتا باشد، زیرا هیچ کس دیگری نمی‌تواند از دامنه شما
+            استفاده کند.</p>
+
+        <div class="chapter-nav">
+            <a href="chapter1.html">→ رفتن به فصل قبل: گذار به شیءگرایی</a>
+            <a href="chapter3.html">رفتن به فصل بعد ←</a>
+        </div>
+
+    </section>
+
+
+</main>
+
+<script src="../assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+</body>
+</html>

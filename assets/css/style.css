@@ -24,6 +24,9 @@ body.theme-transition {
     --sidebar-link-active-text: #064E3B;
     --sidebar-header-border: #115E59;
     --mobile-header-bg: #134E4A;
+    --sidebar-footer-bg: #0F766E; /* New */
+    --sidebar-footer-button-bg: rgba(20, 184, 166, 0.2); /* New */
+    --sidebar-footer-button-hover-bg: rgba(20, 184, 166, 0.4); /* New */
 }
 
 /* Chapter 2: Java Basics (Amber/Orange Theme) */
@@ -40,7 +43,12 @@ body.theme-basics {
     --sidebar-link-active-text: #78350F;
     --sidebar-header-border: #92400E;
     --mobile-header-bg: #78350F;
+    --sidebar-footer-bg: #B45309; /* New */
+    --sidebar-footer-button-bg: rgba(245, 158, 11, 0.2); /* New */
+    --sidebar-footer-button-hover-bg: rgba(245, 158, 11, 0.4); /* New */
 }
+
+/* ... (متغیرهای جدید برای سایر تم‌ها نیز به همین شکل اضافه شده‌اند) ... */
 
 /* Chapter 3: Setup & First Program (Sky Blue Theme) */
 body.theme-setup {
@@ -56,6 +64,9 @@ body.theme-setup {
     --sidebar-link-active-text: #082F49;
     --sidebar-header-border: #075985;
     --mobile-header-bg: #0C4A6E;
+    --sidebar-footer-bg: #0369A1; /* New */
+    --sidebar-footer-button-bg: rgba(14, 165, 233, 0.2); /* New */
+    --sidebar-footer-button-hover-bg: rgba(14, 165, 233, 0.4); /* New */
 }
 
 /* Chapter 4: Core OOP Concepts (Indigo/Violet Theme) */
@@ -72,6 +83,9 @@ body.theme-core-oop {
     --sidebar-link-active-text: #1E1B4B;
     --sidebar-header-border: #4338CA;
     --mobile-header-bg: #312E81;
+    --sidebar-footer-bg: #4338CA; /* New */
+    --sidebar-footer-button-bg: rgba(99, 102, 241, 0.2); /* New */
+    --sidebar-footer-button-hover-bg: rgba(99, 102, 241, 0.4); /* New */
 }
 
 /* Chapter 5: Design & Diagrams (Slate Gray Theme) */
@@ -88,6 +102,9 @@ body.theme-design {
     --sidebar-link-active-text: #0F172A;
     --sidebar-header-border: #475569;
     --mobile-header-bg: #1E293B;
+    --sidebar-footer-bg: #334155; /* New */
+    --sidebar-footer-button-bg: rgba(100, 116, 139, 0.2); /* New */
+    --sidebar-footer-button-hover-bg: rgba(100, 116, 139, 0.4); /* New */
 }
 
 /* Chapter 6: Data Structures (Lime/Green Theme) */
@@ -104,6 +121,9 @@ body.theme-datastruct {
     --sidebar-link-active-text: #1A2E05;
     --sidebar-header-border: #4D7C0F;
     --mobile-header-bg: #365314;
+    --sidebar-footer-bg: #4D7C0F; /* New */
+    --sidebar-footer-button-bg: rgba(132, 204, 22, 0.2); /* New */
+    --sidebar-footer-button-hover-bg: rgba(132, 204, 22, 0.4); /* New */
 }
 
 /* Chapter 7: Advanced OOP (Rose/Purple Theme) */
@@ -120,6 +140,9 @@ body.theme-advanced-oop {
     --sidebar-link-active-text: #500724;
     --sidebar-header-border: #9D174D;
     --mobile-header-bg: #831843;
+    --sidebar-footer-bg: #9D174D; /* New */
+    --sidebar-footer-button-bg: rgba(236, 72, 153, 0.2); /* New */
+    --sidebar-footer-button-hover-bg: rgba(236, 72, 153, 0.4); /* New */
 }
 
 /* Chapter 8: Exceptions & More (Red/Stone Theme) */
@@ -136,48 +159,214 @@ body.theme-exceptions {
     --sidebar-link-active-text: #450A0A;
     --sidebar-header-border: #991B1B;
     --mobile-header-bg: #7F1D1D;
+    --sidebar-footer-bg: #991B1B; /* New */
+    --sidebar-footer-button-bg: rgba(239, 68, 68, 0.2); /* New */
+    --sidebar-footer-button-hover-bg: rgba(239, 68, 68, 0.4); /* New */
 }
 
 /* =================================== */
 /* Structural & Common Styles */
 /* =================================== */
-body { font-family: var(--font-sans); line-height: 1.8; background-color: var(--background-color); color: var(--text-color); }
-#sidebar { width: 300px; background: var(--sidebar-bg); color: var(--sidebar-text); position: fixed; top: 0; right: 0; height: 100vh; overflow-y: auto; transition: transform .3s ease-in-out; z-index: 1000; }
-#main-content { margin-right: 300px; padding: 2rem 3rem; transition: margin-right .3s ease-in-out; }
+body {
+    font-family: var(--font-sans);
+    line-height: 1.8;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+#sidebar {
+    width: 300px;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    overflow-y: auto;
+    transition: transform .3s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-content {
+    margin-right: 300px;
+    padding: 2rem 3rem;
+    transition: margin-right .3s ease-in-out;
+}
 
 /* =================================== */
 /* Sidebar Content Styles */
 /* =================================== */
-.sidebar-profile { padding: 1rem; text-align: center; border-bottom: 1px solid var(--sidebar-header-border); }
-.sidebar-profile img { width: 70px; height: 70px; margin: 0 auto 0.5rem auto; border-radius: 50%; }
-.sidebar-profile .course-title { font-weight: 700; font-size: 1.2rem; }
-.sidebar-profile .instructor-name { font-size: 0.9rem; color: var(--sidebar-link-text); }
-#sidebar header { padding: 1rem; font-weight: 600; font-size: 1.1rem; border-bottom: 1px solid var(--sidebar-header-border); }
-.nav-menu, .submenu { list-style: none; padding: 0; margin: 0; }
-.nav-menu a, .nav-header { display: block; padding: .6rem 1.5rem; text-decoration: none; transition: background .2s, color .2s; cursor: pointer; user-select: none; }
-.nav-header { display: flex; justify-content: space-between; align-items: center; }
-.nav-header.level-1 { font-weight: 700; font-size: 1rem; color: var(--sidebar-text); }
-.nav-menu .nav-link { font-size: 0.9rem; padding-right: 2.5rem; color: var(--sidebar-link-text); }
-.nav-menu a.active, .nav-menu a:hover { background: var(--sidebar-link-active-bg); color: var(--sidebar-link-active-text); }
-.submenu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; }
-.submenu.open { max-height: 1000px; }
-.nav-header::after { content: '◀'; transition: transform .2s; font-size: 0.8em; }
-.nav-header.open::after { transform: rotate(-90deg); }
+.sidebar-profile {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--sidebar-header-border);
+}
+
+.sidebar-profile img {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 0.5rem auto;
+    border-radius: 50%;
+}
+
+.sidebar-profile .course-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.sidebar-profile .instructor-name {
+    font-size: 0.9rem;
+    color: var(--sidebar-link-text);
+}
+
+#sidebar header {
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--sidebar-header-border);
+}
+
+.nav-menu, .submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu a, .nav-header {
+    display: block;
+    padding: .6rem 1.5rem;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+    cursor: pointer;
+    user-select: none;
+}
+
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-header.level-1 {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--sidebar-text);
+}
+
+.nav-menu .nav-link {
+    font-size: 0.9rem;
+    padding-right: 2.5rem;
+    color: var(--sidebar-link-text);
+}
+
+.nav-menu a.active, .nav-menu a:hover {
+    background: var(--sidebar-link-active-bg);
+    color: var(--sidebar-link-active-text);
+}
+
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.submenu.open {
+    max-height: 1000px;
+}
+
+.nav-header::after {
+    content: '◀';
+    transition: transform .2s;
+    font-size: 0.8em;
+}
+
+.nav-header.open::after {
+    transform: rotate(-90deg);
+}
 
 /* =================================== */
 /* Main Content Styles */
 /* =================================== */
-#main-content section { padding-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 2rem; }
-#main-content section:last-of-type { border-bottom: none; }
-#main-content h2 { font-size: 1.8rem; font-weight: 600; color: var(--primary-color); margin-bottom: 1rem; }
-#main-content h3 { font-size: 1.4rem; font-weight: 600; color: var(--secondary-color); margin-top: 1.5rem; margin-bottom: 0.75rem; }
-.code-block-container { position: relative; margin: 1.5rem 0; border-radius: 8px; overflow: hidden; background-color: #272822; }
-.copy-button { position: absolute; top: 0.75rem; left: 0.75rem; background-color: var(--secondary-color); color: var(--background-color); padding: 0.25rem 0.75rem; font-size: 0.8rem; border: none; border-radius: 6px; cursor: pointer; opacity: 0; transition: all 0.2s; font-family: var(--font-sans); }
-.code-block-container:hover .copy-button { opacity: 1; }
-.copy-button:disabled { background-color: var(--primary-color); }
-.chapter-nav { display: flex; justify-content: flex-end; margin-top: 3rem; }
-.chapter-nav a { display: inline-block; background-color: var(--primary-color); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: transform 0.2s, box-shadow 0.2s; }
-.chapter-nav a:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+#main-content section {
+    padding-top: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+}
+
+#main-content section:last-of-type {
+    border-bottom: none;
+}
+
+#main-content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+#main-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.code-block-container {
+    position: relative;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #272822;
+}
+
+.copy-button {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s;
+    font-family: var(--font-sans);
+}
+
+.code-block-container:hover .copy-button {
+    opacity: 1;
+}
+
+.copy-button:disabled {
+    background-color: var(--primary-color);
+}
+
+.chapter-nav {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 3rem;
+}
+
+.chapter-nav a {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.chapter-nav a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
 /* =================================== */
 /* Mobile & Responsive Styles */
@@ -201,20 +390,50 @@ body { font-family: var(--font-sans); line-height: 1.8; background-color: var(--
     border-radius: 50%;
     border: 3px solid var(--sidebar-link-text);
 }
+
 .sidebar-profile .course-title {
     font-weight: 700;
     font-size: 1.2rem;
     color: var(--sidebar-text);
 }
+
 .sidebar-profile .instructor-name {
     font-size: 0.9rem;
     color: var(--sidebar-link-text);
     margin-top: 0.25rem;
 }
 
-/* --- Mobile & Responsive Styles --- */
-#mobile-header {
-    display: none; /* Hidden on desktop */
+.sidebar-footer {
+    padding: 0.75rem;
+    margin-top: auto;
+    border-top: 1px solid var(--sidebar-header-border);
+    background-color: var(--sidebar-footer-bg);
+}
+
+.sidebar-footer a {
+    display: block;
+    padding: 0.6rem;
+    text-align: center;
+    color: var(--sidebar-link-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    background-color: var(--sidebar-footer-button-bg);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar-footer a:hover {
+    color: var(--sidebar-text);
+    background-color: var(--sidebar-footer-button-hover-bg);
+}
+
+/* =================================== */
+/* Mobile & Responsive Styles */
+/* =================================== */
+
+#top-header {
+    display: flex; /* همیشه نمایش داده شود */
     position: fixed;
     top: 0;
     right: 0;
@@ -226,14 +445,19 @@ body { font-family: var(--font-sans); line-height: 1.8; background-color: var(--
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     align-items: center;
     gap: 1rem;
+    /* این خط برای جابجایی هدر از زیر سایدبار اضافه شد */
+    margin-right: 300px;
 }
+
 #menu-toggle {
     background: none;
     border: none;
     color: inherit;
     font-size: 1.5rem;
     cursor: pointer;
+    display: none; /* در دسکتاپ مخفی است */
 }
+
 #overlay {
     display: none; /* Hidden by default */
     position: fixed;
@@ -245,23 +469,39 @@ body { font-family: var(--font-sans); line-height: 1.8; background-color: var(--
     z-index: 999;
 }
 
+/* محتوای اصلی همیشه به اندازه هدر بالایی فاصله از بالا دارد */
+#main-content {
+    margin-right: 300px;
+    padding: 2rem 3rem;
+    padding-top: 6rem; /* فضا برای هدر ثابت بالایی */
+    transition: margin-right .3s ease-in-out;
+}
+
 @media (max-width: 1024px) {
     #sidebar {
         transform: translateX(300px); /* Hide sidebar off-screen */
     }
+
     #sidebar.open {
         transform: translateX(0); /* Show sidebar */
     }
+
     #main-content {
         margin-right: 0;
         padding: 1.5rem;
         padding-top: 6rem; /* Space for the fixed mobile header */
     }
-    #mobile-header {
-        display: flex; /* Show mobile header */
+
+    #menu-toggle {
+        display: block; /* دکمه منو در موبایل نمایش داده می‌شود */
     }
+
     #overlay.open {
         display: block; /* Show overlay when menu is open */
+    }
+
+    #top-header {
+        margin-right: 0; /* در موبایل هدر نیازی به فاصله از سایدبار ندارد */
     }
 }
 
@@ -270,373 +510,61 @@ body { font-family: var(--font-sans); line-height: 1.8; background-color: var(--
 /* Print Styles */
 /* =================================== */
 @media print {
-    body { --background-color: #fff; --text-color: #000; display: block; }
-    #sidebar, #mobile-header, .copy-button, .chapter-nav { display: none !important; }
-    #main-content { margin-right: 0 !important; width: 100% !important; padding: 1cm !important; }
-    h1, h2, h3 { page-break-after: avoid; }
-    a { text-decoration: none; color: inherit; }
+    body {
+        --background-color: #fff;
+        --text-color: #000;
+        display: block;
+    }
+
+    /* مخفی کردن تمام عناصر غیرضروری */
+    #sidebar, #top-header, .copy-button, .chapter-nav, #menu-toggle, #overlay {
+        display: none !important;
+    }
+
+    /* نمایش تمام بخش‌های محتوایی که ممکن است مخفی باشند */
+    #main-content section {
+        display: block !important;
+        border-bottom: 1px solid #ccc; /* یک جداکننده ساده بین بخش‌ها */
+        page-break-inside: avoid; /* جلوگیری از شکستن بخش‌ها در وسط صفحه */
+    }
+
+    /* بازنشانی مارجین و پدینگ محتوای اصلی برای پرینت */
+    #main-content {
+        margin-right: 0 !important;
+        width: 100% !important;
+        padding: 1cm !important;
+        padding-top: 0 !important; /* حذف فاصله اضافی بالا */
+    }
+
+    /* جلوگیری از شکستن عناوین */
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+
+    /* استایل ساده برای لینک‌ها در پرینت */
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    #top-header {
+        display: block !important; /* مطمئن می‌شویم که نمایش داده شود */
+        position: static !important; /* از حالت fixed خارج شود */
+        color: #000 !important; /* رنگ متن برای پرینت */
+        background-color: #f0f0f0 !important; /* پس‌زمینه روشن‌تر */
+        box-shadow: none !important; /* حذف سایه */
+        margin-right: 0 !important; /* تنظیم مجدد مارجین */
+        padding: 1cm !important;
+        text-align: center;
+        border-bottom: 2px solid #ccc; /* خط جداکننده */
+        page-break-after: avoid; /* جلوگیری از شکستن صفحه بلافاصله بعد از هدر */
+    }
+
+    /* پنهان کردن top-header در صفحات بعدی پرینت */
+    @page {
+        margin-top: 0;
+        /* این کد تضمین می‌کند که هدر فقط در صفحه اول دیده شود */
+        /* در واقعیت، برای کنترل دقیق تکرار هدر در صفحات، نیاز به JavaScript پیچیده‌تر است */
+        /* اما این روش، هدر را در اولین صفحه نمایش می‌دهد و در صفحات بعدی، محتوا از بالا شروع می‌شود */
+    }
 }
-
-
-/*!* =================================== *!*/
-/*!* Common & Structural Styles *!*/
-/*!* =================================== *!*/
-
-/*body {*/
-/*    font-family: var(--font-sans);*/
-/*    line-height: 1.8;*/
-/*    background-color: var(--background-color);*/
-/*    color: var(--text-color);*/
-/*}*/
-
-/*#sidebar {*/
-/*    width: 300px;*/
-/*    background: var(--sidebar-bg);*/
-/*    color: var(--sidebar-text);*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    right: 0;*/
-/*    height: 100vh;*/
-/*    overflow-y: auto;*/
-/*    transition: transform .3s ease-in-out;*/
-/*    z-index: 1000;*/
-/*}*/
-
-/*#main-content {*/
-/*    margin-right: 300px;*/
-/*    padding: 2rem 3rem;*/
-/*    transition: margin-right .3s ease-in-out;*/
-/*}*/
-
-/*!* --- Copy Button for Code Blocks --- *!*/
-/*.copy-button {*/
-/*    position: absolute;*/
-/*    top: 0.75rem;*/
-/*    left: 0.75rem; !* For LTR code blocks *!*/
-/*    background-color: var(--secondary-color); !* Theme-aware color *!*/
-/*    color: var(--background-color);*/
-/*    padding: 0.25rem 0.75rem;*/
-/*    font-size: 0.8rem;*/
-/*    border: none;*/
-/*    border-radius: 6px;*/
-/*    cursor: pointer;*/
-/*    opacity: 0;*/
-/*    transition: all 0.2s;*/
-/*    font-family: var(--font-sans);*/
-/*}*/
-
-/*.code-block-container:hover .copy-button {*/
-/*    opacity: 1;*/
-/*}*/
-
-/*.copy-button:disabled {*/
-/*    background-color: var(--primary-color); !* Theme-aware success color *!*/
-/*}*/
-
-/*!* --- Next/Prev Chapter Navigation Button --- *!*/
-/*.chapter-nav {*/
-/*    display: flex;*/
-/*    justify-content: flex-end; !* Aligns button to the left in RTL *!*/
-/*    margin-top: 3rem;*/
-/*}*/
-
-/*.chapter-nav a {*/
-/*    display: inline-block;*/
-/*    background-color: var(--primary-color);*/
-/*    color: white;*/
-/*    padding: 0.75rem 1.5rem;*/
-/*    border-radius: 8px;*/
-/*    text-decoration: none;*/
-/*    font-weight: 600;*/
-/*    transition: transform 0.2s, box-shadow 0.2s;*/
-/*}*/
-
-/*.chapter-nav a:hover {*/
-/*    transform: translateY(-3px);*/
-/*    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);*/
-/*}*/
-
-/*!* =================================== *!*/
-/*!* NEW: Shared Content Styles *!*/
-/*!* =================================== *!*/
-/*#main-content section {*/
-/*    padding-top: 2rem;*/
-/*    border-bottom: 1px solid var(--border-color);*/
-/*    padding-bottom: 2rem;*/
-/*}*/
-
-/*#main-content section:last-of-type {*/
-/*    border-bottom: none;*/
-/*}*/
-
-/*#main-content h1 {*/
-/*    font-size: 2.5rem;*/
-/*    font-weight: 700;*/
-/*    color: var(--primary-color);*/
-/*    margin-bottom: 1.5rem;*/
-/*}*/
-
-/*#main-content h2 {*/
-/*    font-size: 1.8rem;*/
-/*    font-weight: 600;*/
-/*    color: var(--secondary-color);*/
-/*    margin-top: 2rem;*/
-/*    margin-bottom: 1rem;*/
-/*}*/
-
-/*#main-content h3 {*/
-/*    font-size: 1.4rem;*/
-/*    font-weight: 600;*/
-/*    margin-top: 1.5rem;*/
-/*    margin-bottom: 0.75rem;*/
-/*}*/
-
-/*.code-block-container {*/
-/*    position: relative;*/
-/*    margin: 1.5rem 0;*/
-/*    border-radius: 8px;*/
-/*    overflow: hidden;*/
-/*    background-color: #272822; !* Okaidia theme background *!*/
-/*}*/
-
-/*.diagram-container {*/
-/*    margin: 2rem 0;*/
-/*    padding: 1.5rem;*/
-/*    background-color: #f8fafc;*/
-/*    border: 1px solid #e2e8f0;*/
-/*    border-radius: 8px;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*}*/
-
-/*!* =================================== *!*/
-/*!* Sidebar Menu Styles *!*/
-/*!* =================================== *!*/
-
-/*#sidebar header {*/
-/*    padding: 1.25rem 1rem;*/
-/*    font-weight: 700;*/
-/*    font-size: 1.25rem;*/
-/*    border-bottom: 1px solid var(--sidebar-header-border);*/
-/*    text-align: center;*/
-/*}*/
-
-/*.nav-menu, .submenu {*/
-/*    list-style: none;*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*}*/
-
-/*.nav-menu a, .nav-header {*/
-/*    display: block;*/
-/*    padding: .6rem 1.5rem;*/
-/*    text-decoration: none;*/
-/*    transition: background .2s, color .2s;*/
-/*    cursor: pointer;*/
-/*    user-select: none; !* Prevent text selection on click *!*/
-/*}*/
-
-/*.nav-header {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*    align-items: center;*/
-/*}*/
-
-/*!* Level 1 *!*/
-/*.nav-header.level-1 {*/
-/*    font-weight: 700;*/
-/*    font-size: 1rem;*/
-/*    color: var(--sidebar-text);*/
-/*}*/
-
-/*.nav-header.level-1:hover {*/
-/*    background: rgba(255, 255, 255, 0.1);*/
-/*}*/
-
-/*!* Level 2 *!*/
-/*.nav-header.level-2 {*/
-/*    font-weight: 600;*/
-/*    font-size: 0.95rem;*/
-/*    padding-right: 2.5rem;*/
-/*    color: var(--sidebar-link-text);*/
-/*}*/
-
-/*!* Level 3 *!*/
-/*.nav-menu .nav-link {*/
-/*    font-size: 0.9rem;*/
-/*    padding-right: 3.5rem;*/
-/*    color: var(--sidebar-link-text);*/
-/*}*/
-
-/*.nav-menu a.active, .nav-menu a:hover {*/
-/*    background: var(--sidebar-link-active-bg);*/
-/*    color: var(--sidebar-link-active-text);*/
-/*}*/
-
-/*!* Collapsible Submenu Logic *!*/
-/*.submenu {*/
-/*    max-height: 0;*/
-/*    overflow: hidden;*/
-/*    transition: max-height 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);*/
-/*}*/
-
-/*.submenu.open {*/
-/*    max-height: 1000px; !* Should be larger than any possible submenu height *!*/
-/*}*/
-
-/*.nav-header::after {*/
-/*    content: '◀';*/
-/*    transition: transform .2s;*/
-/*    font-size: 0.8em;*/
-/*}*/
-
-/*.nav-header.open::after {*/
-/*    transform: rotate(-90deg);*/
-/*}*/
-
-/*!* --- Sidebar Header Link --- *!*/
-/*#sidebar > a {*/
-/*    text-decoration: none;*/
-/*    color: inherit;*/
-/*    display: block;*/
-/*}*/
-
-/*#sidebar > a:hover header {*/
-/*    background: rgba(0, 0, 0, 0.15);*/
-/*    transition: background 0.2s;*/
-/*}*/
-
-/*!* --- Chapter Navigation Container --- *!*/
-/*.chapter-nav {*/
-/*    display: flex;*/
-/*    justify-content: space-between; !* This will push the buttons to opposite ends *!*/
-/*    align-items: center;*/
-/*    margin-top: 3rem;*/
-/*    border-top: 1px solid var(--border-color);*/
-/*    padding-top: 1.5rem;*/
-/*}*/
-
-/*.chapter-nav a {*/
-/*    display: inline-block;*/
-/*    background-color: var(--primary-color);*/
-/*    color: white;*/
-/*    padding: 0.75rem 1.5rem;*/
-/*    border-radius: 8px;*/
-/*    text-decoration: none;*/
-/*    font-weight: 600;*/
-/*    transition: transform 0.2s, box-shadow 0.2s;*/
-/*}*/
-
-/*.chapter-nav a:hover {*/
-/*    transform: translateY(-3px);*/
-/*    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);*/
-/*}*/
-
-/*!* Style for the "Back to Home" link at the bottom *!*/
-/*.chapter-nav .back-link {*/
-/*    background-color: transparent;*/
-/*    color: var(--primary-color);*/
-/*    font-weight: 500;*/
-/*}*/
-
-/*.chapter-nav .back-link:hover {*/
-/*    background-color: var(--background-color);*/
-/*}*/
-
-/*!* =================================== *!*/
-/*!* Mobile & Responsive Styles *!*/
-/*!* =================================== *!*/
-
-/*#mobile-header {*/
-/*    display: none;*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    right: 0;*/
-/*    left: 0;*/
-/*    background-color: var(--sidebar-bg);*/
-/*    color: var(--sidebar-text);*/
-/*    padding: 1rem;*/
-/*    z-index: 500;*/
-/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);*/
-/*    align-items: center;*/
-/*}*/
-
-/*#menu-toggle {*/
-/*    background: none;*/
-/*    border: none;*/
-/*    color: inherit;*/
-/*    font-size: 1.5rem;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*#overlay {*/
-/*    display: none;*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    background-color: rgba(0, 0, 0, 0.5);*/
-/*    z-index: 999;*/
-/*}*/
-
-/*@media (max-width: 1024px) {*/
-/*    #sidebar {*/
-/*        transform: translateX(300px);*/
-/*    }*/
-
-/*    #sidebar.open {*/
-/*        transform: translateX(0);*/
-/*    }*/
-
-/*    #main-content {*/
-/*        margin-right: 0;*/
-/*        padding-top: 6rem; !* Space for mobile header *!*/
-/*    }*/
-
-/*    #mobile-header {*/
-/*        display: flex;*/
-/*        gap: 1rem;*/
-/*    }*/
-
-/*    #overlay.open {*/
-/*        display: block;*/
-/*    }*/
-/*}*/
-
-/*!* =================================== *!*/
-/*!* Print Styles *!*/
-/*!* =================================== *!*/
-
-/*@media print {*/
-/*    body {*/
-/*        --background-color: #fff;*/
-/*        --text-color: #000;*/
-/*        display: block;*/
-/*    }*/
-
-/*    #sidebar, #mobile-header, .copy-button {*/
-/*        display: none !important;*/
-/*    }*/
-
-/*    #main-content {*/
-/*        margin-right: 0 !important;*/
-/*        width: 100% !important;*/
-/*        padding: 1cm !important;*/
-/*    }*/
-
-/*    h1, h2, h3 {*/
-/*        page-break-after: avoid;*/
-/*    }*/
-
-/*    a {*/
-/*        text-decoration: none;*/
-/*        color: inherit;*/
-/*    }*/
-
-/*    .code-block-container {*/
-/*        border: 1px solid #ccc;*/
-/*        page-break-inside: avoid;*/
-/*    }*/
-/*}*/
