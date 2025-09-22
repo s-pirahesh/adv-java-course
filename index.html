@@ -16,18 +16,17 @@
             background-color: #111827;
         }
         .glass-card {
-            background: rgba(17, 24, 39, 0.4);
+            background: rgba(17, 24, 39, 0.45);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(55, 65, 81, 0.2);
         }
 
-        /* --- Theme-Aware Neon Border Animation --- */
         .card-link {
             position: relative;
-            overflow: hidden; /* Crucial for containing the animation */
+            overflow: hidden;
             z-index: 1;
-            border-radius: 0.5rem; /* Tailwind's rounded-lg */
+            border-radius: 0.5rem;
             transition: all 0.3s ease;
             border: 1px solid #374151;
         }
@@ -38,7 +37,7 @@
             height: 100%;
             transition: background-color 0.3s ease;
             position: relative;
-            z-index: 2; /* Content must be on top of the animation */
+            z-index: 2;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -48,7 +47,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 250%; /* Larger size for a smoother gradient rotation */
+            width: 250%;
             height: 250%;
             z-index: 1;
             opacity: 0;
@@ -57,7 +56,7 @@
                     from 0deg,
                     transparent 0%,
                     transparent 50%,
-                    var(--neon-color, #3B82F6) 90%, /* Default color if not set */
+                    var(--neon-color, #3B82F6) 90%,
                     transparent 100%
             );
             animation: rotate-border 4s linear infinite;
@@ -65,7 +64,7 @@
             transform: translate(-50%, -50%);
         }
         .card-link:hover {
-            border-color: transparent; /* Hide the static border on hover */
+            border-color: transparent;
             box-shadow: 0 0 15px var(--neon-color, #3B82F6), 0 0 25px var(--neon-color, #3B82F6);
         }
         .card-link:hover::before {
@@ -100,42 +99,49 @@
                         <p class="text-gray-400 mt-2 text-sm">مروری بر پارادایم‌ها و معرفی مفاهیم شیءگرایی.</p>
                     </div>
                 </a>
+
                 <a href="chapters/chapter2.html" class="card-link" style="--neon-color: #F59E0B;">
                     <div class="card-content">
-                        <h4 class="text-lg font-bold text-white">فصل ۲: مقدمات جاوا</h4>
-                        <p class="text-gray-400 mt-2 text-sm">آشنایی با JDK، JRE، JVM و ساختار زبان.</p>
+                        <h4 class="text-lg font-bold text-white">فصل ۲: مفاهیم کلیدی جاوا</h4>
+                        <p class="text-gray-400 mt-2 text-sm">آشنایی با JDK، کامپایل، اولین برنامه و ساختار فایل.</p>
                     </div>
                 </a>
+
                 <a href="chapters/chapter3.html" class="card-link" style="--neon-color: #0EA5E9;">
                     <div class="card-content">
-                        <h4 class="text-lg font-bold text-white">فصل ۳: اولین برنامه</h4>
-                        <p class="text-gray-400 mt-2 text-sm">راه‌اندازی محیط و نوشتن اولین برنامه در جاوا.</p>
+                        <h4 class="text-lg font-bold text-white">فصل ۳: انواع داده و خطاها</h4>
+                        <p class="text-gray-400 mt-2 text-sm">بررسی انواع داده اولیه، ارجاعی و مدیریت حافظه.</p>
                     </div>
                 </a>
+
                 <a href="chapters/chapter4.html" class="card-link" style="--neon-color: #6366F1;">
                     <div class="card-content">
                         <h4 class="text-lg font-bold text-white">فصل ۴: مبانی کلاس و شیء</h4>
                         <p class="text-gray-400 mt-2 text-sm">بررسی کلاس، فیلد، متد و سطوح دسترسی.</p>
                     </div>
                 </a>
+
                 <a href="chapters/chapter5.html" class="card-link" style="--neon-color: #64748B;">
                     <div class="card-content">
                         <h4 class="text-lg font-bold text-white">فصل ۵: طراحی و نمودارها</h4>
                         <p class="text-gray-400 mt-2 text-sm">مقدمه‌ای بر نمودار کلاس و مقایسه عملی پارادایم‌ها.</p>
                     </div>
                 </a>
+
                 <a href="chapters/chapter6.html" class="card-link" style="--neon-color: #65A30D;">
                     <div class="card-content">
                         <h4 class="text-lg font-bold text-white">فصل ۶: ساختارهای داده</h4>
                         <p class="text-gray-400 mt-2 text-sm">کار با آرایه‌ها و دریافت ورودی از کاربر.</p>
                     </div>
                 </a>
+
                 <a href="chapters/chapter7.html" class="card-link" style="--neon-color: #BE185D;">
                     <div class="card-content">
                         <h4 class="text-lg font-bold text-white">فصل ۷: OOP پیشرفته</h4>
                         <p class="text-gray-400 mt-2 text-sm">ارث‌بری، چندریختی، کلاس‌های انتزاعی و واسط‌ها.</p>
                     </div>
                 </a>
+
                 <a href="chapters/chapter8.html" class="card-link" style="--neon-color: #DC2626;">
                     <div class="card-content">
                         <h4 class="text-lg font-bold text-white">فصل ۸: مباحث تکمیلی</h4>
@@ -147,7 +153,7 @@
     </main>
 
     <footer class="w-full p-4 text-center text-gray-400 text-sm">
-        <p>تمامی حقوق این محتوای آموزشی محفوظ است. (۱۴۰۳)</p>
+        <p>تمامی حقوق این محتوای آموزشی محفوظ است. (۱۴۰۴)</p>
     </footer>
 </div>
 
