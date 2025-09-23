@@ -62,7 +62,7 @@
 
         <div class="diagram-container">
             <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg"
-                 font-family="Vazirmatn, sans-serif">
+                 font-family="Vazirmatn, sans-serif" direction="ltr">
                 <defs>
                     <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"
                             fill="#075985">
@@ -80,7 +80,7 @@
 
                 <g transform="translate(480, 50)">
                     <rect x="0" y="0" width="280" height="180" fill="#F0F9FF" stroke="#BAE6FD" rx="10"/>
-                    <text x="140" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#0369A1">نوع اولیه
+                    <text x="140" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#0369A1" direction="rtl">نوع اولیه
                         (Primitive)
                     </text>
                     <text x="140" y="70" font-size="14" font-style="italic" text-anchor="middle" fill="#075985"
@@ -89,12 +89,12 @@
                     <rect x="40" y="100" width="200" height="50" fill="#fff" stroke="#7DD3FC"/>
                     <text x="140" y="130" font-size="24" font-weight="bold" text-anchor="middle" fill="#0C4A6E">30
                     </text>
-                    <text x="250" y="130" font-size="14" text-anchor="end" fill="#075985">متغیر age</text>
+                    <text x="250" y="130" font-size="14" text-anchor="middle" fill="#075985" direction="rtl">متغیر age</text>
                 </g>
 
                 <g transform="translate(40, 50)">
                     <rect x="0" y="0" width="320" height="210" fill="#F0F9FF" stroke="#BAE6FD" rx="10"/>
-                    <text x="160" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#0369A1">نوع
+                    <text x="160" y="35" font-size="18" font-weight="bold" text-anchor="middle" fill="#0369A1" direction="rtl">نوع
                         ارجاعی (Reference)
                     </text>
                     <text x="160" y="70" font-size="14" font-style="italic" text-anchor="middle" fill="#075985"
@@ -102,10 +102,10 @@
                     </text>
 
                     <rect x="20" y="100" width="140" height="50" fill="#fff" stroke="#7DD3FC"/>
-                    <text x="90" y="130" font-size="14" font-weight="600" text-anchor="middle" fill="#0C4A6E" dir="ltr">
+                    <text x="90" y="130" font-size="14" font-weight="600" text-anchor="middle" fill="#0C4A6E">
                         @15db9742
                     </text>
-                    <text x="120" y="170" font-size="14" text-anchor="end" fill="#075985">متغیر std</text>
+                    <text x="120" y="170" font-size="14" text-anchor="start" fill="#075985" direction="rtl">متغیر std</text>
 
                     <path d="M 160 125 L 200 125" stroke="#075985" stroke-width="2" marker-end="url(#arrowhead-blue)"/>
 
@@ -226,18 +226,17 @@
 
         <h3>کلاس‌های پوششی (Wrapper Classes)</h3>
         <p>همانطور که در جدول مشاهده می‌کنید، به ازای هر نوع داده اولیه، یک کلاس متناظر وجود دارد (مثلاً
-            <code>int</code> و <code>Integer</code>). به این کلاس‌ها، **کلاس‌های پوششی** می‌گویند. آن‌ها به ما اجازه
+            <code>int</code> و <code>Integer</code>). به این کلاس‌ها، <b>کلاس‌های پوششی</b> می‌گویند. آن‌ها به ما اجازه
             می‌دهند تا با انواع داده اولیه مانند اشیاء رفتار کنیم و از متدهای کاربردی آن‌ها استفاده کنیم. در فصل‌های
             آینده بیشتر با کاربرد این کلاس‌ها آشنا خواهیم شد.</p>
 
         <h3>نگاهی به حافظه: Primitive ها چگونه ذخیره می‌شوند؟</h3>
         <p>وقتی یک متغیر از نوع اولیه تعریف می‌کنید، کامپایلر دقیقاً می‌داند که چقدر فضا در حافظه به آن اختصاص دهد. این
-            فضا در بخشی از حافظه به نام **Stack** تخصیص داده می‌شود که بسیار سریع و بهینه است. مقدار واقعی داده مستقیماً
+            فضا در بخشی از حافظه به نام <b>Stack</b> تخصیص داده می‌شود که بسیار سریع و بهینه است. مقدار واقعی داده مستقیماً
             در همان مکان ذخیره می‌شود.</p>
 
         <div class="diagram-container">
-            <svg width="100%" height="350" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg" font-family:
-            "Vazirmatn, sans-serif;">
+            <svg width="100%" height="350" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg" font-family="Vazirmatn, sans-serif;" direction="ltr">
             <style>
                 .code-text {
                     font-family: var(--code-font);
@@ -263,7 +262,7 @@
             </g>
 
             <g transform="translate(40, 40)">
-                <text x="180" y="0" font-size="18" font-weight="bold" text-anchor="middle" fill="#0369A1">نمایش در حافظه
+                <text x="180" y="0" font-size="18" font-weight="bold" text-anchor="middle" fill="#0369A1" direction="rtl">نمایش در حافظه
                     (RAM)
                 </text>
                 <rect x="0" y="20" width="360" height="280" fill="#F0F9FF" stroke="#BAE6FD" rx="5"/>
@@ -291,8 +290,8 @@
                 <rect x="60" y="265" width="280" height="25" fill="#E0F2FE" stroke="#7DD3FC"/>
             </g>
 
-            <g transform="translate(420, 140)">
-                <text x="180" y="0" font-size="16" font-weight="bold" text-anchor="middle" fill="#0369A1">جدول نمادها
+            <g transform="translate(420, 170)">
+                <text x="180" y="0" font-size="16" font-weight="bold" text-anchor="middle" fill="#0369A1" direction="rtl">جدول نمادها
                     (Symbol Table)
                 </text>
                 <rect x="0" y="20" width="360" height="150" fill="#F0F9FF" stroke="#BAE6FD" rx="5"/>
@@ -322,16 +321,16 @@
     <section id="section3-3">
         <h2>۳-۳: مدیریت حافظه: Stack و Heap</h2>
         <p>برای درک عمیق تفاوت بین انواع داده اولیه و ارجاعی، باید با دو ناحیه اصلی حافظه که جاوا از آن‌ها استفاده
-            می‌کند، آشنا شویم: **پشته (Stack)** و **هیپ (Heap)**.</p>
+            می‌کند، آشنا شویم: <b>پشته (Stack)</b> و <b>هیپ (Heap)</b>.</p>
         <ul>
-            <li><strong>حافظه Stack:</strong> یک ناحیه حافظه بسیار سریع و سازمان‌یافته است که برای ذخیره‌سازی **متغیرهای
-                محلی (Local Variables)** و **فراخوانی متدها** استفاده می‌شود. تمام متغیرهای از نوع اولیه (Primitive)
+            <li><strong>حافظه Stack:</strong> یک ناحیه حافظه بسیار سریع و سازمان‌یافته است که برای ذخیره‌سازی <b>متغیرهای
+                محلی (Local Variables)</b> و <b>فراخوانی متدها</b> استفاده می‌شود. تمام متغیرهای از نوع اولیه (Primitive)
                 مستقیماً در این بخش از حافظه ذخیره می‌شوند. عمر داده‌ها در Stack کوتاه و مدیریت آن به صورت خودکار است.
             </li>
-            <li><strong>حافظه Heap:</strong> یک ناحیه بزرگ‌تر و انعطاف‌پذیرتر از حافظه است که برای ذخیره‌سازی **اشیاء
-                (Objects)** و آرایه‌ها استفاده می‌شود. هر زمان که از کلمه کلیدی <code>new</code> استفاده می‌کنیم، حافظه
+            <li><strong>حافظه Heap:</strong> یک ناحیه بزرگ‌تر و انعطاف‌پذیرتر از حافظه است که برای ذخیره‌سازی <b>اشیاء
+                (Objects)</b> و آرایه‌ها استفاده می‌شود. هر زمان که از کلمه کلیدی <code>new</code> استفاده می‌کنیم، حافظه
                 مورد نیاز برای آن شیء از Heap تخصیص داده می‌شود. مدیریت این فضا کمی پیچیده‌تر است و توسط بخشی به نام
-                **Garbage Collector** در جاوا انجام می‌شود.
+                <b>Garbage Collector</b> در جاوا انجام می‌شود.
             </li>
         </ul>
 
@@ -361,7 +360,7 @@ public class Main {
         <p>در ادامه، وضعیت حافظه Stack و Heap را پس از اجرای هر خط از متد `main` بررسی می‌کنیم.</p>
         <div class="diagram-container">
             <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"
-                 font-family="Vazirmatn, sans-serif">
+                 font-family="Vazirmatn, sans-serif" direction="ltr">
                 <style>
                     .code-text {
                         font-family: var(--code-font);
@@ -420,18 +419,18 @@ public class Main {
                     </marker>
                 </defs>
 
-                <text x="500" y="30" class="title-text" fill="#4338CA">حافظه Heap</text>
+                <text x="500" y="30" class="title-text" fill="#4338CA" direction="rtl">حافظه Heap</text>
                 <rect x="300" y="40" width="450" height="340" class="heap-box-bg" rx="10"/>
-                <text x="140" y="30" class="title-text" fill="#0369A1">حافظه Stack</text>
+                <text x="140" y="30" class="title-text" fill="#0369A1" direction="rtl">حافظه Stack</text>
                 <rect x="25" y="40" width="230" height="340" class="stack-box-bg" rx="10"/>
 
-                <text x="245" y="70" text-anchor="end" class="code-text">int a = 10;</text>
+                <text x="30" y="70" text-anchor="start" class="code-text">int a = 10;</text>
                 <g transform="translate(45, 80)">
                     <rect width="190" height="40" class="stack-item"/>
                     <text x="95" y="25" text-anchor="middle">a: 10</text>
                 </g>
 
-                <text x="245" y="145" text-anchor="end" class="code-text">Point p1 = new Point();</text>
+                <text x="30" y="145" text-anchor="start" class="code-text">Point p1 = new Point();</text>
                 <g transform="translate(45, 155)">
                     <rect width="190" height="40" class="stack-item"/>
                     <text x="95" y="25" text-anchor="middle">p1: @50ab23</text>
@@ -444,20 +443,20 @@ public class Main {
                 </g>
                 <path d="M 235 175 C 330 175, 330 160, 425 160" class="ref-line"/>
 
-                <text x="245" y="225" text-anchor="end" class="code-text">p1.x = 20;</text>
+                <text x="30" y="225" text-anchor="start" class="code-text">p1.x = 20;</text>
                 <g transform="translate(515, 180)">
                     <text x="0" y="0" class="strikethrough">0</text>
                     <text x="0" y="0" class="red-bold" dx="15">20</text>
                 </g>
 
-                <text x="245" y="260" text-anchor="end" class="code-text">Point p2 = p1;</text>
+                <text x="30" y="260" text-anchor="start" class="code-text">Point p2 = p1;</text>
                 <g transform="translate(45, 270)">
                     <rect width="190" height="40" class="stack-item"/>
                     <text x="95" y="25" text-anchor="middle">p2: @50ab23</text>
                 </g>
                 <path d="M 235 290 C 330 290, 330 180, 425 180" class="ref-line"/>
 
-                <text x="245" y="340" text-anchor="end" class="code-text">p2.y = 30;</text>
+                <text x="30" y="340" text-anchor="start" class="code-text">p2.y = 30;</text>
                 <g transform="translate(545, 180)">
                     <text x="0" y="0" class="strikethrough">0</text>
                     <text x="0" y="0" class="red-bold" dx="15">30</text>
@@ -513,7 +512,7 @@ public class SyntaxErrorExample {
         <p>در مثال بالا، کامپایلر یک خطا با این مضمون گزارش خواهد داد: <code>';' expected</code>، و به شما می‌گوید که در انتهای خط اول متد `main`، یک نقطه ویرگول فراموش شده است.</p>
 
         <h3>۲. خطای زمان اجرا (Runtime Error / Exception)</h3>
-        <p>این خطاها پیچیده‌تر هستند، زیرا برنامه از نظر سینتکسی کاملاً صحیح است و با موفقیت کامپایل می‌شود، اما در حین **اجرا** به یک وضعیت پیش‌بینی نشده یا غیرممکن برخورد می‌کند. در این حالت، JVM اجرای برنامه را متوقف کرده و یک "استثنا" (Exception) پرتاب می‌کند که معمولاً باعث بسته شدن ناگهانی برنامه می‌شود.</p>
+        <p>این خطاها پیچیده‌تر هستند، زیرا برنامه از نظر سینتکسی کاملاً صحیح است و با موفقیت کامپایل می‌شود، اما در حین <b>اجرا</b> به یک وضعیت پیش‌بینی نشده یا غیرممکن برخورد می‌کند. در این حالت، JVM اجرای برنامه را متوقف کرده و یک "استثنا" (Exception) پرتاب می‌کند که معمولاً باعث بسته شدن ناگهانی برنامه می‌شود.</p>
         <p><strong>مثال‌های رایج:</strong></p>
         <ul>
             <li><strong><code>ArithmeticException</code>:</strong> تلاش برای تقسیم یک عدد بر صفر.</li>
@@ -535,7 +534,7 @@ public class RuntimeErrorExample {
         <p>اجرای کد بالا باعث ایجاد یک خطای <code>ArrayIndexOutOfBoundsException</code> می‌شود، زیرا بزرگترین ایندکس مجاز در آرایه <code>numbers</code>، ایندکس ۲ است.</p>
 
         <h3>۳. خطای منطقی (Logical Error)</h3>
-        <p>این خطاها معمولاً **سخت‌ترین نوع خطا برای شناسایی و رفع** هستند. در یک خطای منطقی، برنامه شما بدون هیچ مشکلی کامپایل و اجرا می‌شود و هیچ پیامی مبنی بر خطا نمایش نمی‌دهد، اما نتیجه‌ای که تولید می‌کند، **اشتباه** است. این خطاها به دلیل اشتباه در منطق و الگوریتم برنامه رخ می‌دهند، نه در گرامر زبان.</p>
+        <p>این خطاها معمولاً <b>سخت‌ترین نوع خطا برای شناسایی و رفع</b> هستند. در یک خطای منطقی، برنامه شما بدون هیچ مشکلی کامپایل و اجرا می‌شود و هیچ پیامی مبنی بر خطا نمایش نمی‌دهد، اما نتیجه‌ای که تولید می‌کند، <b>اشتباه</b> است. این خطاها به دلیل اشتباه در منطق و الگوریتم برنامه رخ می‌دهند، نه در گرامر زبان.</p>
         <p><strong>مثال رایج:</strong></p>
         <p>فرض کنید می‌خواهیم میانگین دو عدد را محاسبه کنیم. ممکن است کد زیر را بنویسیم:</p>
         <div class="code-block-container" style="direction: ltr;">
