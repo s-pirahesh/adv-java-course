@@ -1,136 +1,228 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.getElementById('sidebar');
+/* ===================================
+   Main JavaScript - Advanced Java Course
+   =================================== */
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ===================================
+    // Sidebar Toggle (Mobile)
+    // ===================================
+    
     const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const navHeaders = document.querySelectorAll('.nav-header');
-
-    // --- NEW: Mobile Menu Functionality ---
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('open');
+    
+    if (menuToggle && sidebar && overlay) {
+        // Open sidebar
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
         });
-    }
-    if (overlay) {
-        overlay.addEventListener('click', () => {
+        
+        // Close sidebar when clicking overlay
+        overlay.addEventListener('click', function() {
             sidebar.classList.remove('open');
-            overlay.classList.remove('open');
+            overlay.classList.remove('active');
         });
-    }
-    // --- End of Mobile Menu Functionality ---
-
-    // Function to handle section link clicks
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (this.hostname !== window.location.hostname || this.pathname !== window.location.pathname) {
-                return; // Let the browser handle links to other pages
-            }
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            // ... (بقیه کد بدون تغییر باقی می‌ماند)
-        });
-    });
-
-    // Function to show a specific section and hide others
-    function showSection(targetId, updateHistory = true) {
-        // Hide all sections
-        document.querySelectorAll('#main-content section').forEach(section => {
-            section.style.display = 'none';
-        });
-
-        // Show the target section
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            targetElement.style.display = 'block';
-            if (updateHistory) {
-                // Smooth scroll to the top of the section
-                window.scrollTo({ top: targetElement.offsetTop - 20, behavior: 'smooth' });
-                // Update URL hash
-                history.pushState(null, null, targetId);
-            }
-        }
-    }
-
-    // Handle clicks on navigation links
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Check if the link points to a different HTML file
-            if (this.hostname !== window.location.hostname || this.pathname !== window.location.pathname) {
-                // It's a link to another page, let the browser handle it
-                return;
-            }
-
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-
-            // Update active link
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-
-            showSection(targetId);
-
-            // Close sidebar on mobile after click
-            if (window.innerWidth < 1024) {
+        
+        // Close sidebar on window resize (desktop)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
                 sidebar.classList.remove('open');
-                overlay.classList.remove('open');
+                overlay.classList.remove('active');
             }
         });
-    });
-
-    // Handle menu header clicks for expanding/collapsing
+    }
+    
+    // ===================================
+    // Submenu Toggle (Collapsible Sections)
+    // ===================================
+    
+    const navHeaders = document.querySelectorAll('.nav-menu > li > header');
+    
     navHeaders.forEach(header => {
         header.addEventListener('click', function() {
-            this.classList.toggle('open');
             const submenu = this.nextElementSibling;
+            
             if (submenu && submenu.classList.contains('submenu')) {
+                // Toggle classes
+                this.classList.toggle('open');
                 submenu.classList.toggle('open');
             }
         });
+        
+        // Open by default if it contains active link
+        const submenu = header.nextElementSibling;
+        if (submenu && submenu.querySelector('.nav-link.active')) {
+            header.classList.add('open');
+            submenu.classList.add('open');
+        }
     });
-
-    // --- Initial Page Load Logic ---
-    const currentHash = window.location.hash;
-    if (currentHash) {
-        // If there's a hash in the URL, show that section
-        showSection(currentHash, false);
-        // Also update the active link in the sidebar
-        const activeLink = document.querySelector(`.nav-link[href='${currentHash}']`);
-        if (activeLink) {
-            navLinks.forEach(l => l.classList.remove('active'));
-            activeLink.classList.add('active');
-        }
-    } else {
-        // If no hash, show the very first section by default
-        const firstSection = document.querySelector('#main-content section');
-        if (firstSection) {
-            showSection('#' + firstSection.id, false);
-        }
+    
+    // ===================================
+    // Copy Code Button
+    // ===================================
+    
+    const copyButtons = document.querySelectorAll('.copy-button');
+    
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const codeBlock = this.nextElementSibling.querySelector('code');
+            const code = codeBlock.textContent;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(code).then(() => {
+                // Visual feedback
+                const originalText = this.textContent;
+                this.textContent = 'کپی شد! ✓';
+                this.classList.add('copied');
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                this.textContent = 'خطا!';
+                setTimeout(() => {
+                    this.textContent = 'کپی';
+                }, 2000);
+            });
+        });
+    });
+    
+    // ===================================
+    // Smooth Scroll for Anchor Links
+    // ===================================
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Skip if it's just "#"
+            if (href === '#') return;
+            
+            e.preventDefault();
+            const target = document.querySelector(href);
+            
+            if (target) {
+                const headerHeight = document.getElementById('top-header').offsetHeight;
+                const targetPosition = target.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile sidebar if open
+                if (window.innerWidth < 1024) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                }
+            }
+        });
+    });
+    
+    // ===================================
+    // Active Section Highlighting in Sidebar
+    // ===================================
+    
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    function updateActiveSection() {
+        const headerHeight = document.getElementById('top-header').offsetHeight;
+        let currentSection = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - headerHeight - 100;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            
+            if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + currentSection) {
+                link.classList.add('active');
+            }
+        });
     }
-});
-
-
-// --- Copy Button Functionality ---
-document.querySelectorAll('.copy-button').forEach(button => {
-    button.addEventListener('click', function() {
-        const preElement = this.closest('.code-block-container').querySelector('pre');
-        if (preElement) {
-            // Create a temporary textarea to hold the text and copy it
-            const textarea = document.createElement('textarea');
-            textarea.value = preElement.innerText;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-
-            // Provide user feedback
-            const originalText = this.innerText;
-            this.innerText = 'کپی شد!';
-            this.disabled = true;
-            setTimeout(() => {
-                this.innerText = originalText;
-                this.disabled = false;
-            }, 2000);
+    
+    // Throttle scroll event for performance
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        if (scrollTimeout) {
+            window.cancelAnimationFrame(scrollTimeout);
+        }
+        scrollTimeout = window.requestAnimationFrame(function() {
+            updateActiveSection();
+        });
+    });
+    
+    // Initial call
+    updateActiveSection();
+    
+    // ===================================
+    // Progress Tracking (LocalStorage)
+    // ===================================
+    
+    function initProgressTracking() {
+        // Get current page
+        const currentPath = window.location.pathname;
+        const pageMatch = currentPath.match(/part(\d+)\.html/);
+        
+        if (!pageMatch) return;
+        
+        const partNumber = parseInt(pageMatch[1]);
+        
+        // Load progress
+        let progress = JSON.parse(localStorage.getItem('courseProgress') || '{"completedParts": [], "lastVisited": null}');
+        
+        // Update last visited
+        progress.lastVisited = `part${partNumber.toString().padStart(2, '0')}`;
+        progress.timestamp = new Date().toISOString();
+        
+        // Save progress
+        localStorage.setItem('courseProgress', JSON.stringify(progress));
+        
+        // Add "Mark as Complete" button (optional - can be implemented later)
+        console.log('Progress tracking initialized for Part', partNumber);
+    }
+    
+    initProgressTracking();
+    
+    // ===================================
+    // External Links - Open in New Tab
+    // ===================================
+    
+    document.querySelectorAll('a[href^="http"]').forEach(link => {
+        // Skip if it's the same domain
+        if (!link.href.includes(window.location.hostname)) {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
         }
     });
+    
+    // ===================================
+    // Console Welcome Message
+    // ===================================
+    
+    console.log('%c🎓 برنامه‌سازی پیشرفته (جاوا)', 'font-size: 20px; font-weight: bold; color: #14B8A6;');
+    console.log('%cمدرس: سید سجاد پیراهش', 'font-size: 14px; color: #6B7280;');
+    console.log('%cدانشگاه آزاد اسلامی واحد تبریز', 'font-size: 12px; color: #9CA3AF;');
+    
 });
+
+// ===================================
+// Service Worker Registration (Optional - for offline support)
+// ===================================
+
+if ('serviceWorker' in navigator) {
+    // Uncomment when ready to implement offline support
+    // navigator.serviceWorker.register('/sw.js')
+    //     .then(reg => console.log('Service Worker registered:', reg))
+    //     .catch(err => console.log('Service Worker error:', err));
+}

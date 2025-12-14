@@ -1,0 +1,329 @@
+/* ===================================
+   Theme System - 20 Parts Color Palette
+   =================================== */
+
+/* Phase 1: مبانی و پایه‌ها (Teal/Cyan Family) - Parts 1-7 */
+
+body.theme-part01 {
+    --primary-color: #0D9488;
+    --secondary-color: #14B8A6;
+    --accent-color: #5EEAD4;
+    --background-color: #F0FDFA;
+    --text-color: #1F2937;
+    --sidebar-bg: linear-gradient(180deg, #134E4A 0%, #115E59 100%);
+    --sidebar-text: #CCFBF1;
+    --sidebar-link-text: #99F6E4;
+    --sidebar-link-active-bg: #14B8A6;
+    --sidebar-link-active-text: #064E3B;
+    --mobile-header-bg: #134E4A;
+    --code-block-bg: #042F2E;
+}
+
+body.theme-part02 {
+    --primary-color: #0F766E;
+    --secondary-color: #14B8A6;
+    --accent-color: #5EEAD4;
+    --background-color: #F0FDFA;
+    --text-color: #1F2937;
+    --sidebar-bg: linear-gradient(180deg, #115E59 0%, #0F766E 100%);
+    --sidebar-text: #CCFBF1;
+    --sidebar-link-text: #99F6E4;
+    --sidebar-link-active-bg: #14B8A6;
+    --sidebar-link-active-text: #064E3B;
+    --mobile-header-bg: #115E59;
+    --code-block-bg: #042F2E;
+}
+
+body.theme-part03 {
+    --primary-color: #14B8A6;
+    --secondary-color: #2DD4BF;
+    --accent-color: #5EEAD4;
+    --background-color: #F0FDFA;
+    --text-color: #1F2937;
+    --sidebar-bg: linear-gradient(180deg, #0F766E 0%, #14B8A6 100%);
+    --sidebar-text: #CCFBF1;
+    --sidebar-link-text: #99F6E4;
+    --sidebar-link-active-bg: #2DD4BF;
+    --sidebar-link-active-text: #064E3B;
+    --mobile-header-bg: #0F766E;
+    --code-block-bg: #042F2E;
+}
+
+body.theme-part04 {
+    --primary-color: #2DD4BF;
+    --secondary-color: #5EEAD4;
+    --accent-color: #99F6E4;
+    --background-color: #F0FDFA;
+    --text-color: #1F2937;
+    --sidebar-bg: linear-gradient(180deg, #14B8A6 0%, #2DD4BF 100%);
+    --sidebar-text: #CCFBF1;
+    --sidebar-link-text: #99F6E4;
+    --sidebar-link-active-bg: #5EEAD4;
+    --sidebar-link-active-text: #064E3B;
+    --mobile-header-bg: #14B8A6;
+    --code-block-bg: #042F2E;
+}
+
+body.theme-part05 {
+    --primary-color: #06B6D4;
+    --secondary-color: #22D3EE;
+    --accent-color: #67E8F9;
+    --background-color: #ECFEFF;
+    --text-color: #1F2937;
+    --sidebar-bg: linear-gradient(180deg, #0E7490 0%, #0891B2 100%);
+    --sidebar-text: #CFFAFE;
+    --sidebar-link-text: #A5F3FC;
+    --sidebar-link-active-bg: #22D3EE;
+    --sidebar-link-active-text: #164E63;
+    --mobile-header-bg: #0E7490;
+    --code-block-bg: #083344;
+}
+
+body.theme-part06 {
+    --primary-color: #0891B2;
+    --secondary-color: #06B6D4;
+    --accent-color: #67E8F9;
+    --background-color: #ECFEFF;
+    --text-color: #1F2937;
+    --sidebar-bg: linear-gradient(180deg, #0C4A6E 0%, #0E7490 100%);
+    --sidebar-text: #CFFAFE;
+    --sidebar-link-text: #A5F3FC;
+    --sidebar-link-active-bg: #06B6D4;
+    --sidebar-link-active-text: #164E63;
+    --mobile-header-bg: #0C4A6E;
+    --code-block-bg: #083344;
+}
+
+body.theme-part06b {
+    --primary-color: #0E7490;
+    --secondary-color: #0891B2;
+    --accent-color: #67E8F9;
+    --background-color: #ECFEFF;
+    --text-color: #1F2937;
+    --sidebar-bg: linear-gradient(180deg, #164E63 0%, #0C4A6E 100%);
+    --sidebar-text: #CFFAFE;
+    --sidebar-link-text: #A5F3FC;
+    --sidebar-link-active-bg: #0891B2;
+    --sidebar-link-active-text: #164E63;
+    --mobile-header-bg: #164E63;
+    --code-block-bg: #083344;
+}
+
+/* Phase 2: تفکر شیءگرا (Blue Family) - Parts 8-10 */
+
+body.theme-part08 {
+    --primary-color: #0284C7;
+    --secondary-color: #0EA5E9;
+    --accent-color: #7DD3FC;
+    --background-color: #F0F9FF;
+    --text-color: #1E293B;
+    --sidebar-bg: linear-gradient(180deg, #0C4A6E 0%, #075985 100%);
+    --sidebar-text: #E0F2FE;
+    --sidebar-link-text: #BAE6FD;
+    --sidebar-link-active-bg: #0EA5E9;
+    --sidebar-link-active-text: #082F49;
+    --mobile-header-bg: #0C4A6E;
+    --code-block-bg: #082F49;
+}
+
+body.theme-part09a {
+    --primary-color: #0369A1;
+    --secondary-color: #0284C7;
+    --accent-color: #7DD3FC;
+    --background-color: #F0F9FF;
+    --text-color: #1E293B;
+    --sidebar-bg: linear-gradient(180deg, #075985 0%, #0369A1 100%);
+    --sidebar-text: #E0F2FE;
+    --sidebar-link-text: #BAE6FD;
+    --sidebar-link-active-bg: #0284C7;
+    --sidebar-link-active-text: #082F49;
+    --mobile-header-bg: #075985;
+    --code-block-bg: #082F49;
+}
+
+body.theme-part09b {
+    --primary-color: #0EA5E9;
+    --secondary-color: #38BDF8;
+    --accent-color: #7DD3FC;
+    --background-color: #F0F9FF;
+    --text-color: #1E293B;
+    --sidebar-bg: linear-gradient(180deg, #0284C7 0%, #0EA5E9 100%);
+    --sidebar-text: #E0F2FE;
+    --sidebar-link-text: #BAE6FD;
+    --sidebar-link-active-bg: #38BDF8;
+    --sidebar-link-active-text: #082F49;
+    --mobile-header-bg: #0284C7;
+    --code-block-bg: #082F49;
+}
+
+/* Phase 3: ارث‌بری و چندریختی (Purple/Indigo Family) - Parts 10-13 */
+
+body.theme-part10 {
+    --primary-color: #4F46E5;
+    --secondary-color: #6366F1;
+    --accent-color: #A5B4FC;
+    --background-color: #EEF2FF;
+    --text-color: #1E1B4B;
+    --sidebar-bg: linear-gradient(180deg, #312E81 0%, #4338CA 100%);
+    --sidebar-text: #E0E7FF;
+    --sidebar-link-text: #C7D2FE;
+    --sidebar-link-active-bg: #6366F1;
+    --sidebar-link-active-text: #1E1B4B;
+    --mobile-header-bg: #312E81;
+    --code-block-bg: #1E1B4B;
+}
+
+body.theme-part11 {
+    --primary-color: #6366F1;
+    --secondary-color: #818CF8;
+    --accent-color: #A5B4FC;
+    --background-color: #EEF2FF;
+    --text-color: #1E1B4B;
+    --sidebar-bg: linear-gradient(180deg, #4338CA 0%, #4F46E5 100%);
+    --sidebar-text: #E0E7FF;
+    --sidebar-link-text: #C7D2FE;
+    --sidebar-link-active-bg: #818CF8;
+    --sidebar-link-active-text: #1E1B4B;
+    --mobile-header-bg: #4338CA;
+    --code-block-bg: #1E1B4B;
+}
+
+body.theme-part12 {
+    --primary-color: #7C3AED;
+    --secondary-color: #8B5CF6;
+    --accent-color: #C4B5FD;
+    --background-color: #F5F3FF;
+    --text-color: #2E1065;
+    --sidebar-bg: linear-gradient(180deg, #5B21B6 0%, #6D28D9 100%);
+    --sidebar-text: #EDE9FE;
+    --sidebar-link-text: #DDD6FE;
+    --sidebar-link-active-bg: #8B5CF6;
+    --sidebar-link-active-text: #2E1065;
+    --mobile-header-bg: #5B21B6;
+    --code-block-bg: #2E1065;
+}
+
+body.theme-part13 {
+    --primary-color: #8B5CF6;
+    --secondary-color: #A78BFA;
+    --accent-color: #C4B5FD;
+    --background-color: #F5F3FF;
+    --text-color: #2E1065;
+    --sidebar-bg: linear-gradient(180deg, #6D28D9 0%, #7C3AED 100%);
+    --sidebar-text: #EDE9FE;
+    --sidebar-link-text: #DDD6FE;
+    --sidebar-link-active-bg: #A78BFA;
+    --sidebar-link-active-text: #2E1065;
+    --mobile-header-bg: #6D28D9;
+    --code-block-bg: #2E1065;
+}
+
+/* Phase 4: انتزاع (Green/Lime Family) - Parts 14-16 */
+
+body.theme-part14 {
+    --primary-color: #059669;
+    --secondary-color: #10B981;
+    --accent-color: #6EE7B7;
+    --background-color: #ECFDF5;
+    --text-color: #064E3B;
+    --sidebar-bg: linear-gradient(180deg, #065F46 0%, #047857 100%);
+    --sidebar-text: #D1FAE5;
+    --sidebar-link-text: #A7F3D0;
+    --sidebar-link-active-bg: #10B981;
+    --sidebar-link-active-text: #064E3B;
+    --mobile-header-bg: #065F46;
+    --code-block-bg: #064E3B;
+}
+
+body.theme-part15 {
+    --primary-color: #10B981;
+    --secondary-color: #34D399;
+    --accent-color: #6EE7B7;
+    --background-color: #ECFDF5;
+    --text-color: #064E3B;
+    --sidebar-bg: linear-gradient(180deg, #047857 0%, #059669 100%);
+    --sidebar-text: #D1FAE5;
+    --sidebar-link-text: #A7F3D0;
+    --sidebar-link-active-bg: #34D399;
+    --sidebar-link-active-text: #064E3B;
+    --mobile-header-bg: #047857;
+    --code-block-bg: #064E3B;
+}
+
+body.theme-part16 {
+    --primary-color: #65A30D;
+    --secondary-color: #84CC16;
+    --accent-color: #BEF264;
+    --background-color: #F7FEE7;
+    --text-color: #365314;
+    --sidebar-bg: linear-gradient(180deg, #4D7C0F 0%, #65A30D 100%);
+    --sidebar-text: #ECFCCB;
+    --sidebar-link-text: #D9F99D;
+    --sidebar-link-active-bg: #84CC16;
+    --sidebar-link-active-text: #365314;
+    --mobile-header-bg: #4D7C0F;
+    --code-block-bg: #365314;
+}
+
+/* Phase 5: موضوعات پیشرفته (Red/Orange Family) - Parts 17-19 */
+
+body.theme-part17 {
+    --primary-color: #DC2626;
+    --secondary-color: #EF4444;
+    --accent-color: #FCA5A5;
+    --background-color: #FEF2F2;
+    --text-color: #7F1D1D;
+    --sidebar-bg: linear-gradient(180deg, #991B1B 0%, #B91C1C 100%);
+    --sidebar-text: #FEE2E2;
+    --sidebar-link-text: #FECACA;
+    --sidebar-link-active-bg: #EF4444;
+    --sidebar-link-active-text: #7F1D1D;
+    --mobile-header-bg: #991B1B;
+    --code-block-bg: #7F1D1D;
+}
+
+body.theme-part18 {
+    --primary-color: #EA580C;
+    --secondary-color: #F97316;
+    --accent-color: #FDBA74;
+    --background-color: #FFF7ED;
+    --text-color: #7C2D12;
+    --sidebar-bg: linear-gradient(180deg, #C2410C 0%, #EA580C 100%);
+    --sidebar-text: #FFEDD5;
+    --sidebar-link-text: #FED7AA;
+    --sidebar-link-active-bg: #F97316;
+    --sidebar-link-active-text: #7C2D12;
+    --mobile-header-bg: #C2410C;
+    --code-block-bg: #7C2D12;
+}
+
+body.theme-part19 {
+    --primary-color: #D97706;
+    --secondary-color: #F59E0B;
+    --accent-color: #FCD34D;
+    --background-color: #FFFBEB;
+    --text-color: #78350F;
+    --sidebar-bg: linear-gradient(180deg, #B45309 0%, #D97706 100%);
+    --sidebar-text: #FEF3C7;
+    --sidebar-link-text: #FDE68A;
+    --sidebar-link-active-bg: #F59E0B;
+    --sidebar-link-active-text: #78350F;
+    --mobile-header-bg: #B45309;
+    --code-block-bg: #78350F;
+}
+
+/* Checkpoint Theme (Special - Mixed Colors) */
+body.theme-checkpoint {
+    --primary-color: #7C3AED;
+    --secondary-color: #F59E0B;
+    --accent-color: #14B8A6;
+    --background-color: #F8FAFC;
+    --text-color: #1E293B;
+    --sidebar-bg: linear-gradient(135deg, #312E81 0%, #B45309 100%);
+    --sidebar-text: #F1F5F9;
+    --sidebar-link-text: #E2E8F0;
+    --sidebar-link-active-bg: #7C3AED;
+    --sidebar-link-active-text: #FFF;
+    --mobile-header-bg: #475569;
+    --code-block-bg: #1E293B;
+}
