@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بخش ۲: انواع داده و حافظه | برنامه‌سازی پیشرفته</title>
+    
+    <meta name="description" content="انواع داده و حافظه">
+    
+    <link rel="stylesheet" href="../assets/css/themes.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+</head>
+<body class="theme-part02">
+
+<div id="overlay"></div>
+
+<header id="top-header">
+    <button id="menu-toggle">☰</button>
+    <h1>۲. انواع داده و حافظه</h1>
+    <div class="breadcrumb">
+        <a href="../index.html">خانه</a>
+        <span>></span>
+        <span>فاز ۱</span>
+        <span>></span>
+        <span>بخش ۲</span>
+    </div>
+</header>
+
+<nav id="sidebar">
+    <div class="sidebar-profile">
+        <a href="../index.html" title="بازگشت به صفحه اصلی">
+            <img src="../assets/images/university_logo.png" alt="لوگو دانشگاه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
+        </a>
+        <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
+        <p>مدرس: سید سجاد پیراهش</p>
+    </div>
+    
+    <ul class="nav-menu">
+        <li>
+            <header class="open">فهرست بخش ۲</header>
+            <ul class="submenu open">
+                <li><a href="#section-1" class="nav-link">۱. 1. جاوا، یک زبان با "نوع‌دهی ایستا" (Statically-Typed)</a></li>
+<li><a href="#section-2" class="nav-link">۲. 2. دو دنیای متفاوت داده: داده‌های اولیه (Primitive) و داده‌های ارجاعی (Reference)</a></li>
+<li><a href="#section-3" class="nav-link">۳. 3. کالبدشکافی حافظه: صحنه نمایش Stack و Heap</a></li>
+<li><a href="#section-4" class="nav-link">۴. 4. شکل کلی تعریف Field</a></li>
+<li><a href="#section-5" class="nav-link">۵. 5. قواعد نام‌گذاری Field</a></li>
+<li><a href="#section-6" class="nav-link">۶. 6. فیلدها در مقابل متغیرهای محلی: مقایسه جامع</a></li>
+<li><a href="#section-7" class="nav-link">۷. 7. اشتباهات رایج</a></li>
+
+            </ul>
+        </li>
+        <li>
+            <header>بخش‌های فاز ۱</header>
+            <ul class="submenu">
+                <li><a href="part01.html" class="nav-link ">بخش ۱: از پارادایم تا بایت‌کد</a></li>
+                <li><a href="part02.html" class="nav-link active">بخش ۲: انواع داده و حافظه</a></li>
+                <li><a href="part03.html" class="nav-link ">بخش ۳: static و final</a></li>
+                <li><a href="part04.html" class="nav-link ">بخش ۴: آرایه‌ها</a></li>
+                <li><a href="part05.html" class="nav-link ">بخش ۵: متدها</a></li>
+                <li><a href="part06.html" class="nav-link ">بخش ۶: سازنده‌ها</a></li>
+                <li><a href="part07.html" class="nav-link ">بخش ۷: پکیج‌بندی</a></li>
+            </ul>
+        </li>
+    </ul>
+    
+    <div class="sidebar-footer">
+        <a href="../index.html">→ بازگشت به فهرست اصلی</a>
+    </div>
+</nav>
+
+<main id="main-content">
+
+    <section id="section-1">
+        <h2>۱. 1. جاوا، یک زبان با "نوع‌دهی ایستا" (Statically-Typed)</h2>
+        <p>قبل از هر چیز، باید بدانیم جاوا یک زبان <strong>Statically-Typed</strong> است. این عبارت به چه معناست؟</p><p>یعنی شما به عنوان برنامه‌نویس، <strong>موظف هستید</strong> قبل از استفاده از هر متغیر، نوع داده آن را به صراحت به کامپایلر اعلام کنید.</p><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">// صحیح: کامپایلر می‌داند age یک عدد صحیح 4 بایتی است.
+int age = 30;
+
+// غلط: کامپایلر نمی داند x چیست و چه مقدار حافظه نیاز دارد. این کد کامپایل نمی‌شود.
+// x = 30;</code></pre>
+</div><ul>
+<li>*چرا این محدودیت مهم است؟**</li>
+<li><strong>کشف خطا در اولین فرصت:</strong> کامپایلر قبل از اجرای برنامه، نوع داده‌ها را چک می‌کند. اگر شما سعی کنید یک مقدار رشته‌ای را در یک متغیر عددی بریزید (<code>age = "thirty";</code>)، کامپایلر همان لحظه به شما خطا می‌دهد. این ویژگی از بروز تعداد بی‌شماری از باگ‌ها در زمان اجرا جلوگیری می‌کند.</li>
+<li><strong>عملکرد و بهینگی:</strong> وقتی کامپایلر دقیقاً می‌داند هر متغیر چقدر حافظه نیاز دارد، می‌تواند حافظه را به بهینه‌ترین شکل ممکن مدیریت کند و کدی سریع‌تر تولید نماید.</li>
+<li><strong>خوانایی و نگهداری کد:</strong> مشخص بودن نوع هر متغیر، کد را برای برنامه‌نویسان دیگر (و خود شما در آینده) بسیار خواناتر و قابل فهم‌تر می‌کند.</li>
+</ul><ul>
+<li>*🆕 جدول مقایسه: Statically-Typed vs Dynamically-Typed**</li>
+</ul><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>ویژگی</th>
+<th>Statically-Typed (Java, C++)</th>
+<th>Dynamically-Typed (Python, JavaScript)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>تعریف نوع</strong></td>
+<td>اجباری در زمان کامپایل</td>
+<td>اختیاری، در زمان اجرا تعیین می‌شود</td>
+</tr>
+<tr>
+<td><strong>کشف خطا</strong></td>
+<td>قبل از اجرا (Compile-time)</td>
+<td>در زمان اجرا (Runtime)</td>
+</tr>
+<tr>
+<td><strong>عملکرد</strong></td>
+<td>سریع‌تر</td>
+<td>کندتر</td>
+</tr>
+<tr>
+<td><strong>انعطاف‌پذیری</strong></td>
+<td>کمتر</td>
+<td>بیشتر</td>
+</tr>
+<tr>
+<td><strong>مثال</strong></td>
+<td><code>int age = 30;</code></td>
+<td><code>age = 30</code></td>
+</tr>
+<tr>
+<td><strong>ایمنی</strong></td>
+<td>بیشتر</td>
+<td>کمتر</td>
+</tr>
+</tbody>
+</table>
+</div>
+    </section>
+
+    <section id="section-2">
+        <h2>۲. 2. دو دنیای متفاوت داده: داده‌های اولیه (Primitive) و داده‌های ارجاعی (Reference)</h2>
+        <p>در جاوا، تمام انواع داده به یکی از این دو دسته تعلق دارند. درک تفاوت این دو، سنگ بنای درک مدیریت حافظه در جاواست.</p><ul>
+<li>*الف) داده‌های اولیه (Primitive Types): ارزش خالص**</li>
+</ul><p>اینها 8 نوع داده بنیادین و از پیش تعریف‌شده در زبان جاوا هستند. ویژگی اصلی آن‌ها این است که متغیر از این نوع، <strong>خودِ مقدار (the actual value)</strong> را مستقیماً در خانه‌ی حافظه اختصاص‌داده‌شده به خود، نگهداری می‌کند.</p><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>نوع داده</th>
+<th>حافظه</th>
+<th>محدوده مقادیر</th>
+<th>مقدار پیش‌فرض</th>
+<th>کاربرد اصلی و مثال</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>boolean</code></td>
+<td>~1 بیت</td>
+<td><code>true</code> یا <code>false</code></td>
+<td><code>false</code></td>
+<td>نگهداری وضعیت‌های منطقی (مثلاً <code>isLoggedIn = true;</code>)</td>
+</tr>
+<tr>
+<td><code>byte</code></td>
+<td>1 بایت</td>
+<td>-128 تا 127</td>
+<td>0</td>
+<td>کار با داده‌های باینری، فایل‌ها، استریم‌ها (جایی که هر بایت مهم است)</td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>2 بایت</td>
+<td>-32,768 تا 32,767</td>
+<td>0</td>
+<td>اعداد صحیح کوچک که در محدوده <code>byte</code> نگنجند (کاربرد کم)</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>4 بایت</td>
+<td>حدود -2.1 میلیارد تا +2.1 میلیارد</td>
+<td>0</td>
+<td><strong>پراستفاده‌ترین نوع</strong> برای اعداد صحیح (سن، شمارنده‌ها، شناسه‌ها)</td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td>8 بایت</td>
+<td>اعداد صحیح بسیار بزرگ (تا 10<sup>18</sup>)</td>
+<td><code>0L</code></td>
+<td>شناسه‌های بانکی، محاسبات نجومی. <strong>نکته:</strong> باید پسوند <code>L</code> داشته باشد (<code>long population = 8000000000L;</code>)</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>4 بایت</td>
+<td>اعداد اعشاری با دقت ~7 رقم</td>
+<td><code>0.0f</code></td>
+<td>محاسبات گرافیکی، جایی که سرعت بر دقت ارجح است. <strong>نکته:</strong> باید پسوند <code>f</code> داشته باشد (<code>float price = 99.99f;</code>)</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>8 بایت</td>
+<td>اعداد اعشاری با دقت ~15 رقم</td>
+<td><code>0.0d</code></td>
+<td><strong>نوع پیش‌فرض</strong> برای اعشاری‌ها، محاسبات علمی و مالی دقیق</td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td>2 بایت</td>
+<td>0 تا 65,535 (Unicode)</td>
+<td><code>'\u0000'</code></td>
+<td>نگهداری یک کاراکتر (<code>char grade = 'A';</code>). از ' (single quote) استفاده می‌کند.</td>
+</tr>
+</tbody>
+</table>
+</div><ul>
+<li>*ب) داده‌های ارجاعی (Reference Types): یک آدرس به سوی ارزش**</li>
+</ul><p>هر نوع داده‌ای که جزو 8 مورد بالا نباشد، از نوع ارجاعی است. این شامل تمام <strong>کلاس‌ها</strong> (مانند <code>String</code>، <code>Scanner</code> یا کلاسی که خودتان می‌سازید)، <strong>آرایه‌ها</strong> و <strong>اینترفیس‌ها</strong> می‌شود.</p><p>ویژگی اصلی آن‌ها این است که متغیر از این نوع، خودِ شیء یا داده را در خود نگه <strong>نمی‌دارد</strong>. بلکه فقط یک <strong>آدرس حافظه (Memory Address)</strong> یا به اصطلاح یک <strong>ارجاع (Reference)</strong> را در خود ذخیره می‌کند. این آدرس به مکانی اشاره می‌کند که شیء واقعی در آنجا قرار دارد.</p><ul>
+<li><strong>مقدار ویژه <code>null</code>:</strong> یک متغیر ارجاعی می‌تواند مقدار <code>null</code> داشته باشد، که یعنی "به هیچ جایی اشاره نمی‌کند". تلاش برای فراخوانی یک متد روی یک متغیر <code>null</code>، منجر به معروف‌ترین خطای زمان اجرای جاوا می‌شود: <code>NullPointerException</code>.</li>
+</ul><ul>
+<li>*🆕 جدول مقایسه: Primitive vs Reference**</li>
+</ul><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>ویژگی</th>
+<th>Primitive Types</th>
+<th>Reference Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>تعداد</strong></td>
+<td>8 نوع ثابت</td>
+<td>نامحدود (هر کلاس)</td>
+</tr>
+<tr>
+<td><strong>ذخیره‌سازی</strong></td>
+<td>مقدار واقعی</td>
+<td>آدرس (ارجاع) به شیء</td>
+</tr>
+<tr>
+<td><strong>محل حافظه (متغیر محلی)</strong></td>
+<td>Stack</td>
+<td>آدرس در Stack، شیء در Heap</td>
+</tr>
+<tr>
+<td><strong>محل حافظه (فیلد)</strong></td>
+<td>Heap (با شیء)</td>
+<td>ارجاع در Heap، شیء در Heap</td>
+</tr>
+<tr>
+<td><strong>مقدار پیش‌فرض (فیلد)</strong></td>
+<td>0, false, '\u0000'</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><strong>مقدار پیش‌فرض (متغیر محلی)</strong></td>
+<td><span class="emoji">❌</span> ندارد</td>
+<td><span class="emoji">❌</span> ندارد</td>
+</tr>
+<tr>
+<td><strong>مقایسه با <code>==</code></strong></td>
+<td>مقایسه مقدار</td>
+<td>مقایسه آدرس</td>
+</tr>
+<tr>
+<td><strong>null پذیری</strong></td>
+<td><span class="emoji">❌</span></td>
+<td><span class="emoji">✅</span></td>
+</tr>
+<tr>
+<td><strong>مثال</strong></td>
+<td><code>int</code>, <code>double</code>, <code>boolean</code></td>
+<td><code>String</code>, <code>Student</code>, <code>int[]</code></td>
+</tr>
+</tbody>
+</table>
+</div><ul>
+<li>*🆕 مثال عملی: Primitive vs Reference**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class DataTypeDemo {
+    public static void main(String[] args) {
+        // --- PRIMITIVE: کپی مقدار ---
+        int a = 10;
+        int b = a;  // مقدار 10 کپی می‌شود
+        b = 20;     // فقط b تغییر می‌کند
+
+        System.out.println("a = " + a);  // 10
+        System.out.println("b = " + b);  // 20
+
+        // --- REFERENCE: کپی آدرس ---
+        Student s1 = new Student("Ali");
+        Student s2 = s1;  // آدرس کپی می‌شود (هر دو به یک شیء اشاره دارند)
+        s2.name = "Reza"; // تغییر در شیء
+
+        System.out.println("s1.name = " + s1.name);  // Reza (!)
+        System.out.println("s2.name = " + s2.name);  // Reza
+
+        // --- مقایسه ---
+        String str1 = new String("Hello");
+        String str2 = new String("Hello");
+
+        System.out.println(str1 == str2);        // false (آدرس‌ها متفاوت)
+        System.out.println(str1.equals(str2));   // true (محتوا یکسان)
+    }
+}
+
+class Student {
+    String name;
+    Student(String name) { this.name = name; }
+}</code></pre>
+</div>
+    </section>
+
+    <section id="section-3">
+        <h2>۳. 3. کالبدشکافی حافظه: صحنه نمایش Stack و Heap</h2>
+        <p>هنگام اجرای یک برنامه جاوا، JVM حافظه RAM را به چند بخش تقسیم می‌کند. دو تا از مهم‌ترین این بخش‌ها <strong>Stack</strong> و <strong>Heap</strong> هستند.</p><ul>
+<li>*الف) حافظه Stack (پشته)**</li>
+</ul><ul>
+<li><strong>چیست؟</strong> یک ناحیه حافظه بسیار سریع، کوچک و به شدت سازمان‌یافته که بر اساس ساختار <strong>LIFO (Last-In, First-Out)</strong> کار می‌کند. آخرین چیزی که وارد آن شود، اولین چیزی است که خارج می‌شود.</li>
+<li><strong>چه چیزی در آن ذخیره می‌شود؟</strong></li>
+<li>.  <strong>فریم‌های متد (Method Frames):</strong> به ازای هر فراخوانی یک متد، یک "فریم" جدید در بالای Stack قرار می‌گیرد.</li>
+<li>.  <strong>متغیرهای محلی اولیه (Local Primitive Variables):</strong> <strong>مقدار واقعی</strong> این متغیرها درون فریم متد مربوطه در Stack ذخیره می‌شود.</li>
+<li>.  <strong>متغیرهای محلی ارجاعی (Local Reference Variables):</strong> <strong>آدرس (ارجاع) به شیء</strong> در این متغیرها ذخیره می‌شود، نه خود شیء.</li>
+</ul><ul>
+<li><strong>مدیریت:</strong> مدیریت حافظه Stack به صورت خودکار و بسیار سریع توسط JVM انجام می‌شود. وقتی یک متد اجرای خود را به پایان می‌رساند، فریم آن بلافاصله از Stack حذف (pop) می‌شود و تمام متغیرهای محلی آن از بین می‌روند.</li>
+</ul><ul>
+<li>*ب) حافظه Heap (هیپ)**</li>
+</ul><ul>
+<li><strong>چیست؟</strong> یک ناحیه حافظه بسیار بزرگ‌تر و با سازماندهی کمتر که تمام برنامه به آن دسترسی دارد.</li>
+<li><strong>چه چیزی در آن ذخیره می‌شود؟</strong></li>
+<li><strong>تمام اشیاء (Objects):</strong> هر بار که شما از کلمه کلیدی <code>new</code> استفاده می‌کنید (مثلاً <code>new Student()</code>)، JVM در حافظه Heap به دنبال فضای خالی گشته، شیء را در آنجا ایجاد می‌کند و آدرس آن را برمی‌گرداند.</li>
+<li><strong>تمام آرایه‌ها (Arrays):</strong> آرایه‌ها نیز در جاوا شیء محسوب می‌شوند و در Heap ذخیره می‌گردند.</li>
+</ul><ul>
+<li><strong>مدیریت:</strong> تخصیص حافظه در Heap کمی کندتر از Stack است. مهم‌تر اینکه، مدیریت آزادسازی این حافظه بر عهده <strong>جمع‌آور زباله (Garbage Collector - GC)</strong> است. GC یک فرآیند پس‌زمینه در JVM است که به صورت دوره‌ای اجرا شده، اشیائی را که دیگر هیچ ارجاعی از Stack (یا از اشیاء دیگر) به آن‌ها وجود ندارد، شناسایی کرده و حافظه آن‌ها را آزاد می‌کند.</li>
+</ul><ul>
+<li>*🆕 جدول مقایسه: Stack vs Heap**</li>
+</ul><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>ویژگی</th>
+<th>Stack</th>
+<th>Heap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>سرعت</strong></td>
+<td><span class="emoji">✅</span> بسیار سریع</td>
+<td><span class="emoji">⚠️</span> کندتر</td>
+</tr>
+<tr>
+<td><strong>اندازه</strong></td>
+<td>کوچک (~1-2 MB)</td>
+<td>بزرگ (چند GB)</td>
+</tr>
+<tr>
+<td><strong>ساختار</strong></td>
+<td>LIFO (پشته)</td>
+<td>بی‌نظم</td>
+</tr>
+<tr>
+<td><strong>محتوا</strong></td>
+<td>متغیرهای محلی، آدرس‌ها</td>
+<td>اشیاء، آرایه‌ها</td>
+</tr>
+<tr>
+<td><strong>مدیریت</strong></td>
+<td>خودکار (JVM)</td>
+<td>Garbage Collector</td>
+</tr>
+<tr>
+<td><strong>چرخه حیات</strong></td>
+<td>تا پایان متد</td>
+<td>تا زمان GC</td>
+</tr>
+<tr>
+<td><strong>دسترسی</strong></td>
+<td>فقط متد فعلی</td>
+<td>تمام برنامه</td>
+</tr>
+<tr>
+<td><strong>خطای رایج</strong></td>
+<td><code>StackOverflowError</code></td>
+<td><code>OutOfMemoryError</code></td>
+</tr>
+</tbody>
+</table>
+</div><ul>
+<li>*نمودار جامع تعامل Stack و Heap (با Mermaid):**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-mermaid">graph TD
+    subgraph "حافظه RAM"
+        subgraph "&lt;b&gt;Stack (بسیار سریع، مدیریت خودکار)&lt;/b&gt;"
+            direction TB
+            subgraph "Frame: main(String[] args)"
+                P1["int age = 30; &lt;br&gt;&lt;b&gt;(مقدار واقعی ذخیره شده)&lt;/b&gt;"]
+                R1["Student s1 = 0x50; &lt;br&gt;&lt;b&gt;(آدرس/ارجاع ذخیره شده)&lt;/b&gt;"]
+                R2["Student s2 = 0x50; &lt;br&gt;&lt;b&gt;(آدرس/ارجاع ذخیره شده)&lt;/b&gt;"]
+                R3["String name = 0x8A; &lt;br&gt;&lt;b&gt;(آدرس/ارجاع ذخیره شده)&lt;/b&gt;"]
+            end
+        end
+
+        subgraph "&lt;b&gt;Heap (بزرگ، مدیریت توسط GC)&lt;/b&gt;"
+            direction LR
+            O1("&lt;b&gt;(0x50)&lt;/b&gt;&lt;br&gt;شیء Student&lt;br&gt;-----------&lt;br&gt;name: 'Ali'&lt;br&gt;studentId: 101")
+            O2("&lt;b&gt;(0x8A)&lt;/b&gt;&lt;br&gt;شیء String&lt;br&gt;-----------&lt;br&gt;value: 'Java'")
+            O3("&lt;b&gt;(0x9F)&lt;/b&gt;&lt;br&gt;شیء Student&lt;br&gt;-----------&lt;br&gt;name: 'Sara'&lt;br&gt;studentId: 102&lt;br&gt;&lt;b&gt;&lt;font color=red&gt;زباله! (Garbage)&lt;/font&gt;&lt;/b&gt;")
+        end
+    end
+
+    R1 -- "اشاره می‌کند به" --&gt; O1;
+    R2 -- "اشاره می‌کند به" --&gt; O1;
+    R3 -- "اشاره می‌کند به" --&gt; O2;
+
+    note right of O3
+      &lt;b&gt;توضیح زباله شدن:&lt;/b&gt;
+      فرض کنید قبلاً متغیر دیگری به این شیء اشاره می‌کرده
+      اما اکنون هیچ ارجاعی به آدرس 0x9F وجود ندارد.
+      بنابراین، GC در اجرای بعدی خود، این حافظه را آزاد خواهد کرد.
+    end
+
+    style O3 fill:#ffe0e0,stroke:#c00,stroke-width:2px</code></pre>
+</div><ul>
+<li>*🆕 مثال عملی: دنبال کردن Garbage Collection**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class GCDemo {
+    public static void main(String[] args) {
+        // مرحله 1: ایجاد دو شیء
+        Student s1 = new Student("Ali");   // شیء 1 در Heap
+        Student s2 = new Student("Sara");  // شیء 2 در Heap
+
+        // Stack: s1 → شیء Ali
+        // Stack: s2 → شیء Sara
+
+        // مرحله 2: s1 به شیء s2 اشاره می‌کند
+        s1 = s2;
+
+        // Stack: s1 → شیء Sara
+        // Stack: s2 → شیء Sara
+        // Heap: شیء Ali بدون ارجاع! (زباله)
+
+        // مرحله 3: null کردن
+        s2 = null;
+
+        // Stack: s1 → شیء Sara
+        // Stack: s2 → null
+        // شیء Sara هنوز زنده است (s1 دارد)
+
+        // مرحله 4: آخرین ارجاع
+        s1 = null;
+
+        // Stack: s1 → null
+        // Stack: s2 → null
+        // Heap: شیء Sara نیز زباله شد!
+
+        // در این نقطه، GC می‌تواند هر دو شیء را پاک کند
+    }
+}
+
+class Student {
+    String name;
+    Student(String name) { this.name = name; }
+}</code></pre>
+</div>
+    </section>
+
+    <section id="section-4">
+        <h2>۴. 4. شکل کلی تعریف Field</h2>
+        <p>حالا که با حافظه آشنا شدیم، به سراغ تعریف کامل Field می‌رویم.</p><ul>
+<li>*Syntax کامل:**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">[Access Modifier] [static] [final] DataType fieldName [= initialValue];</code></pre>
+</div><ul>
+<li>*اجزا:**</li>
+</ul><ol>
+<li>. <strong>Access Modifier</strong> (اختیاری): <code>private</code>, <code>default</code>, <code>protected</code>, <code>public</code></li>
+<li>. <strong>static</strong> (اختیاری): متعلق به کلاس یا شیء؟</li>
+<li>. <strong>final</strong> (اختیاری): تغییرناپذیر؟</li>
+<li>. <strong>DataType</strong> (اجباری): نوع داده</li>
+<li>. <strong>fieldName</strong> (اجباری): نام فیلد</li>
+<li>. <strong>initialValue</strong> (اختیاری): مقدار اولیه</li>
+</ol><ul>
+<li>*الف) Access Modifiers (سطح دسترسی)**</li>
+</ul><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Modifier</th>
+<th>همان کلاس</th>
+<th>همان Package</th>
+<th>زیرکلاس</th>
+<th>همه‌جا</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>private</code></td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">❌</span></td>
+<td><span class="emoji">❌</span></td>
+<td><span class="emoji">❌</span></td>
+</tr>
+<tr>
+<td>default (بدون کلمه)</td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">❌</span></td>
+<td><span class="emoji">❌</span></td>
+</tr>
+<tr>
+<td><code>protected</code></td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">❌</span></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">✅</span></td>
+<td><span class="emoji">✅</span></td>
+</tr>
+</tbody>
+</table>
+</div><ul>
+<li>*مثال کامل:**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class Student {
+    // ===== Access Modifiers =====
+    private String name;           // فقط درون Student
+    int studentId;                 // package access (default)
+    protected double gpa;          // package + زیرکلاس‌ها
+    public String university;      // همه‌جا
+
+    // ===== با static =====
+    private static int studentCount = 0;  // مشترک بین همه
+
+    // ===== با final =====
+    private final String ID_PREFIX = "STD-";  // تغییرناپذیر
+
+    // ===== ترکیب =====
+    public static final int MAX_STUDENTS = 500;  // ثابت عمومی
+
+    // ===== چند فیلد در یک خط =====
+    private int age, grade;
+
+    // ===== مقداردهی با expression =====
+    private double tax = 1000 * 0.09;
+}</code></pre>
+</div><ul>
+<li>*ب) انواع DataType:**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class AllTypes {
+    // ===== Primitive =====
+    private int count;
+    private double price;
+    private boolean active;
+    private char grade;
+
+    // ===== Reference: Classes =====
+    private String name;
+    private Scanner scanner;
+    private BankAccount account;
+
+    // ===== Reference: Arrays =====
+    private int[] scores;
+    private String[] names;
+    private Student[] students;
+}</code></pre>
+</div>
+    </section>
+
+    <section id="section-5">
+        <h2>۵. 5. قواعد نام‌گذاری Field</h2>
+        <ul>
+<li>*جدول قواعد:**</li>
+</ul><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>قاعده</th>
+<th>صحیح ✅</th>
+<th>غلط ❌</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>camelCase</strong></td>
+<td><code>studentName</code></td>
+<td><code>StudentName</code>, <code>student_name</code></td>
+</tr>
+<tr>
+<td><strong>حرف اول کوچک</strong></td>
+<td><code>totalPrice</code></td>
+<td><code>TotalPrice</code></td>
+</tr>
+<tr>
+<td><strong>معنی‌دار</strong></td>
+<td><code>accountBalance</code></td>
+<td><code>ab</code>, <code>x</code>, <code>temp</code></td>
+</tr>
+<tr>
+<td><strong>ثابت‌ها UPPER_SNAKE_CASE</strong></td>
+<td><code>MAX_SIZE</code></td>
+<td><code>maxSize</code>, <code>max_size</code></td>
+</tr>
+<tr>
+<td><strong>شروع با حرف</strong></td>
+<td><code>count1</code></td>
+<td><code>1count</code></td>
+</tr>
+<tr>
+<td><strong>بدون فاصله</strong></td>
+<td><code>firstName</code></td>
+<td><code>first name</code></td>
+</tr>
+</tbody>
+</table>
+</div><ul>
+<li>*مثال جامع:**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class NamingDemo {
+    // ✅ صحیح
+    private String accountNumber;
+    private double balance;
+    private int transactionCount;
+    private boolean isActive;
+    public static final int MAX_TRANSACTIONS = 1000;
+    public static final double TAX_RATE = 0.09;
+
+    // ❌ غلط
+    private String AccountNumber;      // PascalCase
+    private double _balance;           // underscore ابتدایی
+    private int tc;                    // نامعنی‌دار
+    private boolean active_;           // underscore پایانی
+    private static final int maxTrans; // ثابت کوچک
+}</code></pre>
+</div><ul>
+<li>*قراردادهای کلی:**</li>
+</ul><ul>
+<li><strong>متغیرها و فیلدها:</strong> <code>camelCase</code></li>
+<li><strong>کلاس‌ها:</strong> <code>PascalCase</code></li>
+<li><strong>ثابت‌ها:</strong> <code>UPPER_SNAKE_CASE</code></li>
+<li><strong>متدها:</strong> <code>camelCase</code></li>
+<li><strong>پکیج‌ها:</strong> <code>lowercase</code></li>
+</ul>
+    </section>
+
+    <section id="section-6">
+        <h2>۶. 6. فیلدها در مقابل متغیرهای محلی: مقایسه جامع</h2>
+        <p>این دو مفهوم اغلب با هم اشتباه گرفته می‌شوند، اما محل ذخیره‌سازی و چرخه حیات آن‌ها کاملاً متفاوت است.</p><ul>
+<li><strong>فیلدها (Fields / Instance Variables):</strong></li>
+<li><strong>کجا تعریف می‌شوند؟</strong> درون یک کلاس، اما بیرون از هر متدی.</li>
+<li><strong>هدفشان چیست؟</strong> توصیف <strong>وضعیت (State)</strong> یا ویژگی‌های یک شیء. این‌ها داده‌هایی هستند که یک شیء "دارد".</li>
+<li><strong>کجا ذخیره می‌شوند؟</strong> در حافظه <strong>Heap</strong>، به عنوان بخشی از شیء.</li>
+<li><strong>چرخه حیات:</strong> تا زمانی که شیء زنده است، فیلدهای آن نیز وجود دارند.</li>
+<li><strong>مقدار پیش‌فرض:</strong> اگر شما به آن‌ها مقدار اولیه ندهید، جاوا به صورت خودکار یک مقدار پیش‌فرض به آن‌ها اختصاص می‌دهد (<code>0</code> برای اعداد، <code>false</code> برای boolean، و <code>null</code> برای انواع ارجاعی).</li>
+</ul><ul>
+<li><strong>متغیرهای محلی (Local Variables):</strong></li>
+<li><strong>کجا تعریف می‌شوند؟</strong> <strong>درون</strong> یک متد، سازنده (constructor)، یا یک بلوک کد.</li>
+<li><strong>هدفشان چیست؟</strong> ذخیره‌سازی موقت داده برای انجام محاسبات در طول اجرای همان متد.</li>
+<li><strong>کجا ذخیره می‌شوند؟</strong> در حافظه <strong>Stack</strong>، درون فریم مربوط به آن متد.</li>
+<li><strong>چرخه حیات:</strong> فقط تا زمانی که اجرای متد به پایان نرسیده، زنده هستند. به محض خروج از متد، از بین می‌روند.</li>
+<li><strong>مقدار پیش‌فرض:</strong> <strong>هیچ مقدار پیش‌فرضی ندارند.</strong> کامپایلر جاوا شما را <strong>مجبور می‌کند</strong> که قبل از اولین استفاده، حتماً آن‌ها را مقداردهی اولیه کنید. این یک ویژگی ایمنی بسیار مهم برای جلوگیری از استفاده از داده‌های نامشخص است.</li>
+</ul><ul>
+<li>*جدول مقایسه جامع:**</li>
+</ul><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>ویژگی</th>
+<th>Fields (فیلدها)</th>
+<th>Local Variables (متغیرهای محلی)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>محل تعریف</strong></td>
+<td>داخل کلاس، خارج متد</td>
+<td>داخل متد/constructor/بلوک</td>
+</tr>
+<tr>
+<td><strong>هدف</strong></td>
+<td>وضعیت شیء (State)</td>
+<td>محاسبات موقت</td>
+</tr>
+<tr>
+<td><strong>محل ذخیره</strong></td>
+<td>Heap (با شیء)</td>
+<td>Stack (با متد)</td>
+</tr>
+<tr>
+<td><strong>چرخه حیات</strong></td>
+<td>تا زمان زنده بودن شیء</td>
+<td>تا پایان متد</td>
+</tr>
+<tr>
+<td><strong>مقدار پیش‌فرض</strong></td>
+<td><span class="emoji">✅</span> دارد (0, null, false)</td>
+<td><span class="emoji">❌</span> ندارد (باید مقداردهی شود)</td>
+</tr>
+<tr>
+<td><strong>دسترسی</strong></td>
+<td>همه متدهای کلاس</td>
+<td>فقط همان متد/بلوک</td>
+</tr>
+<tr>
+<td><strong>Access Modifiers</strong></td>
+<td><span class="emoji">✅</span> مجاز (<code>private</code>, <code>public</code>, ...)</td>
+<td><span class="emoji">❌</span> غیرمجاز</td>
+</tr>
+<tr>
+<td><strong>static/final</strong></td>
+<td><span class="emoji">✅</span> مجاز</td>
+<td><span class="emoji">❌</span> فقط <code>final</code> مجاز</td>
+</tr>
+</tbody>
+</table>
+</div><ul>
+<li>*مثال جامع:**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class BankAccount {
+    // ==================== فیلدها ====================
+    // وضعیت حساب - در Heap - با شیء زنده می‌مانند
+
+    private String accountNumber;  // پیش‌فرض: null
+    private double balance;        // پیش‌فرض: 0.0
+    private boolean isActive;      // پیش‌فرض: false
+
+    // Constructor
+    public BankAccount(String accountNumber, double initialBalance) {
+        // ==================== متغیرهای محلی ====================
+        // در Stack - فقط تا پایان constructor
+
+        String message = "Creating account...";  // باید مقداردهی شود
+        System.out.println(message);
+
+        // مقداردهی فیلدها
+        this.accountNumber = accountNumber;
+        this.balance = initialBalance;
+        this.isActive = true;
+
+        // message اینجا از بین می‌رود
+    }
+
+    public void deposit(double amount) {
+        // ==================== متغیرهای محلی ====================
+        double fee = amount * 0.01;      // کارمزد - Stack
+        double netAmount = amount - fee;  // مبلغ خالص - Stack
+
+        // به‌روزرسانی فیلد (در Heap)
+        this.balance += netAmount;
+
+        System.out.println("موجودی جدید: " + balance);
+
+        // fee و netAmount اینجا از بین می‌روند
+        // اما balance (فیلد) باقی می‌ماند
+    }
+
+    public void demo() {
+        // ❌ خطای کامپایل: متغیر محلی بدون مقداردهی
+        // int x;
+        // System.out.println(x);
+
+        // ✅ صحیح: ابتدا مقداردهی
+        int x = 10;
+        System.out.println(x);
+
+        // ✅ فیلدها مقدار پیش‌فرض دارند
+        System.out.println(accountNumber);  // اگر مقداردهی نشده: null
+        System.out.println(balance);        // اگر مقداردهی نشده: 0.0
+    }
+}</code></pre>
+</div>
+    </section>
+
+    <section id="section-7">
+        <h2>۷. 7. اشتباهات رایج</h2>
+        <ul>
+<li>*الف) NullPointerException**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class NullDemo {
+    public static void main(String[] args) {
+        String text = null;
+
+        // ❌ خطا: text به چیزی اشاره نمی‌کند
+        // System.out.println(text.length());  // NullPointerException!
+
+        // ✅ راه‌حل: چک کردن null
+        if (text != null) {
+            System.out.println(text.length());
+        } else {
+            System.out.println("متن خالی است");
+        }
+
+        // ✅ راه‌حل 2: مقداردهی اولیه
+        text = "Hello";
+        System.out.println(text.length());  // 5
+    }
+}</code></pre>
+</div><ul>
+<li>*ب) مقایسه String با <code>==</code>**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class StringCompare {
+    public static void main(String[] args) {
+        String s1 = "Hello";
+        String s2 = new String("Hello");
+
+        // ❌ غلط: مقایسه آدرس
+        if (s1 == s2) {  // false
+            System.out.println("یکسان");
+        }
+
+        // ✅ صحیح: مقایسه محتوا
+        if (s1.equals(s2)) {  // true
+            System.out.println("یکسان");
+        }
+    }
+}</code></pre>
+</div><ul>
+<li>*ج) متغیر محلی بدون مقداردهی**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class UninitializedDemo {
+    int field;  // ✅ مقدار پیش‌فرض: 0
+
+    public void method() {
+        int local;  // ❌ بدون مقدار پیش‌فرض
+
+        // System.out.println(local);  // ❌ خطای کامپایل
+
+        local = 10;  // ✅ ابتدا مقداردهی
+        System.out.println(local);  // ✅ حالا قابل استفاده
+
+        System.out.println(field);  // ✅ فیلد مقدار پیش‌فرض دارد
+    }
+}</code></pre>
+</div><ul>
+<li>*د) اشتباه در Primitive vs Reference**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class CopyDemo {
+    public static void main(String[] args) {
+        // Primitive: کپی مقدار
+        int x = 10;
+        int y = x;
+        y = 20;
+        // x همچنان 10 است ✅
+
+        // Reference: کپی آدرس
+        int[] arr1 = {1, 2, 3};
+        int[] arr2 = arr1;  // ❌ اشتباه: هر دو به یک آرایه اشاره دارند
+        arr2[0] = 99;
+        // arr1[0] هم 99 شد! ⚠️
+
+        // ✅ راه‌حل: کپی واقعی
+        int[] arr3 = arr1.clone();  // یا Arrays.copyOf()
+        arr3[0] = 50;
+        // arr1[0] همچنان 99 است ✅
+    }
+}</code></pre>
+</div><ul>
+<li>*تمرین 1: تعریف Fields**</li>
+</ul><p>یک کلاس <code>Product</code> با این ویژگی‌ها بنویسید:</p><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class Product {
+    // TODO: نام محصول (private String)
+    // TODO: قیمت (private double)
+    // TODO: موجودی (private int)
+    // TODO: نرخ مالیات (public static final double = 0.09)
+
+    public Product(String name, double price, int stock) {
+        // TODO: مقداردهی
+    }
+}</code></pre>
+</div><ul>
+<li>*تمرین 2: Stack vs Heap**</li>
+</ul><p>کد زیر را ترسیم کنید و مشخص کنید چه چیزی در Stack و چه چیزی در Heap است:</p><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class Test {
+    int field = 10;
+
+    public void method() {
+        int local = 20;
+        Test obj = new Test();
+    }
+}</code></pre>
+</div><ul>
+<li>*تمرین 3: Primitive vs Reference**</li>
+</ul><p>پیش‌بینی کنید خروجی کد زیر چیست:</p><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">int a = 10;
+int b = a;
+b = 20;
+System.out.println(a);  // ؟
+
+Student s1 = new Student("Ali");
+Student s2 = s1;
+s2.name = "Reza";
+System.out.println(s1.name);  // ؟</code></pre>
+</div><ul>
+<li>*تمرین 4: اشکال‌یابی**</li>
+</ul><p>چرا این کد کامپایل نمی‌شود؟</p><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class Demo {
+    int field1;
+
+    public void method1() {
+        int local1;
+        System.out.println(field1);  // OK
+        System.out.println(local1);  // Error! چرا؟
+    }
+}</code></pre>
+</div><ul>
+<li>*تمرین 5: Null Safety**</li>
+</ul><p>کد زیر را اصلاح کنید تا <code>NullPointerException</code> نگیرد:</p><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">String name = null;
+System.out.println(name.length());</code></pre>
+</div><ul>
+<li>*خلاصه بخش دوم:**</li>
+</ul><p><span class="emoji">✅</span> <strong>Statically-Typed:</strong> نوع هر متغیر باید مشخص باشد</p><p><span class="emoji">✅</span> <strong>Primitive (8 نوع):</strong> مقدار واقعی</p><p><span class="emoji">✅</span> <strong>Reference:</strong> آدرس به شیء</p><p><span class="emoji">✅</span> <strong>Stack:</strong> سریع، کوچک، متغیرهای محلی</p><p><span class="emoji">✅</span> <strong>Heap:</strong> بزرگ، کند، اشیاء و آرایه‌ها</p><p><span class="emoji">✅</span> <strong>GC:</strong> آزادسازی خودکار اشیاء بدون ارجاع</p><p><span class="emoji">✅</span> <strong>Field Syntax:</strong> <code>[access] [static] [final] type name [= value];</code></p><p><span class="emoji">✅</span> <strong>Naming:</strong> camelCase, UPPER_SNAKE_CASE</p><p><span class="emoji">✅</span> <strong>Fields:</strong> Heap، مقدار پیش‌فرض دارند</p><p><span class="emoji">✅</span> <strong>Local Variables:</strong> Stack، باید مقداردهی شوند</p><ul>
+<li>*در بخش بعدی:** <code>static</code> و <code>final</code> — اشتراک‌گذاری و تغییرناپذیری</li>
+</ul>
+    </section>
+
+    <section id="navigation">
+        <div class="part-navigation">
+<a href="part01.html" class="btn-prev">→ بخش قبلی</a>
+<a href="part03.html" class="btn-next">بخش بعدی: انواع داده و حافظه ←</a>
+</div>
+    </section>
+</main>
+
+<script src="../assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+</body>
+</html>

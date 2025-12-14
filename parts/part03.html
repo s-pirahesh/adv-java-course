@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بخش ۳: static و final | برنامه‌سازی پیشرفته</title>
+    
+    <meta name="description" content="static و final">
+    
+    <link rel="stylesheet" href="../assets/css/themes.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+</head>
+<body class="theme-part03">
+
+<div id="overlay"></div>
+
+<header id="top-header">
+    <button id="menu-toggle">☰</button>
+    <h1>۳. static و final</h1>
+    <div class="breadcrumb">
+        <a href="../index.html">خانه</a>
+        <span>></span>
+        <span>فاز ۱</span>
+        <span>></span>
+        <span>بخش ۳</span>
+    </div>
+</header>
+
+<nav id="sidebar">
+    <div class="sidebar-profile">
+        <a href="../index.html" title="بازگشت به صفحه اصلی">
+            <img src="../assets/images/university_logo.png" alt="لوگو دانشگاه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
+        </a>
+        <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
+        <p>مدرس: سید سجاد پیراهش</p>
+    </div>
+    
+    <ul class="nav-menu">
+        <li>
+            <header class="open">فهرست بخش ۳</header>
+            <ul class="submenu open">
+                <li><a href="#section-1" class="nav-link">۱. 1. کلمه کلیدی `static`: قلمرو اشتراک و تعلق به کلاس</a></li>
+<li><a href="#section-2" class="nav-link">۲. 2. کلمه کلیدی `final`: قلمرو ثبات و تغییرناپذیری</a></li>
+
+            </ul>
+        </li>
+        <li>
+            <header>بخش‌های فاز ۱</header>
+            <ul class="submenu">
+                <li><a href="part01.html" class="nav-link ">بخش ۱: از پارادایم تا بایت‌کد</a></li>
+                <li><a href="part02.html" class="nav-link ">بخش ۲: انواع داده و حافظه</a></li>
+                <li><a href="part03.html" class="nav-link active">بخش ۳: static و final</a></li>
+                <li><a href="part04.html" class="nav-link ">بخش ۴: آرایه‌ها</a></li>
+                <li><a href="part05.html" class="nav-link ">بخش ۵: متدها</a></li>
+                <li><a href="part06.html" class="nav-link ">بخش ۶: سازنده‌ها</a></li>
+                <li><a href="part07.html" class="nav-link ">بخش ۷: پکیج‌بندی</a></li>
+            </ul>
+        </li>
+    </ul>
+    
+    <div class="sidebar-footer">
+        <a href="../index.html">→ بازگشت به فهرست اصلی</a>
+    </div>
+</nav>
+
+<main id="main-content">
+
+    <section id="section-1">
+        <h2>۱. 1. کلمه کلیدی `static`: قلمرو اشتراک و تعلق به کلاس</h2>
+        <p>وقتی عضوی (فیلد یا متد) را به صورت <code>static</code> تعریف می‌کنیم، به JVM می‌گوییم: "این عضو متعلق به هیچ شیء منحصربه‌فردی نیست، بلکه مستقیماً به خودِ کلاس <code>Student</code> تعلق دارد."</p><ul>
+<li>*الف) فیلدهای استاتیک (Static Fields / Class Variables)**</li>
+</ul><p>یک فیلد استاتیک، یک متغیر مشترک بین <strong>تمام اشیاء</strong> آن کلاس است. فقط <strong>یک کپی</strong> از این متغیر در حافظه وجود دارد، فارغ از اینکه صفر یا یک میلیون شیء از آن کلاس ساخته شود.</p><ul>
+<li><strong>بهترین مثال: شمارنده اشیاء</strong></li>
+</ul><p>فرض کنید می‌خواهیم بدانیم تاکنون چند شیء از کلاس <code>Student</code> ساخته شده است. اگر یک شمارنده معمولی (غیر استاتیک) داشته باشیم، هر شیء شمارنده خودش را خواهد داشت که همیشه مقدار 1 را نشان می‌دهد. راه‌حل، استفاده از یک فیلد <code>static</code> است.</p><p>```java</p><p>public class Student {</p><p>// فیلد نمونه: هر دانشجو نام خود را دارد.</p><p>String name;</p><p>// فیلد استاتیک: این شمارنده بین همه دانشجویان مشترک است.</p><p>public static int studentCount = 0;</p><p>public Student(String name) {</p><p>this.name = name;</p><p>// با ساخت هر شیء جدید، شمارنده مشترک یک واحد زیاد می‌شود.</p><p>studentCount++;</p><p>}</p><p>}</p><p>```</p><p>```java</p><p>// نحوه استفاده:</p><p>System.out.println("تعداد اولیه دانشجو: " + Student.studentCount); // خروجی: 0</p><p>Student s1 = new Student("علی");</p><p>System.out.println("تعداد دانشجو پس از s1: " + Student.studentCount); // خروجی: 1</p><p>Student s2 = new Student("سارا");</p><p>System.out.println("تعداد دانشجو پس از s2: " + Student.studentCount); // خروجی: 2</p><p>// نکته مهم: دسترسی از طریق نام کلاس صحیح است، نه نام شیء.</p><p>// System.out.println(s1.studentCount); // خروجی 2 است، اما این روش دسترسی گمراه‌کننده است.</p><p>```</p><ul>
+<li><strong>مدیریت حافظه فیلدهای <code>static</code>:</strong></li>
+</ul><p>فیلدهای استاتیک در Heap و داخل خود اشیاء ذخیره <strong>نمی‌شوند</strong>. JVM یک ناحیه حافظه ویژه (که در نسخه‌های قدیمی‌تر PermGen و در نسخه‌های جدیدتر <strong>Metaspace</strong> نامیده می‌شود) برای نگهداری داده‌های مربوط به خودِ کلاس‌ها (فراداده یا Metadata) دارد. فیلدهای استاتیک در این ناحیه ذخیره می‌شوند.</p><ul>
+<li>*نمودار حافظه برای فیلدهای استاتیک (با Mermaid):**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-mermaid">graph TD
+    subgraph "حافظه RAM"
+        subgraph "&lt;b&gt;Stack&lt;/b&gt;"
+            direction TB
+            R1["Student s1 = 0x50;"]
+            R2["Student s2 = 0x70;"]
+        end
+
+        subgraph "&lt;b&gt;Heap (برای اشیاء)&lt;/b&gt;"
+            direction TB
+            O1("&lt;b&gt;(0x50)&lt;/b&gt;&lt;br&gt;شیء Student&lt;br&gt;-----------&lt;br&gt;&lt;i&gt;فیلد نمونه:&lt;/i&gt;&lt;br&gt;name: 'علی'")
+            O2("&lt;b&gt;(0x70)&lt;/b&gt;&lt;br&gt;شیء Student&lt;br&gt;-----------&lt;br&gt;&lt;i&gt;فیلد نمونه:&lt;/i&gt;&lt;br&gt;name: 'سارا'")
+        end
+
+        subgraph "&lt;b&gt;Metaspace / Method Area (برای کلاس)&lt;/b&gt;"
+            direction TB
+            C1("فراداده کلاس Student&lt;br&gt;-----------&lt;br&gt;&lt;i&gt;&lt;b&gt;فیلد استاتیک:&lt;/b&gt;&lt;/i&gt;&lt;br&gt;studentCount: 2")
+        end
+    end
+
+    R1 -- "اشاره به شیء" --&gt; O1;
+    R2 -- "اشاره به شیء" --&gt; O2;
+
+    O1 -- "همه اشیاء به" --&gt; C1;
+    O2 -- "داده‌های کلاس مشترک دسترسی دارند" --&gt; C1;
+
+    style C1 fill:#e6f3ff,stroke:#0066cc,stroke-width:2px</code></pre>
+</div><ul>
+<li>*ب) متدهای استاتیک (Static Methods / Class Methods)**</li>
+</ul><p>یک متد استاتیک نیز به کلاس تعلق دارد و برای فراخوانی آن، نیازی به ساختن شیء نیست.</p><ul>
+<li><strong>قانون طلایی متدهای استاتیک:</strong></li>
+</ul><p>یک متد <code>static</code> <strong>نمی‌تواند</strong> به اعضای <strong>غیر استاتیک (non-static / instance)</strong> کلاس (فیلدها یا متدها) به صورت مستقیم دسترسی داشته باشد.</p><ul>
+<li><strong>چرا؟</strong> چون یک متد استاتیک به هیچ شیء خاصی وابسته نیست. وقتی شما <code>Student.doSomething()</code> را فراخوانی می‌کنید، JVM چگونه باید بداند منظور شما <code>name</code> مربوط به <code>s1</code> است یا <code>s2</code>؟ هیچ شیء (<code>this</code>) در کار نیست.</li>
+</ul><p>```java</p><p>public class Calculator {</p><p>// فیلد نمونه</p><p>String model = "Casio";</p><p>// متد استاتیک: یک ابزار عمومی است، به مدل ماشین حساب بستگی ندارد.</p><p>public static int add(int a, int b) {</p><p>// صحیح: متد استاتیک به داده‌های ورودی خودش دسترسی دارد.</p><p>return a + b;</p><p>// غلط: این کد کامپایل نمی‌شود. کدام "model"؟</p><p>// System.out.println(model);</p><p>// System.out.println(this.model); // کلمه کلیدی 'this' در زمینه استاتیک وجود ندارد.</p><p>}</p><p>// متد نمونه: به یک شیء خاص وابسته است.</p><p>public void printModel() {</p><p>// صحیح: متد نمونه به فیلد نمونه دسترسی دارد.</p><p>System.out.println(this.model);</p><p>// صحیح: متد نمونه می‌تواند به متد استاتیک دسترسی داشته باشد.</p><p>int result = add(10, 5);</p><p>}</p><p>}</p><p>```</p><ul>
+<li><strong>کاربرد:</strong> متدهای استاتیک برای ساخت <strong>توابع ابزاری (Utility Functions)</strong> که به وضعیت یک شیء خاص بستگی ندارند، عالی هستند. کلاس <code>Math</code> در جاوا یک مثال کامل است؛ تمام متدهای آن (<code>Math.random()</code>, <code>Math.pow()</code>, <code>Math.max()</code>) استاتیک هستند، چون برای استفاده از آن‌ها نیازی به ساختن شیء <code>new Math()</code> نداریم.</li>
+</ul><ul>
+<li>*ج) بلوک‌های استاتیک (Static Blocks)**</li>
+</ul><p>یک بلوک کد که با کلمه <code>static</code> شروع می‌شود. این بلوک <strong>فقط یک بار</strong>، در لحظه‌ای که کلاس برای اولین بار توسط JVM بارگذاری (Load) می‌شود، اجرا می‌گردد. از آن برای مقداردهی اولیه پیچیده فیلدهای استاتیک استفاده می‌شود.</p><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class DatabaseConfig {
+    public static final String CONNECTION_STRING;
+
+    static {
+        System.out.println("بلوک استاتیک در حال اجرا است...");
+        // فرض کنید برای ساخت رشته اتصال، نیاز به خواندن از فایل یا منطق پیچیده‌ای داریم
+        String dbHost = "localhost";
+        int dbPort = 5432;
+        CONNECTION_STRING = "jdbc:postgresql://" + dbHost + ":" + dbPort + "/maindb";
+    }
+}</code></pre>
+</div><ul>
+<li>*🆕 جدول مقایسه: Instance vs Static**</li>
+</ul><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>ویژگی</strong></th>
+<th><strong>Instance (نمونه)</strong></th>
+<th><strong>Static (استاتیک)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>تعلق</strong></td>
+<td>به شیء</td>
+<td>به کلاس</td>
+</tr>
+<tr>
+<td><strong>تعداد کپی</strong></td>
+<td>هر شیء یک کپی</td>
+<td>یک کپی برای همه</td>
+</tr>
+<tr>
+<td><strong>دسترسی</strong></td>
+<td><code>object.member</code></td>
+<td><code>ClassName.member</code></td>
+</tr>
+<tr>
+<td><strong>حافظه</strong></td>
+<td>Heap</td>
+<td>Metaspace</td>
+</tr>
+<tr>
+<td><strong>عمر</strong></td>
+<td>تا زنده بودن شیء</td>
+<td>تا پایان برنامه</td>
+</tr>
+<tr>
+<td><strong>دسترسی به Instance</strong></td>
+<td><span class="emoji">✅</span> می‌تواند</td>
+<td><span class="emoji">❌</span> نمی‌تواند</td>
+</tr>
+<tr>
+<td><strong>دسترسی به Static</strong></td>
+<td><span class="emoji">✅</span> می‌تواند</td>
+<td><span class="emoji">✅</span> می‌تواند</td>
+</tr>
+<tr>
+<td><strong>کلمه <code>this</code></strong></td>
+<td><span class="emoji">✅</span> دارد</td>
+<td><span class="emoji">❌</span> ندارد</td>
+</tr>
+<tr>
+<td><strong>کاربرد</strong></td>
+<td>وضعیت شیء</td>
+<td>ابزار مشترک</td>
+</tr>
+</tbody>
+</table>
+</div><ul>
+<li>*🆕 مثال جامع:**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class Counter {
+    // Instance
+    private int instanceCount = 0;
+
+    // Static
+    private static int staticCount = 0;
+
+    public void increment() {
+        instanceCount++;  // فقط این شیء
+        staticCount++;    // همه اشیاء
+    }
+
+    public void display() {
+        System.out.println("Instance: " + instanceCount + ", Static: " + staticCount);
+    }
+
+    public static void main(String[] args) {
+        Counter c1 = new Counter();
+        c1.increment();
+        c1.increment();
+        c1.display();  // Instance: 2, Static: 2
+
+        Counter c2 = new Counter();
+        c2.increment();
+        c2.display();  // Instance: 1, Static: 3 (static مشترک است!)
+
+        c1.display();  // Instance: 2, Static: 3
+    }
+}</code></pre>
+</div><ul>
+<li>*🆕 Decision Tree: کی از Static استفاده کنیم؟**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">آیا این داده/رفتار به یک شیء خاص وابسته است?
+│
+├─ بله → Instance (غیر استاتیک)
+│   مثال: نام دانشجو، موجودی حساب
+│
+└─ خیر → Static
+    │
+    ├─ آیا تمام اشیاء باید این مقدار را به اشتراک بگذارند?
+    │  └─ بله → Static Field
+    │      مثال: شمارنده اشیاء، نرخ بهره بانک
+    │
+    ├─ آیا این یک تابع ابزاری است که به شیء نیاز ندارد?
+    │  └─ بله → Static Method
+    │      مثال: Math.pow(), Collections.sort()
+    │
+    └─ آیا نیاز به مقداردهی پیچیده یک‌باره دارید?
+       └─ بله → Static Block
+           مثال: بارگذاری تنظیمات، اتصال دیتابیس</code></pre>
+</div><ul>
+<li>*🆕 مثال‌های واقعی:**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class BankAccount {
+    // Instance: هر حساب موجودی خودش را دارد
+    private double balance;
+
+    // Static: همه حساب‌ها نرخ بهره یکسانی دارند
+    private static double interestRate = 0.05;
+
+    // Instance Method: محاسبه بهره این حساب
+    public double calculateInterest() {
+        return balance * interestRate;
+    }
+
+    // Static Method: تغییر نرخ بهره برای همه
+    public static void setInterestRate(double rate) {
+        interestRate = rate;
+    }
+}</code></pre>
+</div>
+    </section>
+
+    <section id="section-2">
+        <h2>۲. 2. کلمه کلیدی `final`: قلمرو ثبات و تغییرناپذیری</h2>
+        <p>کلمه کلیدی <code>final</code> را می‌توان به عنوان یک "قول" در نظر گرفت. وقتی چیزی را <code>final</code> اعلام می‌کنید، قول می‌دهید که مقدار آن پس از مقداردهی اولیه، دیگر هرگز تغییر نخواهد کرد. این کلمه در سه زمینه مختلف به کار می‌رود:</p><ul>
+<li>*الف) متغیرهای نهایی (Final Variables)**</li>
+</ul><p>یک متغیر <code>final</code> فقط یک بار می‌تواند مقداردهی شود.</p><ul>
+<li><strong>برای داده‌های اولیه (Primitives):</strong> مقدار واقعی متغیر، ثابت می‌شود.</li>
+</ul><p>```java</p><p>final int DAYS_IN_WEEK = 7;</p><p>DAYS_IN_WEEK = 8; // خطای کامپایل: نمی‌توان به یک متغیر final مقدار جدیدی داد.</p><p>```</p><ul>
+<li><strong>برای داده‌های ارجاعی (References):</strong> این نکته بسیار مهم و اغلب گیج‌کننده است. <code>final</code> کردن یک متغیر ارجاعی، خود <strong>ارجاع (آدرس حافظه)</strong> را ثابت می‌کند، نه <strong>محتوای شیئی</strong> که به آن اشاره دارد. یعنی شما نمی‌توانید آن متغیر را وادار کنید به شیء دیگری اشاره کند، اما همچنان می‌توانید وضعیت داخلی (فیلدهای) همان شیء را تغییر دهید.</li>
+</ul><ul>
+<li>*نمودار تفاوت <code>final</code> برای Primitive و Reference (با Mermaid):**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-mermaid">graph TD
+    subgraph "&lt;b&gt;Final Primitive&lt;/b&gt;"
+        A["final int x = 10;"] -- "مقدار 10 ثابت است" --&gt; B((10));
+        C["x = 20;"] --&gt; D{&lt;font color=red&gt;&lt;b&gt;خطای کامپایل!&lt;/b&gt;&lt;/font&gt;};
+    end
+
+    subgraph "&lt;b&gt;Final Reference&lt;/b&gt;"
+        E["final Student s = new Student('Ali');&lt;br&gt;(s به آدرس 0x99 اشاره می‌کند)"]
+        subgraph "Heap"
+            O1("&lt;b&gt;(0x99)&lt;/b&gt;&lt;br&gt;شیء Student&lt;br&gt;-----------&lt;br&gt;name: 'Ali'");
+        end
+        E -- "این ارجاع ثابت است" --&gt; O1;
+
+        F["s.setName('Reza');"] -- "صحیح: محتوای شیء تغییر می‌کند" --&gt; O1;
+        G["s = new Student('Sara');"] -- "&lt;font color=red&gt;&lt;b&gt;خطای کامپایل!&lt;/b&gt;&lt;/font&gt;&lt;br&gt;نمی‌توان ارجاع را به شیء جدید تغییر داد" --&gt; H((New Object));
+    end</code></pre>
+</div><ul>
+<li>*ب) متدهای نهایی (Final Methods)**</li>
+</ul><p>یک متد <code>final</code> <strong>نمی‌تواند</strong> در کلاس فرزند <strong>بازنویسی (Override)</strong> شود.</p><ul>
+<li><strong>کاربرد:</strong></li>
+<li>.  <strong>امنیتی:</strong> برای تضمین اینکه رفتار حیاتی یک متد توسط کلاس‌های فرزند تغییر داده نمی‌شود.</li>
+<li>.  <strong>طراحی:</strong> برای اطلاع به دیگر برنامه‌نویسان که "این متد برای انجام دقیق همین کار طراحی شده و نباید تغییر کند."</li>
+</ul><p>```java</p><p>public class Animal {</p><p>public final void breathe() {</p><p>System.out.println("Breathing...");</p><p>}</p><p>}</p><p>public class Dog extends Animal {</p><p>// خطای کامپایل: نمی‌توان متد final را بازنویسی کرد.</p><p>// @Override</p><p>// public void breathe() { ... }</p><p>}</p><p>```</p><ul>
+<li>*ج) کلاس‌های نهایی (Final Classes)**</li>
+</ul><p>یک کلاس <code>final</code> <strong>نمی‌تواند</strong> به عنوان والد مورد ارث‌بری قرار گیرد. هیچ کلاسی نمی‌تواند آن را <code>extend</code> کند.</p><ul>
+<li><strong>کاربرد:</strong> کلاس‌های <code>String</code>, <code>Integer</code>, <code>Double</code> و... در جاوا همگی <code>final</code> هستند. این کار تضمین می‌کند که رفتار و ساختار این کلاس‌های بنیادین همیشه ثابت و قابل اعتماد باقی بماند و هیچ‌کس نتواند با ارث‌بری از آن‌ها، یک نسخه "تقلبی" یا مخرب ایجاد کند.</li>
+</ul><ul>
+<li>*ترکیب طلایی: <code>public static final</code>**</li>
+</ul><p>این ترکیب برای تعریف <strong>ثابت‌های عمومی (Public Constants)</strong> در یک برنامه استفاده می‌شود.</p><ul>
+<li><code>public</code>: از همه جا قابل دسترسی است.</li>
+<li><code>static</code>: متعلق به کلاس است، نیازی به ساخت شیء نیست.</li>
+<li><code>final</code>: مقدار آن ثابت و غیرقابل تغییر است.</li>
+</ul><ul>
+<li>*قرارداد نام‌گذاری:** نام این ثابت‌ها همیشه با حروف بزرگ و با <code>_</code> برای جداسازی کلمات نوشته می‌شود (<code>SNAKE_CASE</code>).</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class AppConfig {
+    public static final int MAX_LOGIN_ATTEMPTS = 5;
+    public static final String DEFAULT_GREETING = "Welcome!";
+}
+
+// استفاده در جای دیگر برنامه:
+if (attempts &gt; AppConfig.MAX_LOGIN_ATTEMPTS) { ... }</code></pre>
+</div><ul>
+<li>*🆕 اشتباهات رایج**</li>
+</ul><ul>
+<li>*الف) استفاده بیش از حد از Static**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">// ❌ بد: همه چیز static
+public class BadDesign {
+    public static String userName;
+    public static int userAge;
+
+    public static void printUser() { ... }
+}
+
+// ✅ خوب: فقط آنچه واقعاً باید static باشد
+public class User {
+    private String name;
+    private int age;
+    private static int totalUsers = 0;
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+        totalUsers++;
+    }
+}</code></pre>
+</div><ul>
+<li>*ب) فراموش کردن final برای ثابت‌ها**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">// ⚠️ بد: قابل تغییر است
+public static int MAX_SIZE = 100;
+
+// ✅ خوب: تغییرناپذیر
+public static final int MAX_SIZE = 100;</code></pre>
+</div><ul>
+<li>*ج) سوءتفاهم درباره final Reference**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">final List&lt;String&gt; names = new ArrayList&lt;&gt;();
+names.add("Ali");     // ✅ مجاز
+names.add("Sara");    // ✅ مجاز
+// names = new ArrayList&lt;&gt;(); // ❌ غیرمجاز</code></pre>
+</div><ul>
+<li>*تمرین 1: شمارنده بانک**</li>
+</ul><p>یک کلاس <code>BankAccount</code> بنویسید که:</p><ul>
+<li>فیلد static برای تعداد کل حساب‌ها</li>
+<li>فیلد static برای مجموع موجودی همه حساب‌ها</li>
+<li>متد static برای نمایش آمار کل</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class BankAccount {
+    private String accountNumber;
+    private double balance;
+
+    private static int totalAccounts = 0;
+    private static double totalBalance = 0;
+
+    public BankAccount(String accountNumber, double initialBalance) {
+        // کد شما اینجا
+    }
+
+    public static void displayStatistics() {
+        // کد شما اینجا
+    }
+}</code></pre>
+</div><ul>
+<li>*تمرین 2: تفاوت Instance vs Static**</li>
+</ul><p>پیش‌بینی کنید خروجی کد زیر چیست:</p><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">public class Test {
+    int x = 0;
+    static int y = 0;
+
+    public void increment() {
+        x++;
+        y++;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Test t1 = new Test();
+        t1.increment();
+        t1.increment();
+
+        Test t2 = new Test();
+        t2.increment();
+
+        System.out.println("t1.x=" + t1.x + ", t1.y=" + t1.y);
+        System.out.println("t2.x=" + t2.x + ", t2.y=" + t2.y);
+    }
+}</code></pre>
+</div><ul>
+<li>*تمرین 3: Final با ArrayList**</li>
+</ul><div class="code-block-container">
+    <button class="copy-button" onclick="copyCode(this)">کپی</button>
+    <pre><code class="language-java">final ArrayList&lt;Integer&gt; numbers = new ArrayList&lt;&gt;();
+numbers.add(10);
+numbers.add(20);
+numbers.set(0, 30);  // آیا مجاز است؟
+numbers = new ArrayList&lt;&gt;();  // آیا مجاز است؟</code></pre>
+</div><ul>
+<li>*تمرین 4: طراحی کلاس Constants**</li>
+</ul><p>یک کلاس <code>GameConstants</code> طراحی کنید با:</p><ul>
+<li>حداکثر تعداد بازیکن</li>
+<li>سرعت پیش‌فرض</li>
+<li>نام نسخه بازی</li>
+<li>تمام اینها <code>public static final</code></li>
+</ul><ul>
+<li>*تمرین 5: Static Block**</li>
+</ul><p>یک کلاس بنویسید که در static block:</p><ul>
+<li>تاریخ و زمان بارگذاری را چاپ کند</li>
+<li>یک فایل تنظیمات خیالی را بارگذاری کند</li>
+<li>پیام "آماده به کار" نمایش دهد</li>
+</ul><ul>
+<li>*خلاصه بخش سوم:**</li>
+</ul><p><span class="emoji">✅</span> <strong>static:</strong> متعلق به کلاس، مشترک بین همه</p><p><span class="emoji">✅</span> <strong>final:</strong> تغییرناپذیر، قابل مقداردهی یکبار</p><p><span class="emoji">✅</span> <strong>Static Fields:</strong> یک کپی برای همه اشیاء</p><p><span class="emoji">✅</span> <strong>Static Methods:</strong> بدون شیء قابل فراخوانی</p><p><span class="emoji">✅</span> <strong>Static Block:</strong> یکبار در بارگذاری کلاس</p><p><span class="emoji">✅</span> <strong>Final Variables:</strong> Primitive ثابت، Reference آدرس ثابت</p><p><span class="emoji">✅</span> <strong>public static final:</strong> ثابت‌های عمومی (UPPER_SNAKE_CASE)</p><p>با درک عمیق <code>static</code> و <code>final</code>، شما اکنون کنترل بسیار بیشتری بر معماری، اشتراک‌گذاری داده، امنیت و ثبات برنامه خود دارید.</p><ul>
+<li>*در بخش بعدی:** آرایه‌ها — مدیریت مجموعه‌های داده</li>
+</ul>
+    </section>
+
+    <section id="navigation">
+        <div class="part-navigation">
+<a href="part02.html" class="btn-prev">→ بخش قبلی</a>
+<a href="part04.html" class="btn-next">بخش بعدی: static و final ←</a>
+</div>
+    </section>
+</main>
+
+<script src="../assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+</body>
+</html>
