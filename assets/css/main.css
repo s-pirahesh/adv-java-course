@@ -518,7 +518,7 @@ li {
 .part-navigation {
     display: flex;
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 4rem;
     padding-top: 2rem;
     border-top: 2px solid var(--accent-color, #E5E7EB);
 }
@@ -536,12 +536,6 @@ li {
 .btn-prev, .btn-next {
     background: var(--primary-color, #3B82F6);
     color: #FFF;
-	display: inline-block;
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s;
 }
 
 .btn-prev:hover, .btn-next:hover {
@@ -568,29 +562,29 @@ li {
     #top-header h1 {
         font-size: 1.3rem;
     }
-    
+
     #main-content {
         padding: 2rem 1.5rem;
     }
-    
+
     /* Copy button always visible on mobile */
     .copy-button {
         opacity: 1 !important;
         right: 0.75rem !important;
         left: auto !important;
     }
-    
+
     /* Ensure diagrams are LTR on mobile */
     .diagram-container {
         direction: ltr !important;
     }
-    
+
     /* Tables responsive */
     table {
         font-size: 0.9rem;
         direction: ltr !important;
     }
-    
+
     th, td {
         padding: 0.75rem 0.5rem;
         direction: rtl !important;
@@ -601,7 +595,7 @@ li {
     #top-header h1 {
         font-size: 1.3rem;
     }
-    
+
     #main-content {
         padding: 3rem 2rem;
     }
@@ -611,20 +605,20 @@ li {
     #sidebar {
         transform: translateX(0);
     }
-    
+
     #menu-toggle {
         display: none;
     }
-    
+
     #top-header {
         right: var(--sidebar-width);  /* Add margin for sidebar */
     }
-    
+
     #main-content {
         margin-right: var(--sidebar-width);
         padding: 3rem 4rem;
     }
-    
+
     #overlay {
         display: none;
     }
@@ -659,10 +653,81 @@ li {
     .copy-button {
         display: none;
     }
-    
+
     #main-content {
         margin: 0;
         padding: 0;
         max-width: 100%;
     }
+}
+
+/* === Next Section Navigation Fix === */
+.next-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border-radius: 12px;
+    border-right: 4px solid #0ea5e9;
+}
+
+.next-section p {
+    margin-bottom: 1rem;
+    color: #374151;
+}
+
+.part-navigation {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* === Summary Box === */
+.summary-box {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border-right: 4px solid #10b981;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.summary-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.summary-box li {
+    padding: 0.5rem 0;
+    color: #374151;
+}
+
+/* === Exercise Box === */
+.exercise-box {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-right: 4px solid #f59e0b;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.exercise-box h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #92400e;
+}
+
+.exercise-box ul, .exercise-box ol {
+    margin: 0.5rem 0;
+}
+
+/* === Warning Box === */
+.warning-box {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border-right: 4px solid #ef4444;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+}
+
+.warning-box strong {
+    color: #991b1b;
 }
