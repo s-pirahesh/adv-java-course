@@ -3,36 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بخش ۴: آرایه‌ها - برنامه‌سازی پیشرفته</title>
+    <title>بخش ۴: آرایه‌ها | برنامه‌سازی پیشرفته</title>
     
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
+    <meta name="description" content="آموزش جامع آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
     
-    <!-- Styles -->
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+    
+    <style>
+    .diagram-container {
+        margin: 2rem 0;
+        background: white;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .diagram-container svg {
+        width: 100%;
+        height: auto;
+        max-width: 900px;
+        margin: 0 auto;
+        display: block;
+    }
+    </style>
 </head>
 <body class="theme-part04">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>بخش ۴: آرایه‌ها — مدیریت مجموعه‌های داده</h1>
+    <h1>۴. آرایه‌ها</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۱</span>
         <span>></span>
         <span>بخش ۴</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -54,7 +65,6 @@
                 <li><a href="#section-6" class="nav-link">۶. خطاهای رایج</a></li>
                 <li><a href="#section-7" class="nav-link">۷. آرایه‌ای از اشیاء</a></li>
                 <li><a href="#section-8" class="nav-link">۸. آرایه‌های چندبعدی</a></li>
-                <li><a href="#section-9" class="nav-link">۹. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
@@ -66,7 +76,7 @@
                 <li><a href="part04.html" class="nav-link active">بخش ۴: آرایه‌ها</a></li>
                 <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
                 <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها</a></li>
-                <li><a href="part06b.html" class="nav-link">بخش ۶b: پکیج‌بندی</a></li>
+                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
             </ul>
         </li>
     </ul>
@@ -76,226 +86,258 @@
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
     
-    <!-- Introduction -->
-    <section>
-        <p class="text-center" style="font-size: 1.1rem; font-weight: 500; color: var(--secondary-color); margin-bottom: 2rem;">
-            تا به حال، هر متغیری که تعریف کرده‌ایم، تنها قابلیت نگهداری <strong>یک</strong> مقدار را داشته است. اما اگر بخواهیم نمرات 100 دانشجو را ذخیره کنیم، آیا باید 100 متغیر <code>int</code> مجزا تعریف کنیم؟ قطعاً خیر. اینجاست که آرایه‌ها به عنوان یک ساختار داده بنیادین وارد عمل می‌شوند.
-        </p>
+    <section id="intro">
+        <p class="lead">تا به حال، هر متغیری که تعریف کرده‌ایم، تنها قابلیت نگهداری <strong>یک</strong> مقدار را داشته است. اما اگر بخواهیم نمرات ۱۰۰ دانشجو را ذخیره کنیم، آیا باید ۱۰۰ متغیر <code>int</code> مجزا تعریف کنیم؟ (<code>grade1</code>, <code>grade2</code>, ... <code>grade100</code>). قطعاً خیر. اینجاست که آرایه‌ها به عنوان یک ساختار داده بنیادین وارد عمل می‌شوند.</p>
     </section>
 
-    <!-- Section 1: What is an Array -->
     <section id="section-1">
         <h2>۱. آرایه چیست؟</h2>
-        <p>
-            یک آرایه، یک <strong>مجموعه مرتب</strong> از مقادیر است که <strong>همگی از یک نوع داده</strong> هستند. این مقادیر در خانه‌های حافظه <strong>پشت سر هم (Contiguous)</strong> قرار می‌گیرند. آرایه به ما اجازه می‌دهد تا تعداد زیادی مقدار را تحت یک نام واحد مدیریت کنیم.
-        </p>
         
-        <h3>ویژگی‌های کلیدی:</h3>
-        <ul>
-            <li><strong>اندازه ثابت (Fixed Size):</strong> وقتی یک آرایه با اندازه‌ای مشخص ایجاد شد، اندازه آن هرگز قابل تغییر نیست.</li>
-            <li><strong>نوع داده یکسان (Homogeneous):</strong> یک آرایه <code>int</code> فقط می‌تواند مقادیر <code>int</code> را نگه دارد.</li>
-            <li><strong>دسترسی با شاخص (Indexed Access):</strong> به هر عنصر یک شماره شاخص از <code>0</code> تا <code>length - 1</code> اختصاص داده می‌شود.</li>
-        </ul>
-        
-        <h3 class="text-center mt-4">جدول مقایسه: Array vs متغیرهای مجزا</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>ویژگی</th>
-                    <th>متغیرهای مجزا</th>
-                    <th>Array</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>تعداد نام</strong></td>
-                    <td>هر متغیر یک نام</td>
-                    <td>یک نام برای همه</td>
-                </tr>
-                <tr>
-                    <td><strong>مدیریت</strong></td>
-                    <td>بسیار سخت</td>
-                    <td>ساده</td>
-                </tr>
-                <tr>
-                    <td><strong>حلقه‌زدن</strong></td>
-                    <td>غیرممکن</td>
-                    <td>آسان</td>
-                </tr>
-                <tr>
-                    <td><strong>انعطاف</strong></td>
-                    <td>صفر</td>
-                    <td>بالا</td>
-                </tr>
-                <tr>
-                    <td><strong>مثال</strong></td>
-                    <td><code>score1, score2, ...</code></td>
-                    <td><code>scores[0], scores[1], ...</code></td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+        <p>یک آرایه، یک <strong>مجموعه مرتب</strong> از مقادیر است که <strong>همگی از یک نوع داده</strong> هستند. این مقادیر در خانه‌های حافظه <strong>پشت سر هم (Contiguous)</strong> قرار می‌گیرند. آرایه به ما اجازه می‌دهد تا تعداد زیادی مقدار را تحت یک نام واحد مدیریت کنیم.</p>
 
-    <!-- Section 2: Arrays in Memory -->
+        <h3>ویژگی‌های کلیدی:</h3>
+        <ol>
+            <li><strong>اندازه ثابت (Fixed Size):</strong> مهم‌ترین ویژگی (و محدودیت) آرایه‌ها در جاوا این است که وقتی یک آرایه با اندازه‌ای مشخص ایجاد شد، اندازه آن <strong>هرگز</strong> قابل تغییر نیست.</li>
+            <li><strong>نوع داده یکسان (Homogeneous):</strong> یک آرایه <code>int</code> فقط می‌تواند مقادیر <code>int</code> را نگه دارد. شما نمی‌توانید یک <code>String</code> را در آن قرار دهید.</li>
+            <li><strong>دسترسی با شاخص (Indexed Access):</strong> به هر عنصر در آرایه یک شماره شاخص (index) منحصربه‌فرد از <code>0</code> تا <code>length - 1</code> اختصاص داده می‌شود که از طریق آن می‌توان به عنصر دسترسی سریع داشت.</li>
+        </ol>
+
+        <h3>جدول مقایسه: Array vs متغیرهای مجزا</h3>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>متغیرهای مجزا</th>
+                        <th>Array</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>تعداد نام</strong></td>
+                        <td>هر متغیر یک نام</td>
+                        <td>یک نام برای همه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>مدیریت</strong></td>
+                        <td>بسیار سخت</td>
+                        <td>ساده</td>
+                    </tr>
+                    <tr>
+                        <td><strong>حلقه‌زدن</strong></td>
+                        <td>غیرممکن</td>
+                        <td>آسان</td>
+                    </tr>
+                    <tr>
+                        <td><strong>انعطاف</strong></td>
+                        <td>صفر</td>
+                        <td>بالا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>مثال</strong></td>
+                        <td><code>score1, score2, ...</code></td>
+                        <td><code>scores[0], scores[1], ...</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+PART4_CONTINUES
+
     <section id="section-2">
         <h2>۲. آرایه‌ها در حافظه: اشیاء ویژه‌ای در Heap</h2>
-        <p>
-            این مهم‌ترین نکته در مورد آرایه‌هاست: <strong>آرایه‌ها در جاوا شیء (Object) هستند.</strong> این جمله پیامدهای عمیقی در نحوه مدیریت حافظه دارد:
-        </p>
+        
+        <p>این مهم‌ترین نکته در مورد آرایه‌هاست: <strong>آرایه‌ها در جاوا شیء (Object) هستند.</strong></p>
+        
+        <p>این جمله پیامدهای عمیقی در نحوه مدیریت حافظه دارد:</p>
+        
         <ol>
-            <li>متغیری که یک آرایه را نگهداری می‌کند (مثلاً <code>int[] numbers</code>)، یک <strong>متغیر ارجاعی</strong> است و در <strong>Stack</strong> قرار می‌گیرد.</li>
-            <li>خودِ آرایه در حافظه <strong>Heap</strong> ایجاد می‌شود.</li>
-            <li>متغیر ارجاعی در Stack، <strong>آدرس</strong> شروع آرایه در Heap را نگه می‌دارد.</li>
+            <li>متغیری که یک آرایه را نگهداری می‌کند (مثلاً <code>int[] numbers</code>)، یک <strong>متغیر ارجاعی (Reference Variable)</strong> است و در حافظه <strong>Stack</strong> قرار می‌گیرد.</li>
+            <li>خودِ آرایه (یعنی فضایی که عناصر در آن ذخیره می‌شوند) در حافظه <strong>Heap</strong> ایجاد می‌شود.</li>
+            <li>متغیر ارجاعی در Stack، <strong>آدرس</strong> شروع آرایه در Heap را در خود نگه می‌دارد.</li>
         </ol>
+
+        <h3>نمودار حافظه برای آرایه Primitive</h3>
         
-        <h3>نمودار حافظه</h3>
         <p>فرض کنید کد زیر را نوشته‌ایم: <code>int[] grades = new int[4];</code></p>
-        
+
         <div class="diagram-container">
-            <svg width="100%" height="350" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg" font-family="Vazirmatn, sans-serif">
-                <defs>
-                    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#2DD4BF"/>
-                    </marker>
-                </defs>
-                
-                <!-- Stack -->
-                <g transform="translate(50, 50)">
-                    <rect x="0" y="0" width="280" height="120" fill="#ECFDF5" stroke="#14B8A6" stroke-width="3" rx="10"/>
-                    <text x="140" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#0F766E">Stack</text>
-                    <line x1="20" y1="45" x2="260" y2="45" stroke="#14B8A6" stroke-width="2"/>
-                    <text x="140" y="75" text-anchor="middle" font-size="16" fill="#134E4A">int[] grades = 0xA1</text>
-                    <text x="140" y="100" text-anchor="middle" font-size="13" fill="#115E59">(آدرس/ارجاع به آرایه)</text>
-                </g>
-                
-                <!-- Arrow -->
-                <line x1="330" y1="110" x2="430" y2="180" stroke="#2DD4BF" stroke-width="3" marker-end="url(#arrow)"/>
-                <text x="380" y="135" font-size="14" fill="#0F766E" font-weight="600">اشاره می‌کند به</text>
-                
-                <!-- Heap -->
-                <g transform="translate(430, 150)">
-                    <rect x="0" y="0" width="320" height="180" fill="#FEF2F2" stroke="#EF4444" stroke-width="3" rx="10"/>
-                    <text x="160" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#991B1B">Heap - شیء آرایه (0xA1)</text>
-                    <line x1="20" y1="45" x2="300" y2="45" stroke="#EF4444" stroke-width="2"/>
-                    
-                    <text x="30" y="75" font-size="14" fill="#7F1D1D">length = 4</text>
-                    
-                    <!-- Array Elements -->
-                    <g transform="translate(20, 95)">
-                        <rect x="0" y="0" width="60" height="60" fill="#FFF" stroke="#F87171" stroke-width="2" rx="5"/>
-                        <text x="30" y="25" text-anchor="middle" font-size="12" fill="#991B1B">index 0</text>
-                        <text x="30" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#DC2626">0</text>
-                        
-                        <rect x="70" y="0" width="60" height="60" fill="#FFF" stroke="#F87171" stroke-width="2" rx="5"/>
-                        <text x="100" y="25" text-anchor="middle" font-size="12" fill="#991B1B">index 1</text>
-                        <text x="100" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#DC2626">0</text>
-                        
-                        <rect x="140" y="0" width="60" height="60" fill="#FFF" stroke="#F87171" stroke-width="2" rx="5"/>
-                        <text x="170" y="25" text-anchor="middle" font-size="12" fill="#991B1B">index 2</text>
-                        <text x="170" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#DC2626">0</text>
-                        
-                        <rect x="210" y="0" width="60" height="60" fill="#FFF" stroke="#F87171" stroke-width="2" rx="5"/>
-                        <text x="240" y="25" text-anchor="middle" font-size="12" fill="#991B1B">index 3</text>
-                        <text x="240" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#DC2626">0</text>
-                    </g>
-                </g>
-                
-                <!-- Note -->
-                <g transform="translate(50, 280)">
-                    <text x="0" y="0" font-size="14" fill="#0F766E" font-weight="600">💡 نکته:</text>
-                    <text x="0" y="20" font-size="13" fill="#374151">وقتی آرایه عددی با new ساخته می‌شود، تمام عناصر</text>
-                    <text x="0" y="40" font-size="13" fill="#374151">به صورت خودکار با مقدار پیش‌فرض (0 برای int) پر می‌شوند.</text>
-                </g>
-            </svg>
-        </div>
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+  <rect width="900" height="500" fill="#f8f9fa"/>
+  
+  <text x="450" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#1f2937">
+    Primitive Array Memory Model
+  </text>
+  
+  <!-- Stack -->
+  <g id="stack">
+    <rect x="50" y="70" width="280" height="350" fill="#e0f2fe" stroke="#0284c7" stroke-width="3" rx="8"/>
+    <text x="190" y="100" text-anchor="middle" font-size="16" font-weight="bold" fill="#0c4a6e">Stack</text>
+    
+    <rect x="80" y="130" width="220" height="80" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="4"/>
+    <text x="190" y="160" text-anchor="middle" font-size="13" fill="#1e40af">int[] grades = 0xA1</text>
+    <text x="190" y="185" text-anchor="middle" font-size="11" fill="#1e3a8a">(Reference to Array)</text>
+  </g>
+  
+  <!-- Heap -->
+  <g id="heap">
+    <rect x="400" y="70" width="450" height="380" fill="#f0fdf4" stroke="#10b981" stroke-width="3" rx="8"/>
+    <text x="625" y="100" text-anchor="middle" font-size="16" font-weight="bold" fill="#065f46">Heap</text>
+    
+    <!-- Array Object -->
+    <rect x="430" y="130" width="390" height="300" fill="#fff" stroke="#10b981" stroke-width="2" rx="6"/>
+    <text x="625" y="160" text-anchor="middle" font-size="14" font-weight="bold" fill="#047857">(0xA1) Array Object</text>
+    <line x1="430" y1="175" x2="820" y2="175" stroke="#cbd5e1" stroke-width="2"/>
+    
+    <!-- Property: length -->
+    <rect x="450" y="190" width="350" height="40" fill="#d1fae5" stroke="#10b981" stroke-width="1" rx="4"/>
+    <text x="625" y="215" text-anchor="middle" font-size="12" fill="#065f46">property: length = 4</text>
+    
+    <!-- Array Elements -->
+    <text x="625" y="255" text-anchor="middle" font-size="13" font-weight="bold" fill="#047857">
+      Array Elements (Contiguous Memory)
+    </text>
+    
+    <g id="elements">
+      <!-- Element 0 -->
+      <rect x="450" y="270" width="80" height="80" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="4"/>
+      <text x="490" y="295" text-anchor="middle" font-size="11" fill="#92400e">index 0</text>
+      <text x="490" y="320" text-anchor="middle" font-size="18" font-weight="bold" fill="#78350f">0</text>
+      
+      <!-- Element 1 -->
+      <rect x="545" y="270" width="80" height="80" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="4"/>
+      <text x="585" y="295" text-anchor="middle" font-size="11" fill="#92400e">index 1</text>
+      <text x="585" y="320" text-anchor="middle" font-size="18" font-weight="bold" fill="#78350f">0</text>
+      
+      <!-- Element 2 -->
+      <rect x="640" y="270" width="80" height="80" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="4"/>
+      <text x="680" y="295" text-anchor="middle" font-size="11" fill="#92400e">index 2</text>
+      <text x="680" y="320" text-anchor="middle" font-size="18" font-weight="bold" fill="#78350f">0</text>
+      
+      <!-- Element 3 -->
+      <rect x="735" y="270" width="80" height="80" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="4"/>
+      <text x="775" y="295" text-anchor="middle" font-size="11" fill="#92400e">index 3</text>
+      <text x="775" y="320" text-anchor="middle" font-size="18" font-weight="bold" fill="#78350f">0</text>
+    </g>
+    
+    <!-- Note -->
+    <rect x="450" y="365" width="350" height="50" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" rx="4" opacity="0.3"/>
+    <text x="625" y="385" text-anchor="middle" font-size="10" fill="#92400e">
+      Default Values: All elements initialized to 0
+    </text>
+    <text x="625" y="402" text-anchor="middle" font-size="10" fill="#92400e">
+      (for int arrays)
+    </text>
+  </g>
+  
+  <!-- Arrow -->
+  <defs>
+    <marker id="arrowArray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#3b82f6"/>
+    </marker>
+  </defs>
+  
+  <path d="M 300 170 Q 350 170 400 200" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrowArray)"/>
+  
+  <text x="450" y="485" text-anchor="middle" font-size="11" fill="#6b7280">
+    Reference variable in Stack → Array object in Heap
+  </text>
+</svg>
+</div>
+
+        <h3>جدول مقادیر پیش‌فرض</h3>
         
-        <h3 class="mt-4">جدول مقادیر پیش‌فرض</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>نوع آرایه</th>
-                    <th>مقدار پیش‌فرض</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>int[]</code>, <code>long[]</code>, <code>short[]</code>, <code>byte[]</code></td>
-                    <td><code>0</code></td>
-                </tr>
-                <tr>
-                    <td><code>float[]</code>, <code>double[]</code></td>
-                    <td><code>0.0</code></td>
-                </tr>
-                <tr>
-                    <td><code>boolean[]</code></td>
-                    <td><code>false</code></td>
-                </tr>
-                <tr>
-                    <td><code>char[]</code></td>
-                    <td><code>'\u0000'</code></td>
-                </tr>
-                <tr>
-                    <td>آرایه اشیاء (مثل <code>String[]</code>)</td>
-                    <td><code>null</code></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>نوع آرایه</th>
+                        <th>مقدار پیش‌فرض</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>int[]</code>, <code>long[]</code>, <code>short[]</code>, <code>byte[]</code></td>
+                        <td><code>0</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>float[]</code>, <code>double[]</code></td>
+                        <td><code>0.0</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>boolean[]</code></td>
+                        <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>char[]</code></td>
+                        <td><code>'\u0000'</code></td>
+                    </tr>
+                    <tr>
+                        <td>آرایه اشیاء (مثل <code>String[]</code>)</td>
+                        <td><code>null</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
-    <!-- Section 3: Declaration and Creation -->
     <section id="section-3">
         <h2>۳. اعلان، ایجاد و مقداردهی اولیه آرایه‌ها</h2>
+        
         <p>برای کار با آرایه‌ها سه مرحله وجود دارد:</p>
-        
+
         <h3>الف) اعلان (Declaration)</h3>
-        <p>به کامپایلر می‌گوییم که یک متغیر از نوع آرایه خواهیم داشت.</p>
         
+        <p>به کامپایلر می‌گوییم که یک متغیر از نوع آرایه خواهیم داشت.</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">int[] numbers;      // ✅ روش توصیه شده
 String[] names;
 
 // یا (کمتر رایج):
 int numbers[];      // ✅ معتبر اما کمتر استفاده می‌شود</code></pre>
         </div>
-        
-        <p style="background: #FFF3CD; padding: 1rem; border-right: 4px solid #FFA500; border-radius: 8px; margin-top: 1rem;">
-            <strong>⚠️ توجه:</strong> در این لحظه، فقط یک متغیر ارجاعی با مقدار <code>null</code> در Stack ایجاد شده است. هیچ آرایه‌ای در Heap وجود ندارد.
-        </p>
-        
+
+        <p>در این لحظه، فقط یک متغیر ارجاعی با مقدار <code>null</code> در Stack ایجاد شده است. هیچ آرایه‌ای در Heap وجود ندارد.</p>
+
         <h3>ب) ایجاد (Instantiation)</h3>
-        <p>با استفاده از کلمه کلیدی <code>new</code>، شیء آرایه را با اندازه مشخص در Heap ایجاد می‌کنیم.</p>
         
+        <p>با استفاده از کلمه کلیدی <code>new</code>، شیء آرایه را با اندازه مشخص در Heap ایجاد می‌کنیم.</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">numbers = new int[5];       // آرایه برای 5 عدد صحیح
 names = new String[10];     // آرایه برای 10 ارجاع به String</code></pre>
         </div>
-        
+
         <h3>ج) مقداردهی اولیه (Initialization)</h3>
-        <p>مقادیر را در خانه‌های آرایه قرار می‌دهیم.</p>
         
+        <p>مقادیر را در خانه‌های آرایه قرار می‌دهیم.</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">numbers[0] = 42;
 numbers[1] = -5;</code></pre>
         </div>
-        
+
         <h3>روش مختصر (Array Literal)</h3>
-        <p>می‌توان هر سه مرحله را در یک خط و با استفاده از مقادیر اولیه انجام داد:</p>
         
+        <p>می‌توان هر سه مرحله را در یک خط و با استفاده از مقادیر اولیه انجام داد:</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">int[] primeNumbers = {2, 3, 5, 7, 11};
 String[] days = {"Saturday", "Sunday", "Monday"};</code></pre>
         </div>
-        
+
         <h3>مثال عملی: روش‌های مختلف ایجاد آرایه</h3>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">public class ArrayCreationDemo {
     public static void main(String[] args) {
         // روش 1: اعلان + ایجاد + مقداردهی جداگانه
@@ -327,35 +369,36 @@ String[] days = {"Saturday", "Sunday", "Monday"};</code></pre>
         </div>
     </section>
 
-    <!-- Section 4: Access and Length -->
     <section id="section-4">
-        <h2>۴. دسترسی به عناصر و ویژگی <code>length</code></h2>
+        <h2>۴. دسترسی به عناصر و ویژگی length</h2>
+
+        <h3>دسترسی</h3>
         
-        <h3>دسترسی به عناصر</h3>
         <p>برای خواندن یا نوشتن در یک خانه از آرایه، از نام آرایه به همراه شاخص عنصر در <code>[]</code> استفاده می‌کنیم.</p>
-        
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">int[] primeNumbers = {2, 3, 5, 7, 11};
 
 int firstPrime = primeNumbers[0];  // خواندن: firstPrime = 2
 primeNumbers[1] = 13;              // نوشتن: تغییر 3 به 13</code></pre>
         </div>
+
+        <h3>ویژگی length</h3>
         
-        <h3>ویژگی <code>length</code></h3>
-        <p>هر آرایه یک <strong>فیلد (property)</strong> عمومی و <code>final</code> به نام <code>length</code> دارد که اندازه آرایه را برمی‌گرداند.</p>
-        
+        <p>هر آرایه یک <strong>فیلد (property)</strong> عمومی و <code>final</code> به نام <code>length</code> دارد که اندازه (تعداد کل عناصر) آرایه را برمی‌گرداند.</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">int count = primeNumbers.length;  // count = 5</code></pre>
         </div>
-        
-        <p style="background: #FFF3CD; padding: 1rem; border-right: 4px solid #FFA500; border-radius: 8px; margin-top: 1rem;">
-            <strong>⚠️ توجه مهم:</strong> <code>length</code> در آرایه‌ها یک <strong>فیلد</strong> است (بدون پرانتز)، اما در کلاس <code>String</code>، <code>length()</code> یک <strong>متد</strong> است (با پرانتز).
-        </p>
-        
+
+        <div class="warning-box">
+            <strong>⚠️ توجه:</strong> <code>length</code> در آرایه‌ها یک <strong>فیلد</strong> است (بدون پرانتز)، اما در کلاس <code>String</code>، <code>length()</code> یک <strong>متد</strong> است (با پرانتز).
+        </div>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">int[] numbers = {1, 2, 3};
 String text = "Hello";
 
@@ -364,92 +407,96 @@ int stringSize = text.length();    // ✅ متد</code></pre>
         </div>
     </section>
 
-    <!-- Section 5: Iteration -->
     <section id="section-5">
         <h2>۵. پیمایش (Iterating) آرایه‌ها</h2>
+        
         <p>برای کار با تمام عناصر یک آرایه، از حلقه‌ها استفاده می‌کنیم.</p>
+
+        <h3>الف) حلقه for کلاسیک (با شاخص)</h3>
         
-        <h3>الف) حلقه <code>for</code> کلاسیک (با شاخص)</h3>
         <p>این روش زمانی بهترین است که علاوه بر مقدار عنصر، به <strong>شاخص (index)</strong> آن نیز نیاز دارید.</p>
-        
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">String[] days = {"Saturday", "Sunday", "Monday"};
 
 for (int i = 0; i < days.length; i++) {
     System.out.println("Element at index " + i + " is: " + days[i]);
 }</code></pre>
         </div>
+
+        <h3>ب) حلقه for-each پیشرفته (Enhanced For Loop)</h3>
         
-        <h3>ب) حلقه <code>for-each</code> پیشرفته</h3>
-        <p>این روش زمانی بهترین است که فقط به <strong>مقدار (value)</strong> هر عنصر نیاز دارید.</p>
-        
+        <p>این روش زمانی بهترین است که فقط به <strong>مقدار (value)</strong> هر عنصر نیاز دارید و کاری با شاخص آن ندارید.</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">for (String day : days) {
     System.out.println(day);
 }</code></pre>
         </div>
+
+        <h3>جدول مقایسه: for vs for-each</h3>
         
-        <h3 class="text-center mt-4">جدول مقایسه: for vs for-each</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>ویژگی</th>
-                    <th><code>for</code> کلاسیک</th>
-                    <th><code>for-each</code></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>دسترسی به index</strong></td>
-                    <td>✅ بله</td>
-                    <td>❌ خیر</td>
-                </tr>
-                <tr>
-                    <td><strong>تغییر عناصر</strong></td>
-                    <td>✅ بله</td>
-                    <td>⚠️ محدود</td>
-                </tr>
-                <tr>
-                    <td><strong>خوانایی</strong></td>
-                    <td>متوسط</td>
-                    <td>عالی</td>
-                </tr>
-                <tr>
-                    <td><strong>سرعت</strong></td>
-                    <td>یکسان</td>
-                    <td>یکسان</td>
-                </tr>
-                <tr>
-                    <td><strong>کاربرد</strong></td>
-                    <td>نیاز به index</td>
-                    <td>فقط خواندن</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>for کلاسیک</th>
+                        <th>for-each</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>دسترسی به index</strong></td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>تغییر عناصر</strong></td>
+                        <td>✅</td>
+                        <td>⚠️ (فقط محتوای اشیاء)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>خوانایی</strong></td>
+                        <td>متوسط</td>
+                        <td>عالی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>سرعت</strong></td>
+                        <td>یکسان</td>
+                        <td>یکسان</td>
+                    </tr>
+                    <tr>
+                        <td><strong>کاربرد</strong></td>
+                        <td>نیاز به index</td>
+                        <td>فقط خواندن</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
-    <!-- Section 6: Common Errors -->
     <section id="section-6">
-        <h2>۶. خطای مهلک: <code>ArrayIndexOutOfBoundsException</code></h2>
-        <p>
-            از آنجایی که شاخص‌های یک آرایه با اندازه <code>N</code> از <code>0</code> تا <code>N-1</code> هستند، تلاش برای دسترسی به یک شاخص خارج از این محدوده منجر به خطای زمان اجرا می‌شود.
-        </p>
+        <h2>۶. خطای مهلک: ArrayIndexOutOfBoundsException</h2>
         
+        <p>از آنجایی که شاخص‌های یک آرایه با اندازه <code>N</code> از <code>0</code> تا <code>N-1</code> هستند، تلاش برای دسترسی به یک شاخص خارج از این محدوده منجر به خطای زمان اجرا می‌شود.</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">int[] numbers = new int[3];  // شاخص‌های معتبر: 0, 1, 2
 
 numbers[3] = 10;   // ❌ ArrayIndexOutOfBoundsException
 numbers[-1] = 5;   // ❌ ArrayIndexOutOfBoundsException</code></pre>
         </div>
-        
+
         <h3>اشتباهات رایج با آرایه‌ها</h3>
-        
-        <h4>الف) فراموش کردن <code>length - 1</code></h4>
+
+        <h4>الف) فراموش کردن length - 1</h4>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">// ❌ غلط: i <= arr.length
 for (int i = 0; i <= arr.length; i++) {  // خطا در آخرین تکرار!
     System.out.println(arr[i]);
@@ -460,17 +507,19 @@ for (int i = 0; i < arr.length; i++) {
     System.out.println(arr[i]);
 }</code></pre>
         </div>
-        
-        <h4>ب) <code>NullPointerException</code></h4>
+
+        <h4>ب) NullPointerException</h4>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">int[] numbers = null;
 // System.out.println(numbers.length);  // ❌ NullPointerException</code></pre>
         </div>
-        
+
         <h4>ج) کپی آرایه</h4>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">int[] arr1 = {1, 2, 3};
 int[] arr2 = arr1;  // ❌ کپی آدرس، نه کپی آرایه
 
@@ -483,116 +532,453 @@ int[] arr3 = arr1.clone();
         </div>
     </section>
 
-    <!-- Section 7: Array of Objects -->
     <section id="section-7">
         <h2>۷. آرایه‌ای از اشیاء: لایه‌ای از ارجاع</h2>
-        <p>
-            این بخش بسیار مهم است. وقتی یک آرایه از نوع یک کلاس (نوع ارجاعی) ایجاد می‌کنید، چه اتفاقی در حافظه می‌افتد؟
-        </p>
         
+        <p>این بخش بسیار مهم است. وقتی یک آرایه از نوع یک کلاس (نوع ارجاعی) ایجاد می‌کنید، چه اتفاقی در حافظه می‌افتد؟</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
             <pre><code class="language-java">Student[] students = new Student[3];</code></pre>
         </div>
-        
-        <p style="background: #FFEBEE; padding: 1rem; border-right: 4px solid #EF4444; border-radius: 8px; margin-top: 1rem;">
-            <strong>⚠️ نکته حیاتی:</strong> این دستور، <strong>3 شیء <code>Student</code> ایجاد نمی‌کند!</strong> بلکه فقط یک آرایه در Heap ایجاد می‌کند که قادر است 3 ارجاع (reference) به اشیاء <code>Student</code> را نگه دارد. در ابتدا، تمام این 3 ارجاع <code>null</code> هستند.
-        </p>
-        
-        <p>شما باید سپس هر شیء را به صورت جداگانه ایجاد کنید:</p>
-        
+
+        <div class="warning-box">
+            <strong>⚠️ نکته مهم:</strong> این دستور، <strong>۳ شیء Student ایجاد نمی‌کند!</strong> بلکه فقط یک آرایه در Heap ایجاد می‌کند که قادر است <strong>۳ ارجاع (reference)</strong> به اشیاء <code>Student</code> را در خود نگه دارد. در ابتدا، تمام این ۳ ارجاع <code>null</code> هستند.
+        </div>
+
+        <p>شما باید سپس هر شیء را به صورت جداگانه ایجاد کرده و ارجاع آن را در آرایه قرار دهید.</p>
+
+        <h3>نمودار حافظه برای آرایه‌ای از اشیاء</h3>
+
+        <div class="diagram-container">
+<svg viewBox="0 0 950 600" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+  <rect width="950" height="600" fill="#f8f9fa"/>
+  
+  <text x="475" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#1f2937">
+    Object Array Memory Model
+  </text>
+  
+  <!-- Stack -->
+  <g id="stack">
+    <rect x="50" y="70" width="280" height="200" fill="#e0f2fe" stroke="#0284c7" stroke-width="3" rx="8"/>
+    <text x="190" y="100" text-anchor="middle" font-size="16" font-weight="bold" fill="#0c4a6e">Stack</text>
+    
+    <rect x="80" y="130" width="220" height="80" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="4"/>
+    <text x="190" y="160" text-anchor="middle" font-size="13" fill="#1e40af">Student[] students = 0xB2</text>
+    <text x="190" y="185" text-anchor="middle" font-size="11" fill="#1e3a8a">(Reference to Array)</text>
+  </g>
+  
+  <!-- Heap -->
+  <g id="heap">
+    <rect x="390" y="70" width="510" height="480" fill="#f0fdf4" stroke="#10b981" stroke-width="3" rx="8"/>
+    <text x="645" y="100" text-anchor="middle" font-size="16" font-weight="bold" fill="#065f46">Heap</text>
+    
+    <!-- Array Object -->
+    <rect x="420" y="130" width="450" height="160" fill="#fff" stroke="#10b981" stroke-width="2" rx="6"/>
+    <text x="645" y="160" text-anchor="middle" font-size="14" font-weight="bold" fill="#047857">(0xB2) Array Object: Student[]</text>
+    <line x1="420" y1="175" x2="870" y2="175" stroke="#cbd5e1" stroke-width="2"/>
+    
+    <!-- Array Elements (Initially null) -->
+    <g id="array-elements">
+      <rect x="440" y="195" width="120" height="70" fill="#fee2e2" stroke="#ef4444" stroke-width="2" rx="4"/>
+      <text x="500" y="220" text-anchor="middle" font-size="11" fill="#7f1d1d">index 0</text>
+      <text x="500" y="245" text-anchor="middle" font-size="14" font-weight="bold" fill="#991b1b">null</text>
+      
+      <rect x="575" y="195" width="120" height="70" fill="#fee2e2" stroke="#ef4444" stroke-width="2" rx="4"/>
+      <text x="635" y="220" text-anchor="middle" font-size="11" fill="#7f1d1d">index 1</text>
+      <text x="635" y="245" text-anchor="middle" font-size="14" font-weight="bold" fill="#991b1b">null</text>
+      
+      <rect x="710" y="195" width="120" height="70" fill="#fee2e2" stroke="#ef4444" stroke-width="2" rx="4"/>
+      <text x="770" y="220" text-anchor="middle" font-size="11" fill="#7f1d1d">index 2</text>
+      <text x="770" y="245" text-anchor="middle" font-size="14" font-weight="bold" fill="#991b1b">null</text>
+    </g>
+    
+    <!-- Student Objects -->
+    <text x="645" y="330" text-anchor="middle" font-size="13" font-weight="bold" fill="#047857">
+      After: students[0] = new Student("Ali")
+    </text>
+    <text x="645" y="350" text-anchor="middle" font-size="13" font-weight="bold" fill="#047857">
+      After: students[1] = new Student("Sara")
+    </text>
+    
+    <rect x="420" y="370" width="200" height="90" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="6"/>
+    <text x="520" y="395" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e40af">(0xC3) Student Object</text>
+    <line x1="420" y1="405" x2="620" y2="405" stroke="#cbd5e1"/>
+    <text x="520" y="425" text-anchor="middle" font-size="11" fill="#374151">name: "Ali"</text>
+    <text x="520" y="445" text-anchor="middle" font-size="11" fill="#374151">studentId: 101</text>
+    
+    <rect x="650" y="370" width="200" height="90" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="6"/>
+    <text x="750" y="395" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e40af">(0xD4) Student Object</text>
+    <line x1="650" y1="405" x2="850" y2="405" stroke="#cbd5e1"/>
+    <text x="750" y="425" text-anchor="middle" font-size="11" fill="#374151">name: "Sara"</text>
+    <text x="750" y="445" text-anchor="middle" font-size="11" fill="#374151">studentId: 102</text>
+    
+    <!-- Note -->
+    <rect x="420" y="480" width="450" height="55" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" rx="4" opacity="0.3"/>
+    <text x="645" y="505" text-anchor="middle" font-size="10" fill="#92400e">
+      Step 1: Array created with null references
+    </text>
+    <text x="645" y="522" text-anchor="middle" font-size="10" fill="#92400e">
+      Step 2: Objects created and references assigned to array elements
+    </text>
+  </g>
+  
+  <!-- Arrows -->
+  <defs>
+    <marker id="arrowObj" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowRef" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
+    </marker>
+  </defs>
+  
+  <path d="M 300 170 Q 350 170 390 230" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrowObj)"/>
+  
+  <path d="M 500 265 Q 500 300 520 370" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#arrowRef)" stroke-dasharray="5,5"/>
+  <path d="M 635 265 Q 700 300 750 370" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#arrowRef)" stroke-dasharray="5,5"/>
+  
+  <text x="475" y="585" text-anchor="middle" font-size="11" fill="#6b7280">
+    Object array: Initially null references → Must create objects separately
+  </text>
+</svg>
+</div>
+
+        <h3>مثال عملی: کار با آرایه اشیاء</h3>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
-            <pre><code class="language-java">students[0] = new Student("علی", 18);
-students[1] = new Student("سارا", 19);
-students[2] = new Student("محمد", 20);</code></pre>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// کلاس Student برای نمایش
+class Student {
+    private String name;
+    private double gpa;
+    
+    public Student(String name, double gpa) {
+        this.name = name;
+        this.gpa = gpa;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public double getGpa() {
+        return gpa;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s (GPA: %.2f)", name, gpa);
+    }
+}
+
+public class ObjectArrayDemo {
+    public static void main(String[] args) {
+        // مرحله 1: ایجاد آرایه (فقط ارجاع‌ها، همه null)
+        Student[] students = new Student[4];
+        
+        // مرحله 2: ایجاد اشیاء و قرار دادن در آرایه
+        students[0] = new Student("علی", 3.8);
+        students[1] = new Student("سارا", 3.95);
+        students[2] = new Student("محمد", 3.5);
+        students[3] = new Student("زهرا", 3.7);
+        
+        // مرحله 3: کار با آرایه
+        System.out.println("لیست دانشجویان:");
+        for (Student s : students) {
+            System.out.println("  - " + s);
+        }
+        
+        // یافتن دانشجوی ممتاز (GPA > 3.75)
+        System.out.println("\nدانشجویان ممتاز:");
+        for (Student s : students) {
+            if (s.getGpa() > 3.75) {
+                System.out.println("  - " + s.getName());
+            }
+        }
+        
+        // محاسبه میانگین GPA
+        double totalGpa = 0;
+        for (Student s : students) {
+            totalGpa += s.getGpa();
+        }
+        double averageGpa = totalGpa / students.length;
+        System.out.println("\nمیانگین GPA کلاس: " + String.format("%.2f", averageGpa));
+    }
+}</code></pre>
+        </div>
+
+        <div class="note-box">
+            <strong>💡 خروجی:</strong>
+            <pre style="margin-top: 0.5rem;">لیست دانشجویان:
+  - علی (GPA: 3.80)
+  - سارا (GPA: 3.95)
+  - محمد (GPA: 3.50)
+  - زهرا (GPA: 3.70)
+
+دانشجویان ممتاز:
+  - علی
+  - سارا
+
+میانگین GPA کلاس: 3.74</pre>
         </div>
     </section>
 
-    <!-- Section 8: Multidimensional Arrays -->
     <section id="section-8">
-        <h2>۸. آرایه‌های چندبعدی</h2>
-        <p>
-            جاوا به طور مستقیم از آرایه‌های چندبعدی پشتیبانی نمی‌کند، اما می‌توانید <strong>آرایه‌ای از آرایه‌ها</strong> ایجاد کنید که رفتاری شبیه به آرایه چندبعدی دارد.
-        </p>
+        <h2>۸. آرایه‌های چندبعدی (Multi-dimensional Arrays)</h2>
         
-        <h3>آرایه دوبعدی (ماتریس)</h3>
+        <p>جاوا مستقیماً آرایه چندبعدی ندارد. در عوض، جاوا <strong>آرایه‌ای از آرایه‌ها (Array of Arrays)</strong> را پیاده‌سازی می‌کند.</p>
+
         <div class="code-block-container">
-            <button class="copy-button">کپی</button>
-            <pre><code class="language-java">// ایجاد ماتریس 3x4
-int[][] matrix = new int[3][4];
-
-// مقداردهی
-matrix[0][0] = 1;
-matrix[0][1] = 2;
-
-// آرایه دوبعدی با مقادیر اولیه
-int[][] grid = {
-    {1, 2, 3},
-    {4, 5, 6},
-    {7, 8, 9}
-};</code></pre>
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">int[][] matrix = new int[3][4];</code></pre>
         </div>
-        
-        <h3>پیمایش آرایه دوبعدی</h3>
-        <div class="code-block-container">
-            <button class="copy-button">کپی</button>
-            <pre><code class="language-java">// حلقه تو در تو
-for (int i = 0; i < grid.length; i++) {
-    for (int j = 0; j < grid[i].length; j++) {
-        System.out.print(grid[i][j] + " ");
-    }
-    System.out.println();
-}
 
-// یا با for-each
-for (int[] row : grid) {
-    for (int num : row) {
-        System.out.print(num + " ");
+        <p>این کد یک آرایه به نام <code>matrix</code> با ۳ عنصر ایجاد می‌کند. هر عنصر، یک <strong>ارجاع</strong> به یک آرایه <code>int</code> با اندازه ۴ است.</p>
+
+        <h3>مثال عملی: MatrixDemo - عملیات روی ماتریس</h3>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class MatrixDemo {
+    public static void main(String[] args) {
+        // ایجاد یک ماتریس 3×3
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+        
+        System.out.println("ماتریس اصلی:");
+        printMatrix(matrix);
+        
+        System.out.println("\nجمع عناصر هر ردیف:");
+        printRowSums(matrix);
+        
+        System.out.println("\nترانهاده ماتریس:");
+        int[][] transposed = transpose(matrix);
+        printMatrix(transposed);
+    }
+    
+    // چاپ ماتریس
+    public static void printMatrix(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+    
+    // محاسبه و چاپ جمع هر ردیف
+    public static void printRowSums(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            int rowSum = 0;
+            for (int j = 0; j < matrix[i].length; j++) {
+                rowSum += matrix[i][j];
+            }
+            System.out.println("ردیف " + (i + 1) + ": " + rowSum);
+        }
+    }
+    
+    // ترانهاده ماتریس (تبدیل ردیف‌ها به ستون‌ها)
+    public static int[][] transpose(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] result = new int[cols][rows];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[j][i] = matrix[i][j];
+            }
+        }
+        return result;
+    }
+}</code></pre>
+        </div>
+
+        <div class="note-box">
+            <strong>💡 خروجی:</strong>
+            <pre style="margin-top: 0.5rem;">ماتریس اصلی:
+1	2	3	
+4	5	6	
+7	8	9	
+
+جمع عناصر هر ردیف:
+ردیف 1: 6
+ردیف 2: 15
+ردیف 3: 24
+
+ترانهاده ماتریس:
+1	4	7	
+2	5	8	
+3	6	9</pre>
+        </div>
+
+        <h3>سناریوی واقعی: سینمای اشیاء</h3>
+        
+        <p>تصور کنید می‌خواهیم صندلی‌های یک سالن سینما کوچک با ۳ ردیف و ۴ صندلی در هر ردیف را مدیریت کنیم.</p>
+
+        <h4>مرحله ۱: تعریف کلاس Seat</h4>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class Seat {
+    private final int row;
+    private final int number;
+    private boolean isReserved;
+
+    public Seat(int row, int number) {
+        this.row = row;
+        this.number = number;
+        this.isReserved = false;
+    }
+
+    public void reserve() {
+        this.isReserved = true;
+    }
+
+    public void cancelReservation() {
+        this.isReserved = false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[R%d-N%d: %s]", 
+            this.row, this.number, (isReserved ? "X" : "O"));
+    }
+}</code></pre>
+        </div>
+
+        <h4>مرحله ۲: ایجاد ساختار سینما</h4>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">Seat[][] cinema = new Seat[3][4];</code></pre>
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ این دستور دقیقاً چه کاری در حافظه انجام می‌دهد؟</strong> این دستور <strong>۱۲ شیء Seat ایجاد نمی‌کند</strong>. بلکه:
+            <ol>
+                <li>در Stack: یک متغیر ارجاعی <code>cinema</code> ایجاد می‌شود</li>
+                <li>در Heap: یک آرایه اصلی به طول ۳ ایجاد می‌شود</li>
+                <li>در Heap: ۳ آرایه داخلی، هر کدام به طول ۴، ایجاد می‌شوند</li>
+                <li>تمام ۱۲ خانه در آرایه‌های داخلی، مقدار <code>null</code> دارند</li>
+            </ol>
+        </div>
+
+        <h4>مرحله ۳: پر کردن سینما</h4>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">for (int i = 0; i < cinema.length; i++) {
+    for (int j = 0; j < cinema[i].length; j++) {
+        cinema[i][j] = new Seat(i + 1, j + 1);
+    }
+}</code></pre>
+        </div>
+
+        <h4>مرحله ۴: استفاده</h4>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// رزرو صندلی وسط در ردیف دوم
+cinema[1][2].reserve();
+
+// چاپ نقشه کامل سینما
+for (Seat[] row : cinema) {
+    for (Seat seat : row) {
+        System.out.print(seat + " ");
     }
     System.out.println();
 }</code></pre>
         </div>
-    </section>
 
-    <!-- Section 9: Exercises -->
-    <section id="section-9">
-        <h2>۹. تمرین‌های عملی</h2>
-        
-        <div style="background: #F0F9FF; padding: 1.5rem; border-radius: 12px; border-right: 4px solid #0EA5E9; margin: 1.5rem 0;">
-            <h4 style="color: #0284C7; margin-top: 0;">💪 تمرین 1: محاسبه میانگین</h4>
-            <p>برنامه‌ای بنویسید که یک آرایه از نمرات دانشجویان را دریافت کرده و میانگین آن‌ها را محاسبه کند.</p>
-        </div>
-        
-        <div style="background: #F0F9FF; padding: 1.5rem; border-radius: 12px; border-right: 4px solid #0EA5E9; margin: 1.5rem 0;">
-            <h4 style="color: #0284C7; margin-top: 0;">💪 تمرین 2: پیدا کردن بیشترین مقدار</h4>
-            <p>تابعی بنویسید که بزرگترین عدد در یک آرایه از اعداد صحیح را پیدا کند.</p>
-        </div>
-        
-        <div style="background: #F0F9FF; padding: 1.5rem; border-radius: 12px; border-right: 4px solid #0EA5E9; margin: 1.5rem 0;">
-            <h4 style="color: #0284C7; margin-top: 0;">💪 تمرین 3: معکوس کردن آرایه</h4>
-            <p>برنامه‌ای بنویسید که یک آرایه را معکوس کند (بدون استفاده از آرایه کمکی).</p>
-        </div>
-        
-        <div style="background: #F0F9FF; padding: 1.5rem; border-radius: 12px; border-right: 4px solid #0EA5E9; margin: 1.5rem 0;">
-            <h4 style="color: #0284C7; margin-top: 0;">💪 تمرین 4: جمع ماتریس‌ها</h4>
-            <p>تابعی بنویسید که دو ماتریس (آرایه دوبعدی) را با هم جمع کند.</p>
+        <div class="note-box">
+            <strong>💡 خروجی:</strong>
+            <pre style="margin-top: 0.5rem;">[R1-N1: O] [R1-N2: O] [R1-N3: O] [R1-N4: O] 
+[R2-N1: O] [R2-N2: O] [R2-N3: X] [R2-N4: O] 
+[R3-N1: O] [R3-N2: O] [R3-N3: O] [R3-N4: O]</pre>
         </div>
     </section>
 
-    <!-- Navigation Footer -->
-    <div class="part-navigation">
-        <a href="part03.html" class="btn-prev">← بخش ۳: static و final</a>
-        <a href="../checkpoints/checkpoint1.html" class="btn-checkpoint">💡 Checkpoint 1</a>
-        <a href="part05.html" class="btn-next">بخش ۵: متدها →</a>
-    </div>
+    <section id="exercises">
+        <h2>💡 تمرین‌های عملی</h2>
+
+        <div class="exercise-box">
+            <h3>تمرین ۱: میانگین نمرات</h3>
+            <p>یک برنامه بنویسید که میانگین نمرات آرایه زیر را محاسبه و چاپ کند.</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">int[] scores = {85, 92, 78, 95, 88};</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۲: یافتن بزرگترین عدد</h3>
+            <p>یک برنامه بنویسید که بزرگترین عدد در آرایه زیر را پیدا و چاپ کند.</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">int[] numbers = {12, 45, 23, 67, 34};</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۳: معکوس آرایه</h3>
+            <p>یک برنامه بنویسید که عناصر آرایه زیر را معکوس کند.</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">int[] arr = {1, 2, 3, 4, 5};
+// خروجی مورد انتظار: {5, 4, 3, 2, 1}</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۴: جمع دو ماتریس</h3>
+            <p>یک برنامه بنویسید که دو ماتریس زیر را با هم جمع کرده و ماتریس حاصل را چاپ کند.</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">int[][] m1 = {{1, 2}, {3, 4}};
+int[][] m2 = {{5, 6}, {7, 8}};
+// نتیجه مورد انتظار: {{6, 8}, {10, 12}}</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۵: آرایه دانشجویان</h3>
+            <p>با استفاده از کلاس <code>Student</code> (که دارای فیلدهای <code>name</code> و <code>gpa</code> است)، یک آرایه برای ۳ دانشجو بسازید. آن‌ها را مقداردهی کرده و سپس نام دانشجویانی که معدل بالاتر از ۳.۵ است را چاپ کنید.</p>
+        </div>
+    </section>
+
+    <section id="summary">
+        <h2>خلاصه بخش چهارم</h2>
+        
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>آرایه:</strong> مجموعه مرتب از یک نوع داده</li>
+                <li>✅ <strong>اندازه ثابت:</strong> پس از ایجاد تغییر نمی‌کند</li>
+                <li>✅ <strong>شیء:</strong> آرایه‌ها اشیاء هستند (در Heap)</li>
+                <li>✅ <strong>شاخص:</strong> از ۰ تا length-1</li>
+                <li>✅ <strong>length:</strong> فیلد (نه متد)</li>
+                <li>✅ <strong>for vs for-each:</strong> با index یا بدون</li>
+                <li>✅ <strong>آرایه اشیاء:</strong> ابتدا null، سپس باید مقداردهی شوند</li>
+                <li>✅ <strong>چندبعدی:</strong> آرایه‌ای از آرایه‌ها</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="navigation">
+        <div class="part-navigation">
+            <a href="part03.html" class="btn-prev">→ بخش قبلی</a>
+            <a href="part05.html" class="btn-next">بخش بعدی: متدها ←</a>
+        </div>
+    </section>
 
 </main>
 
-<!-- Scripts -->
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
