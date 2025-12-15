@@ -4,35 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بخش 10: روابط در UML | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+
+    <meta name="description" content="آموزش تخصصی روابط در UML شامل Association, Aggregation, Composition و طراحی سیستم‌های شیءگرا">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل اختصاصی دیاگرام‌های روابط */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+        }
+        .uml-class {
+            fill: #ffffff;
+            stroke: #4f46e5; /* indigo-600 */
+            stroke-width: 2px;
+        }
+        .uml-title {
+            font-weight: bold;
+            font-size: 14px;
+            text-anchor: middle;
+            fill: #1e1b4b;
+        }
+        .uml-text {
+            font-size: 12px;
+            fill: #312e81;
+        }
+        .uml-line {
+            stroke: #4f46e5;
+            stroke-width: 1px;
+        }
+        /* خطوط رابطه */
+        .relation-line {
+            stroke: #3730a3;
+            stroke-width: 2px;
+            fill: none;
+        }
+        .diamond-empty {
+            fill: #ffffff;
+            stroke: #3730a3;
+            stroke-width: 2px;
+        }
+        .diamond-filled {
+            fill: #3730a3;
+            stroke: #3730a3;
+            stroke-width: 2px;
+        }
+        .arrow-head {
+            fill: #3730a3;
+        }
+        .relation-label {
+            font-size: 11px;
+            fill: #6b21a8;
+            background-color: white;
+        }
+    </style>
 </head>
 <body class="theme-part10">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>10. روابط در UML</h1>
+    <h1>10. روابط در UML: داستان تعامل اشیاء</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۲</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۱۰</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,92 +85,339 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 10</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. انواع روابط</a></li>
+                <li><a href="#section-2" class="nav-link">۲. Association (انجمن)</a></li>
+                <li><a href="#section-3" class="nav-link">۳. Aggregation (تجمیع)</a></li>
+                <li><a href="#section-4" class="nav-link">۴. Composition (ترکیب)</a></li>
+                <li><a href="#section-5" class="nav-link">۵. سناریوی دانشگاه</a></li>
+                <li><a href="#exercises" class="nav-link">۶. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۲</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part08.html" class="nav-link">بخش ۸: تفکر شیءگرا</a></li>
+                <li><a href="part09.html" class="nav-link">بخش ۹: مبانی UML</a></li>
+                <li><a href="part10.html" class="nav-link active">بخش ۱۰: روابط در UML</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">در بخش قبل، یاد گرفتیم که چگونه یک کلاس منفرد را مدل‌سازی کنیم. اما قدرت واقعی سیستم‌های نرم‌افزاری از <strong>تعامل (Interaction)</strong> و <strong>همکاری (Collaboration)</strong> بین اشیاء ناشی می‌شود. خطوط UML داستان این تعاملات را بازگو می‌کنند: "کی با کی کار می‌کند"، "کی مالک کیست" و "اگر یکی بمیرد، چه بر سر دیگری می‌آید".</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 10: روابط در UML آماده شده است.
+        <h2>۱. انواع روابط: یک نگاه کلی</h2>
+        <p>سه نوع رابطه اصلی در طراحی کلاس‌ها وجود دارد که اغلب با هم اشتباه گرفته می‌شوند.</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار مقایسه</th>
+                    <th>Association (انجمن)</th>
+                    <th>Aggregation (تجمیع)</th>
+                    <th>Composition (ترکیب)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>نماد UML</strong></td>
+                    <td>خط ساده <code>—</code> یا فلش <code>—&gt;</code></td>
+                    <td>خط با لوزی <strong>توخالی</strong> <code>◇—</code></td>
+                    <td>خط با لوزی <strong>توپر</strong> <code>◆—</code></td>
+                </tr>
+                <tr>
+                    <td><strong>مفهوم کلیدی</strong></td>
+                    <td>"استفاده می‌کند" / "ارتباط دارد"</td>
+                    <td>"دارایِ ... است" (Has-a)</td>
+                    <td>"متشکل از ... است" (Part-of)</td>
+                </tr>
+                <tr>
+                    <td><strong>نوع مالکیت</strong></td>
+                    <td>بدون مالکیت (همتا به همتا)</td>
+                    <td>مالکیت اشتراکی / ضعیف</td>
+                    <td>مالکیت انحصاری / قوی</td>
+                </tr>
+                <tr>
+                    <td><strong>چرخه حیات</strong></td>
+                    <td><strong>مستقل:</strong> نابودی یکی بی‌تأثیر است.</td>
+                    <td><strong>مستقل:</strong> جزء بدون کل زنده می‌ماند.</td>
+                    <td><strong>وابسته:</strong> کل بمیرد، جزء هم می‌میرد.</td>
+                </tr>
+                <tr>
+                    <td><strong>شدت رابطه</strong></td>
+                    <td>ضعیف</td>
+                    <td>متوسط</td>
+                    <td>بسیار قوی</td>
+                </tr>
+                <tr>
+                    <td><strong>مثال واقعی</strong></td>
+                    <td>معلم و دانش‌آموز</td>
+                    <td>تیم فوتبال و بازیکن</td>
+                    <td>خانه و اتاق</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        
-        <h3>نمونه کد:</h3>
+    </section>
+
+    <section id="section-2">
+        <h2>۲. وابستگی انجمنی (Association): همکاران مستقل</h2>
+        <p>پایه‌ترین نوع رابطه است. دو کلاس با هم کار می‌کنند، اما هیچکدام "رئیس" یا "مالک" دیگری نیست.</p>
+
+        <div class="diagram-container" style="max-width: 500px; margin: 2rem auto;">
+            <svg viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#3730a3" />
+                    </marker>
+                </defs>
+
+                <rect x="20" y="20" width="100" height="60" class="uml-class"/>
+                <text x="70" y="55" class="uml-title">Teacher</text>
+
+                <rect x="280" y="20" width="100" height="60" class="uml-class"/>
+                <text x="330" y="55" class="uml-title">Student</text>
+
+                <line x1="120" y1="50" x2="280" y2="50" class="relation-line" marker-end="url(#arrow)"/>
+                <text x="200" y="40" text-anchor="middle" font-size="12" fill="#4338ca">teaches ></text>
+                <text x="130" y="65" font-size="11" fill="#6b21a8">1..*</text>
+                <text x="270" y="65" font-size="11" fill="#6b21a8">1..*</text>
+            </svg>
+        </div>
+
+        <p><strong>تحلیل:</strong></p>
+        <ul>
+            <li>معلم دانش‌آموزان را می‌شناسد و به آن‌ها درس می‌دهد.</li>
+            <li>اگر معلم بازنشسته شود، دانش‌آموزان از بین نمی‌روند (چرخه حیات مستقل).</li>
+        </ul>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 10");
+            <pre><code class="language-java">class Student {
+    private String name;
+    // فقط ارجاع است، نه مالکیت
+    private List&lt;Teacher&gt; teachers;
+}
+
+class Teacher {
+    private String name;
+    private List&lt;Student&gt; students;
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="section-3">
+        <h2>۳. تجمیع (Aggregation): رابطه "کل و جزء" ضعیف</h2>
+        <p>نوع خاصی از Association که رابطه "Has-a" (داشتن) را نشان می‌دهد. "کل" شامل "جزء" است، اما "جزء" می‌تواند به تنهایی هم وجود داشته باشد.</p>
+
+        <div class="diagram-container" style="max-width: 500px; margin: 2rem auto;">
+            <svg viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <rect x="20" y="20" width="100" height="60" class="uml-class"/>
+                <text x="70" y="55" class="uml-title">Department</text>
+
+                <rect x="280" y="20" width="100" height="60" class="uml-class"/>
+                <text x="330" y="55" class="uml-title">Professor</text>
+
+                <line x1="135" y1="50" x2="280" y2="50" class="relation-line"/>
+                <polygon points="120,50 130,45 140,50 130,55" class="diamond-empty"/>
+
+                <text x="200" y="40" text-anchor="middle" font-size="12" fill="#4338ca">has</text>
+            </svg>
+        </div>
+
+        <p><strong>تحلیل:</strong> اگر گروه آموزشی منحل شود، اساتید نمی‌میرند؛ آن‌ها می‌توانند به گروه دیگری منتقل شوند.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">class Department {
+    private List&lt;Professor&gt; professors = new ArrayList&lt;&gt;();
+
+    // استاد بیرون ساخته شده و اینجا اضافه می‌شود (تزریق)
+    public void addProfessor(Professor p) {
+        professors.add(p);
+    }
+}
+
+// استفاده:
+Professor p1 = new Professor("Dr. Hesabi");
+Department mathDept = new Department();
+mathDept.addProfessor(p1);
+// اگر mathDept از بین برود، p1 همچنان زنده است.</code></pre>
+        </div>
+    </section>
+
+    <section id="section-4">
+        <h2>۴. ترکیب (Composition): رابطه "کل و جزء" حیاتی</h2>
+        <p>قوی‌ترین نوع رابطه. در اینجا، "جزء" هیچ هویت مستقلی خارج از "کل" ندارد. "کل" مسئول تولد و مرگ "جزء" است.</p>
+
+        <div class="diagram-container" style="max-width: 500px; margin: 2rem auto;">
+            <svg viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <rect x="20" y="20" width="100" height="60" class="uml-class"/>
+                <text x="70" y="55" class="uml-title">House</text>
+
+                <rect x="280" y="20" width="100" height="60" class="uml-class"/>
+                <text x="330" y="55" class="uml-title">Room</text>
+
+                <line x1="135" y1="50" x2="280" y2="50" class="relation-line"/>
+                <polygon points="120,50 130,45 140,50 130,55" class="diamond-filled"/>
+
+                <text x="200" y="40" text-anchor="middle" font-size="12" fill="#4338ca">composed of</text>
+            </svg>
+        </div>
+
+        <p><strong>تحلیل:</strong> اتاق بدون خانه معنا ندارد. اگر خانه تخریب شود، اتاق‌هایش هم نابود می‌شوند.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">class House {
+    private List&lt;Room&gt; rooms;
+
+    public House() {
+        this.rooms = new ArrayList&lt;&gt;();
+        // خانه خودش اتاق‌هایش را خلق می‌کند (مالکیت انحصاری)
+        rooms.add(new Room("Kitchen"));
+        rooms.add(new Room("Bedroom"));
     }
 }</code></pre>
         </div>
     </section>
 
-    <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
-    </section>
-
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. سناریوی جامع طراحی: سیستم مدیریت دانشگاه</h2>
+        <p>بیایید تمام این مفاهیم را در طراحی یک سیستم واقعی ترکیب کنیم.</p>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#3730a3" />
+                    </marker>
+                    <marker id="dashedArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#3730a3" />
+                    </marker>
+                </defs>
+
+                <rect x="50" y="50" width="140" height="80" class="uml-class"/>
+                <text x="120" y="80" class="uml-title">University</text>
+                <line x1="50" y1="90" x2="190" y2="90" class="uml-line"/>
+                <text x="60" y="110" class="uml-text">+ createDept()</text>
+
+                <rect x="300" y="50" width="140" height="80" class="uml-class"/>
+                <text x="370" y="80" class="uml-title">Department</text>
+                <line x1="300" y1="90" x2="440" y2="90" class="uml-line"/>
+                <text x="310" y="110" class="uml-text">- name: String</text>
+
+                <line x1="190" y1="90" x2="300" y2="90" class="relation-line"/>
+                <polygon points="190,90 200,85 210,90 200,95" class="diamond-filled" transform="translate(-10,0)"/>
+
+                <rect x="300" y="250" width="140" height="80" class="uml-class"/>
+                <text x="370" y="280" class="uml-title">Professor</text>
+                <line x1="300" y1="290" x2="440" y2="290" class="uml-line"/>
+                <text x="310" y="310" class="uml-text">- empId: String</text>
+
+                <line x1="370" y1="130" x2="370" y2="250" class="relation-line"/>
+                <polygon points="370,130 365,140 370,150 375,140" class="diamond-empty"/>
+
+                <rect x="550" y="250" width="140" height="80" class="uml-class"/>
+                <text x="620" y="280" class="uml-title">Student</text>
+                <line x1="550" y1="290" x2="690" y2="290" class="uml-line"/>
+                <text x="560" y="310" class="uml-text">- stdId: String</text>
+
+                <line x1="440" y1="290" x2="550" y2="290" class="relation-line"/>
+                <text x="495" y="280" text-anchor="middle" class="relation-label">advises ></text>
+
+                <rect x="550" y="50" width="140" height="80" class="uml-class"/>
+                <text x="620" y="80" class="uml-title">Course</text>
+
+                <line x1="620" y1="130" x2="620" y2="250" class="relation-line"/>
+                <text x="630" y="190" class="relation-label">enrolls in</text>
+
+                <rect x="550" y="380" width="140" height="50" class="uml-class" stroke-dasharray="5,5"/>
+                <text x="620" y="410" class="uml-title">TranscriptPrinter</text>
+
+                <line x1="620" y1="330" x2="620" y2="380" class="relation-line" stroke-dasharray="5,5" marker-end="url(#arrowHead)"/>
+                <text x="630" y="360" class="relation-label">uses</text>
+            </svg>
+        </div>
+
+        <div class="note-box">
+            <strong>تحلیل روابط:</strong>
+            <ul>
+                <li><strong>Composition:</strong> دانشگاه و دانشکده (دانشکده بدون دانشگاه وجود ندارد).</li>
+                <li><strong>Aggregation:</strong> دانشکده و استاد (استاد مستقل است).</li>
+                <li><strong>Association:</strong> استاد و دانشجو (رابطه آموزشی دوطرفه یا یک‌طرفه).</li>
+                <li><strong>Dependency:</strong> دانشجو و پرینتر (استفاده موقت در متد <code>print</code>).</li>
+            </ul>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
-    <section id="section-6">
+    <section id="exercises">
         <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+
+        <div class="exercise-box">
+            <h3>تمرین 1: کارآگاه روابط</h3>
+            <p>برای هر جفت موجودیت زیر، نوع رابطه (Association, Aggregation, Composition) را مشخص کنید و دلیل خود را بنویسید:</p>
+            <ol>
+                <li>انسان (Human) و مغز (Brain)</li>
+                <li>پوشه (Folder) و فایل (File)</li>
+                <li>کتابخانه (Library) و عضو (Member)</li>
+                <li>ماشین (Car) و چرخ (Wheel)</li>
+            </ol>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 2: طراحی سیستم فروشگاه آنلاین</h3>
+            <p>یک دیاگرام کلاس UML برای یک فروشگاه اینترنتی طراحی کنید:</p>
+            <ul>
+                <li><strong>مشتری (Customer)</strong> و <strong>سبد خرید (ShoppingCart)</strong>: هر مشتری دقیقاً یک سبد خرید دارد (آیا سبد خرید بخشی از وجود مشتری است یا مستقل؟).</li>
+                <li><strong>سفارش (Order)</strong> و <strong>اقلام سفارش (OrderItem)</strong>: اگر سفارش حذف شود، اقلام آن چه می‌شوند؟</li>
+                <li><strong>اقلام سفارش</strong> و <strong>محصول (Product)</strong>: رابطه اقلام با محصول واقعی در انبار چیست؟</li>
+            </ul>
+            <p>نوع خطوط (لوزی پر، خالی یا خط ساده) را مشخص کنید.</p>
+        </div>
     </section>
 
-    </main>
+    <section id="summary">
+        <h2>خلاصه بخش دهم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>Association:</strong> همکاران مستقل (خط ساده).</li>
+                <li>✅ <strong>Aggregation:</strong> رابطه Has-a با مالکیت ضعیف (لوزی خالی).</li>
+                <li>✅ <strong>Composition:</strong> رابطه Part-of با مالکیت قوی و حیات وابسته (لوزی پر).</li>
+                <li>✅ <strong>Dependency:</strong> استفاده موقت (خط‌چین).</li>
+                <li>✅ <strong>طراحی:</strong> انتخاب صحیح رابطه بر مدیریت حافظه و طول عمر اشیاء تأثیر مستقیم دارد.</li>
+            </ul>
+        </div>
 
-<!-- Scripts -->
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> ارث‌بری (Inheritance) — ستون فقرات سلسله‌مراتب شیءگرا</p>
+            <div class="part-navigation">
+                <a href="part09.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part11.html" class="btn-next">بخش بعدی: ارث‌بری ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
