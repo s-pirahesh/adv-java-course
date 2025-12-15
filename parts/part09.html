@@ -4,35 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بخش 9: مبانی UML | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+
+    <meta name="description" content="آموزش جامع مبانی UML، دیاگرام کلاس، آناتومی کلاس و مهندسی نرم‌افزار در جاوا">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
-</head>
-<body class="theme-part09">
 
-<!-- Mobile Header -->
+    <style>
+        /* استایل اختصاصی دیاگرام‌های کلاس UML */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+        }
+        .uml-class {
+            fill: #ffffff;
+            stroke: #1e3a8a;
+            stroke-width: 2px;
+        }
+        .uml-header {
+            fill: #eff6ff;
+        }
+        .uml-text {
+            fill: #1e293b;
+            font-size: 14px;
+        }
+        .uml-title {
+            font-weight: bold;
+            font-size: 15px;
+            text-anchor: middle;
+        }
+        .uml-line {
+            stroke: #1e3a8a;
+            stroke-width: 1px;
+        }
+        .uml-static {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="theme-part09a">
+
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>9. مبانی UML</h1>
+    <h1>9. مبانی UML: الفبای مهندسی نرم‌افزار</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۲</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۹</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,92 +66,363 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 9</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. چرا UML حیاتی است؟</a></li>
+                <li><a href="#section-2" class="nav-link">۲. آناتومی کلاس</a></li>
+                <li><a href="#section-3" class="nav-link">۳. دستور زبان (Syntax)</a></li>
+                <li><a href="#section-4" class="nav-link">۴. کارگاه طراحی Student</a></li>
+                <li><a href="#exercises" class="nav-link">۵. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۲</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part08.html" class="nav-link">بخش ۸: تفکر شیءگرا</a></li>
+                <li><a href="part09.html" class="nav-link active">بخش ۹: مبانی UML</a></li>
+                <li><a href="part10.html" class="nav-link">بخش ۱۰: روابط در UML</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">تا این مرحله از مسیر یادگیری، ما بر روی نوشتن کد جاوا و درک مفاهیم انتزاعی شیءگرایی تمرکز داشتیم. اما در دنیای حرفه‌ای توسعه نرم‌افزار، پریدن مستقیم به داخل کدنویسی بدون داشتن یک نقشه راه، مانند شروع به چیدن آجر برای ساختن یک آسمان‌خراش بدون داشتن نقشه‌های مهندسی است. نتیجه نهایی شاید در ابتدا شبیه ساختمان باشد، اما با اولین لرزش (تغییر نیازها) فرو خواهد ریخت.</p>
+        <p>اینجاست که <strong>UML (Unified Modeling Language)</strong> یا زبان مدل‌سازی یکپارچه وارد میدان می‌شود.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 9: مبانی UML آماده شده است.
-        </div>
-        
-        <h3>نمونه کد:</h3>
-        <div class="code-block-container">
-            <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 9");
-    }
-}</code></pre>
-        </div>
+        <h2>۱. چرا UML حیاتی است؟ (فراتر از نقاشی)</h2>
+        <p>بسیاری از دانشجویان و برنامه‌نویسان تازه‌کار تصور می‌کنند UML صرفاً کشیدن چند مستطیل و فلش برای راضی کردن استاد یا مدیر پروژه است. اما UML سه کارکرد حیاتی دارد که کدنویسی به تنهایی فاقد آن است:</p>
+
+        <ol>
+            <li><strong>قدرت "دید از بالا" (Abstraction Level):</strong> وقتی شما به کد نگاه می‌کنید، درگیر جزئیات پیاده‌سازی (مثل حلقه <code>for</code> یا شرط <code>if</code>) می‌شوید. اما UML به شما اجازه می‌دهد ساختار کلان سیستم، روابط بین ماژول‌ها و جریان داده‌ها را بدون گم شدن در جزئیات ببینید.</li>
+            <li><strong>طراحی پیش از ساخت (Blueprinting):</strong> تغییر دادن یک خط در دیاگرام UML روی وایت‌برد، هزینه‌ای نزدیک به صفر دارد. اما تغییر دادن ساختار کلاسی که هزاران خط کد به آن وابسته است، می‌تواند روزها زمان ببرد. UML اجازه می‌دهد اشتباهات معماری را <strong>قبل</strong> از نوشتن کد پیدا کنید.</li>
+            <li><strong>زبان مشترک جهانی (Lingua Franca):</strong> کد جاوا را فقط برنامه‌نویسان جاوا می‌فهمند. اما دیاگرام UML را مدیر پروژه، تحلیل‌گر سیستم، توسعه‌دهنده دیتابیس و حتی برنامه‌نویسان سایر زبان‌ها (مانند Python یا C#) درک می‌کنند.</li>
+        </ol>
     </section>
 
     <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
+        <h2>۲. آناتومی دقیق یک کلاس در UML</h2>
+        <p>در دیاگرام کلاس (Class Diagram)، که مهم‌ترین دیاگرام برای برنامه‌نویسان OOP است، هر کلاس با یک مستطیل نمایش داده می‌شود. این مستطیل به طور استاندارد به سه طبقه (Compartment) تقسیم می‌شود. بیایید هر طبقه را کالبدشکافی کنیم:</p>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <filter id="shadow" x="0" y="0" width="200%" height="200%">
+                        <feOffset result="offOut" in="SourceAlpha" dx="2" dy="2" />
+                        <feGaussianBlur result="blurOut" in="offOut" stdDeviation="2" />
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                    </filter>
+                </defs>
+
+                <rect x="100" y="20" width="200" height="180" class="uml-class" filter="url(#shadow)"/>
+
+                <rect x="100" y="20" width="200" height="40" class="uml-header" stroke="none"/>
+                <text x="200" y="45" class="uml-title">ClassName</text>
+                <line x1="100" y1="60" x2="300" y2="60" class="uml-line"/>
+
+                <text x="110" y="85" class="uml-text">- field1 : Type</text>
+                <text x="110" y="105" class="uml-text">+ field2 : Type</text>
+                <line x1="100" y1="120" x2="300" y2="120" class="uml-line"/>
+
+                <text x="110" y="145" class="uml-text">+ method1() : void</text>
+                <text x="110" y="165" class="uml-text">- method2() : Type</text>
+
+                <text x="310" y="45" font-size="12" fill="#64748b">طبقه اول: هویت (Name)</text>
+                <text x="310" y="95" font-size="12" fill="#64748b">طبقه دوم: ویژگی‌ها (Attributes)</text>
+                <text x="310" y="155" font-size="12" fill="#64748b">طبقه سوم: عملیات (Operations)</text>
+            </svg>
+        </div>
+
+        <h3>طبقه اول: هویت کلاس (Name)</h3>
+        <ul>
+            <li>در بالاترین بخش، نام کلاس قرار می‌گیرد.</li>
+            <li><strong>قالب‌بندی:</strong> نام کلاس باید با حروف <strong>Bold</strong> و در وسط کادر نوشته شود.</li>
+            <li><strong>قرارداد:</strong> حرف اول نام کلاس باید بزرگ باشد (PascalCase)، دقیقاً مانند جاوا.</li>
+            <li><strong>نکته پیشرفته:</strong> اگر کلاس <code>abstract</code> باشد، نام آن باید به صورت <em>Italic</em> (کج) نوشته شود. اگر <code>interface</code> باشد، معمولاً بالای نام عبارت <code>&lt;&lt;interface&gt;&gt;</code> قرار می‌گیرد.</li>
+        </ul>
+
+        <h3>طبقه دوم: ویژگی‌ها (Attributes/Fields)</h3>
+        <ul>
+            <li>در بخش میانی، لیستی از فیلدها یا متغیرهای کلاس قرار می‌گیرد.</li>
+            <li>این بخش نشان‌دهنده "وضعیت" (State) یا "دانش" شیء است.</li>
+            <li>هر خط در این بخش معادل یک متغیر در کلاس جاوا است.</li>
+        </ul>
+
+        <h3>طبقه سوم: عملیات (Operations/Methods)</h3>
+        <ul>
+            <li>در بخش پایینی، لیستی از متدها قرار می‌گیرد.</li>
+            <li>این بخش نشان‌دهنده "رفتار" (Behavior) شیء است.</li>
+        </ul>
     </section>
 
     <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
+        <h2>۳. دستور زبان و نمادهای UML (Syntax)</h2>
+        <p>برای اینکه بتوانید دیاگرام‌ها را بخوانید یا رسم کنید، باید دستور زبان آن را بلد باشید. فرمت کلی تعریف یک عضو در UML به صورت زیر است:</p>
+
+        <div class="code-block-container" dir="ltr">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code>[Visibility] [Name] : [Type] [Multiplicity] = [Default Value]</code></pre>
+        </div>
+
+        <h3>جدول ۱: سطح دسترسی (Visibility Modifiers)</h3>
+        <p>این نمادها دقیقاً معادل Access Modifier های جاوا هستند و در ابتدای خط می‌آیند.</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>نماد</th>
+                    <th>معادل جاوا</th>
+                    <th>سطح دسترسی</th>
+                    <th>توضیح</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center"><strong>+</strong></td>
+                    <td><code>public</code></td>
+                    <td>عمومی</td>
+                    <td>قابل دسترسی برای تمام کلاس‌های سیستم.</td>
+                </tr>
+                <tr>
+                    <td class="text-center"><strong>-</strong></td>
+                    <td><code>private</code></td>
+                    <td>خصوصی</td>
+                    <td>فقط قابل دسترسی در داخل خود همین کلاس.</td>
+                </tr>
+                <tr>
+                    <td class="text-center"><strong>#</strong></td>
+                    <td><code>protected</code></td>
+                    <td>محافظت‌شده</td>
+                    <td>قابل دسترسی در پکیج فعلی و تمام زیرکلاس‌ها (فرزندان).</td>
+                </tr>
+                <tr>
+                    <td class="text-center"><strong>~</strong></td>
+                    <td>(default)</td>
+                    <td>پکیج</td>
+                    <td>فقط قابل دسترسی برای کلاس‌های هم‌پکیج (Package-Private).</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>جدول ۲: نوع اعضا و ویژگی‌های خاص</h3>
+        <p>چگونه تفاوت فیلد، متد و استاتیک بودن را نشان دهیم؟</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>ویژگی</th>
+                    <th>نحوه نمایش بصری</th>
+                    <th>مثال UML</th>
+                    <th>معادل کد جاوا</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>Field</strong></td>
+                    <td><code>name : type</code></td>
+                    <td><code>- age : int</code></td>
+                    <td><code>private int age;</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Method</strong></td>
+                    <td><code>name(params) : returnType</code></td>
+                    <td><code>+ getName() : String</code></td>
+                    <td><code>public String getName() { ... }</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Constructor</strong></td>
+                    <td>نام کلاس یا <code>&lt;&lt;create&gt;&gt;</code></td>
+                    <td><code>+ Student(name: String)</code></td>
+                    <td><code>public Student(String name) { ... }</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Static</strong></td>
+                    <td><u>زیر خط کشیده (Underline)</u></td>
+                    <td><u><code>+ count : int</code></u></td>
+                    <td><code>public static int count;</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Abstract</strong></td>
+                    <td><em>متن کج (Italic)</em></td>
+                    <td><em><code>+ getArea() : double</code></em></td>
+                    <td><code>public abstract double getArea();</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Final</strong></td>
+                    <td>حروف بزرگ یا <code>{readOnly}</code></td>
+                    <td><code>MAX_SIZE : int</code></td>
+                    <td><code>public final int MAX_SIZE;</code></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
+        <h2>۴. کارگاه عملی: طراحی گام‌به‌گام کلاس Student</h2>
+        <p>بیایید فرآیند تبدیل یک نیازمندی ذهنی به یک طرح UML استاندارد را قدم به قدم پیش برویم.</p>
+
+        <p><strong>سناریو:</strong> ما نیاز به کلاسی برای مدیریت اطلاعات دانشجویان داریم. هر دانشجو باید نام، نام خانوادگی و شماره دانشجویی داشته باشد. همچنین باید معدل او محاسبه شود. شماره دانشجویی نباید پس از ایجاد تغییر کند.</p>
+
+        <p><strong>دیاگرام نهایی و کامل:</strong></p>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <rect x="100" y="20" width="300" height="280" class="uml-class"/>
+
+                <rect x="100" y="20" width="300" height="40" class="uml-header" stroke="none"/>
+                <text x="250" y="45" class="uml-title">Student</text>
+                <line x1="100" y1="60" x2="400" y2="60" class="uml-line"/>
+
+                <text x="110" y="85" class="uml-text">- firstName : String</text>
+                <text x="110" y="105" class="uml-text">- lastName : String</text>
+                <text x="110" y="125" class="uml-text">- studentId : String</text>
+                <text x="110" y="145" class="uml-text">- grades : List&lt;Double&gt;</text>
+                <text x="110" y="165" class="uml-text uml-static">- totalStudents : int</text>
+                <line x1="100" y1="175" x2="400" y2="175" class="uml-line"/>
+
+                <text x="110" y="200" class="uml-text">+ Student(fName: String, lName: String, id: String)</text>
+                <text x="110" y="220" class="uml-text">+ getFullName() : String</text>
+                <text x="110" y="240" class="uml-text">+ getStudentId() : String</text>
+                <text x="110" y="260" class="uml-text">+ addGrade(score: double) : void</text>
+                <text x="110" y="280" class="uml-text">+ calculateGPA() : double</text>
+                <text x="110" y="300" class="uml-text uml-static">+ getTotalCount() : int</text>
+            </svg>
+        </div>
+
+        <div class="note-box">
+            <strong>تحلیل دیاگرام نهایی:</strong>
+            <p>با نگاه به این دیاگرام، هر برنامه‌نویسی (چه جاوا کار کند چه ++C) دقیقاً می‌داند باید چه کدی بنویسد:</p>
+            <ul>
+                <li>یک کلاس به نام <code>Student</code>.</li>
+                <li>چهار فیلد خصوصی.</li>
+                <li>یک فیلد استاتیک (چون زیرش خط کشیده شده).</li>
+                <li>یک سازنده عمومی با 3 پارامتر.</li>
+                <li>چهار متد عمومی و یک متد استاتیک.</li>
+            </ul>
+        </div>
     </section>
 
-    <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+    <section id="exercises">
+        <h2>۵. تمرین‌های عملی</h2>
+        <p>برای تسلط بر UML، قلم و کاغذ بردارید (یا از ابزارهایی مثل draw.io استفاده کنید) و تمرین‌های زیر را حل کنید.</p>
+
+        <div class="exercise-box">
+            <h3>تمرین 1: طراحی UML برای موجودیت Book</h3>
+            <p>یک کلاس <code>Book</code> برای سیستم کتابخانه طراحی کنید که مشخصات زیر را داشته باشد:</p>
+            <ul>
+                <li><strong>عنوان (Title):</strong> عمومی، رشته.</li>
+                <li><strong>نویسنده (Author):</strong> خصوصی، رشته.</li>
+                <li><strong>قیمت (Price):</strong> خصوصی، عدد اعشاری.</li>
+                <li><strong>تعداد صفحات (PageCount):</strong> محافظت شده (protected)، عدد صحیح.</li>
+                <li><strong>شابک (ISBN):</strong> خصوصی و ثابت (final/read-only)، رشته.</li>
+                <li><strong>متدها:</strong>
+                    <ul>
+                        <li>سازنده‌ای که تمام اطلاعات را بگیرد.</li>
+                        <li>متدی به نام <code>applyDiscount</code> که درصد تخفیف (int) را بگیرد و قیمت جدید را اعمال کند.</li>
+                        <li>متدی به نام <code>getBookInfo</code> که تمام اطلاعات کتاب را به صورت رشته برگرداند.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 2: مهندسی رو به جلو (UML به Code)</h3>
+            <p>کد جاوای دیاگرام زیر را با دقت بنویسید (به access modifier ها و موارد استاتیک دقت کنید):</p>
+
+            <div class="diagram-container" style="max-width: 400px; margin: 0 auto;">
+                <svg viewBox="0 0 350 200" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                    <rect x="20" y="20" width="310" height="160" class="uml-class"/>
+                    <text x="175" y="45" class="uml-title">BankAccount</text>
+                    <line x1="20" y1="55" x2="330" y2="55" class="uml-line"/>
+                    <text x="30" y="75" class="uml-text">- accountNumber : String</text>
+                    <text x="30" y="95" class="uml-text">- balance : double</text>
+                    <text x="30" y="115" class="uml-text uml-static">- interestRate : double</text>
+                    <line x1="20" y1="125" x2="330" y2="125" class="uml-line"/>
+                    <text x="30" y="145" class="uml-text">+ BankAccount(accNum : String)</text>
+                    <text x="30" y="165" class="uml-text">+ deposit(amount : double) : void</text>
+                    <text x="30" y="185" class="uml-text">+ withdraw(amount : double) : boolean</text>
+                    <text x="30" y="205" class="uml-text">- checkBalance() : boolean</text>
+                    <text x="30" y="225" class="uml-text uml-static">+ setInterestRate(rate : double) : void</text>
+                </svg>
+            </div>
+            <p><em>نکته:</em> به زیرخط‌دار بودن <code>interestRate</code> و <code>setInterestRate</code> دقت کنید (نشانه <code>static</code> بودن).</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 3: مهندسی معکوس (Code به UML)</h3>
+            <p>کد جاوای زیر را تحلیل کرده و دیاگرام کلاس استاندارد آن را رسم کنید:</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">public class SmartPhone {
+    private String brand;
+    private String model;
+    private boolean isOn;
+    public static int totalPhonesManufactured = 0;
+
+    public SmartPhone(String brand, String model) {
+        this.brand = brand;
+        this.model = model;
+        this.isOn = false;
+        totalPhonesManufactured++;
+    }
+
+    public void powerOn() {
+        this.isOn = true;
+    }
+
+    private void connectToNetwork() {
+        // منطق اتصال به شبکه
+    }
+
+    public String getStatus() {
+        return isOn ? "On" : "Off";
+    }
+}</code></pre>
+            </div>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
-    <section id="section-6">
-        <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+    <section id="summary">
+        <h2>خلاصه بخش نهم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>UML:</strong> زبان استاندارد مدل‌سازی برای ارتباط و طراحی.</li>
+                <li>✅ <strong>Class Diagram:</strong> مستطیل ۳ بخشی (نام، فیلد، متد).</li>
+                <li>✅ <strong>Visibility:</strong> <code>+</code> (public)، <code>-</code> (private)، <code>#</code> (protected)، <code>~</code> (package).</li>
+                <li>✅ <strong>Static:</strong> با <u>زیرخط</u> نمایش داده می‌شود.</li>
+                <li>✅ <strong>Abstract:</strong> با <em>فونت کج</em> نمایش داده می‌شود.</li>
+            </ul>
+        </div>
+
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> روابط در UML — داستان تعامل اشیاء (Association, Aggregation, Composition)</p>
+            <div class="part-navigation">
+                <a href="part08.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part10.html" class="btn-next">بخش بعدی: روابط در UML ←</a>
+            </div>
+        </div>
     </section>
+</main>
 
-    </main>
-
-<!-- Scripts -->
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
