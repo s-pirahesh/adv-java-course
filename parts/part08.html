@@ -4,35 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بخش 8: تفکر شیءگرا | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+
+    <meta name="description" content="آموزش تفکر شیءگرا (Object-Oriented Thinking)، تفاوت پارادایم‌ها و تشخیص کلاس‌ها در جاوا">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل‌های اختصاصی دیاگرام‌های این بخش */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .decision-box {
+            fill: #eff6ff; /* blue-50 */
+            stroke: #2563eb; /* blue-600 */
+            stroke-width: 2px;
+        }
+        .action-box {
+            fill: #fff;
+            stroke: #1e40af; /* blue-800 */
+            stroke-width: 2px;
+        }
+        .note-box-svg {
+            fill: #f0fdf4; /* green-50 */
+            stroke: #16a34a; /* green-600 */
+            stroke-dasharray: 5,5;
+        }
+        .connector {
+            stroke: #64748b;
+            stroke-width: 1.5px;
+            fill: none;
+        }
+        .text-label {
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body class="theme-part08">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>8. تفکر شیءگرا</h1>
+    <h1>8. تفکر شیءگرا: تغییر پارادایم</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۲</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۸</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,92 +66,325 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 8</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. پارادایم خطی</a></li>
+                <li><a href="#section-2" class="nav-link">۲. پارادایم رویه‌ای</a></li>
+                <li><a href="#section-3" class="nav-link">۳. پارادایم شیءگرا</a></li>
+                <li><a href="#section-4" class="nav-link">۴. مقایسه با مثال عملی</a></li>
+                <li><a href="#section-5" class="nav-link">۵. کی کلاس بسازیم؟</a></li>
+                <li><a href="#exercises" class="nav-link">۶. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۲</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part08.html" class="nav-link active">بخش ۸: تفکر شیءگرا</a></li>
+                <li><a href="part09.html" class="nav-link">بخش ۹: مبانی UML</a></li>
+                <li><a href="part10.html" class="nav-link">بخش ۱۰: روابط در UML</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+    <section id="intro">
+        <p class="lead">قبل از اینکه به ستون‌های اصلی OOP مانند ارث‌بری و چندریختی بپردازیم، کاملاً ضروری است که <strong>تفاوت در شیوه تفکر</strong> بین پارادایم‌ها را عمیقاً درک کنیم. این درک، تمایز بین "کدنویسی به زبان جاوا" و "تفکر به شیوه شیءگرا" را رقم می‌زند.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 8: تفکر شیءگرا آماده شده است.
-        </div>
-        
-        <h3>نمونه کد:</h3>
+        <h2>۱. پارادایم خطی (Linear): ذهنیت "فقط انجامش بده"</h2>
+        <p><strong>فلسفه:</strong> برنامه یک دستور پخت طولانی و یکپارچه است. کامپیوتر از خط اول شروع می‌کند و بدون هیچ انحرافی تا آخر می‌رود.</p>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
+            <pre><code class="language-java">public class Sum2NumLinear {
     public static void main(String[] args) {
-        System.out.println("Part 8");
+        // 1. تعریف داده‌ها
+        int num1 = 10;
+        int num2 = 20;
+
+        // 2. انجام عملیات
+        int result = num1 + num2;
+
+        // 3. نمایش نتیجه
+        System.out.println("The result is: " + result);
     }
 }</code></pre>
         </div>
+        <p><strong>تحلیل:</strong> تمرکز بر روی <strong>دنباله دستورات</strong> است. این رویکرد برای کارهای تکراری فاجعه‌بار است و قابلیت نگهداری ندارد.</p>
     </section>
 
     <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
+        <h2>۲. پارادایم رویه‌ای (Procedural): ذهنیت "جعبه ابزار"</h2>
+        <p><strong>فلسفه:</strong> وظایف بزرگ را به زیروظیفه‌های کوچک‌تر و قابل استفاده مجدد به نام <strong>تابع (Function)</strong> تقسیم کن.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class Sum2NumProcedural {
+    // ابزار (تابع) برای جمع کردن
+    public static int sum(int n1, int n2) {
+        return n1 + n2;
+    }
+
+    public static void main(String[] args) {
+        int num1 = 10;
+        int num2 = 20;
+
+        // استفاده از ابزار برای انجام عملیات
+        int result = sum(num1, num2);
+
+        System.out.println("The result is: " + result);
+    }
+}</code></pre>
+        </div>
+        <p><strong>تحلیل:</strong> تمرکز بر روی <strong>"افعال"</strong> و <strong>"عملیات"</strong> است. پیشرفت بزرگی در استفاده مجدد کد حاصل شده، اما <strong>داده‌ها از عملیات جدا هستند</strong> که در سیستم‌های بزرگ منشأ خطا است.</p>
     </section>
 
     <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
+        <h2>۳. پارادایم شیءگرا (Object-Oriented): ذهنیت "جامعه اشیاء"</h2>
+        <p><strong>فلسفه:</strong> دنیای مسئله را به صورت مجموعه‌ای از <strong>اشیاء (Objects)</strong> هوشمند و مستقل مدل‌سازی کن. هر شیء هم "دانش" (داده‌ها) و هم "توانایی" (رفتارها) مربوط به خود را دارد.</p>
+        <p><strong>سوال کلیدی:</strong> <strong>چه کسی</strong> مسئول انجام این کار است؟</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// مدل‌سازی موجودیت: یک "ماشین حساب"
+public class Calculator {
+    // رفتار: این ماشین حساب توانایی جمع کردن دارد
+    public int add(int n1, int n2) {
+        return n1 + n2;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // 1. ایجاد یک شیء متخصص (ماشین حساب)
+        Calculator myCalc = new Calculator();
+
+        // 2. ارسال پیام به شیء برای انجام کار
+        // "ای ماشین حساب، دو عدد 10 و 20 را برای من جمع کن"
+        int result = myCalc.add(10, 20);
+
+        System.out.println("The result is: " + result);
+    }
+}</code></pre>
+        </div>
+        <p><strong>تحلیل:</strong> تمرکز از "چگونه جمع کنم؟" به "از چه کسی بخواهم که جمع کند؟" تغییر کرده است. مسئولیت "جمع کردن" به یک شیء متخصص به نام <code>Calculator</code> واگذار شده است.</p>
+
+        <h3>جدول مقایسه جامع پارادایم‌ها</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Linear</th>
+                    <th>Procedural</th>
+                    <th>OOP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>واحد اصلی</strong></td>
+                    <td>کل برنامه</td>
+                    <td>تابع / رویه</td>
+                    <td>شیء / کلاس</td>
+                </tr>
+                <tr>
+                    <td><strong>ساختار</strong></td>
+                    <td>یکپارچه</td>
+                    <td>ماژولار و تابع‌محور</td>
+                    <td>کپسوله و شیء‌محور</td>
+                </tr>
+                <tr>
+                    <td><strong>داده و رفتار</strong></td>
+                    <td>درهم‌تنیده</td>
+                    <td>جدا از هم</td>
+                    <td>یکپارچه در شیء</td>
+                </tr>
+                <tr>
+                    <td><strong>محافظت از داده</strong></td>
+                    <td>❌ وجود ندارد</td>
+                    <td>❌ ضعیف (Global State)</td>
+                    <td>✅ قوی (Encapsulation)</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
+        <h2>۴. مقایسه نهایی با مثال قدرتمند <code>ShamsiDate</code></h2>
+        <p>قدرت واقعی تفکر شیءگرا در مواجهه با پیچیدگی مشخص می‌شود.</p>
+
+        <h3>رویکرد رویه‌ای (Procedural)</h3>
+        <ul>
+            <li>داده‌ها (سال، ماه، روز) و توابع (افزودن روز، چک کردن اعتبار) جدا هستند.</li>
+            <li>کاربر باید داده‌ها را به درستی به توابع پاس دهد و نگران وضعیت نامعتبر باشد.</li>
+        </ul>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class DateUtils {
+    public static int[] addOneDay(int year, int month, int day) {
+        day++;
+        // منطق پیچیده اعتبار سنجی اینجا پخش شده است
+        if (day > 31) {
+            day = 1; month++;
+            // ...
+        }
+        return new int[]{year, month, day};
+    }
+}</code></pre>
+        </div>
+
+        <h3>رویکرد شیءگرا (OOP)</h3>
+        <ul>
+            <li>تمام منطق پیچیده در <strong>داخل</strong> کلاس <code>ShamsiDate</code> <strong>کپسوله</strong> شده است.</li>
+            <li>کاربر نیازی به دانستن جزئیات پیاده‌سازی ندارد و با یک رابط کاربری ساده و امن کار می‌کند.</li>
+        </ul>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class ShamsiDate {
+    private int year, month, day;
+
+    public ShamsiDate(int year, int month, int day) {
+        // اعتبارسنجی در سازنده تضمین شده است
+        this.year = year; this.month = month; this.day = day;
+    }
+
+    public void addDay() {
+        this.day++;
+        // منطق پیچیده پنهان شده است
+        if (this.day > 31) { /* ... */ }
+    }
+}
+
+// استفاده:
+ShamsiDate today = new ShamsiDate(1403, 5, 15);
+today.addDay(); // کاربر فقط دستور می‌دهد، نگران جزئیات نیست</code></pre>
+        </div>
+        <div class="note-box">
+            <strong>جادوی OOP:</strong> پنهان‌سازی پیچیدگی (Hiding Complexity). کاربر هرگز نگران جزئیات پیاده‌سازی سال کبیسه نیست.
+        </div>
     </section>
 
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. چه زمانی باید یک کلاس بسازیم؟ (درخت تصمیم)</h2>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#64748b" />
+                    </marker>
+                </defs>
+
+                <polygon points="400,20 580,70 400,120 220,70" class="decision-box"/>
+                <text x="400" y="65" text-anchor="middle" font-size="13" font-weight="bold">آیا این مفهوم یک "موجودیت"</text>
+                <text x="400" y="85" text-anchor="middle" font-size="13" font-weight="bold">با داده و رفتار است؟</text>
+
+                <path d="M 580 70 L 680 70 L 680 150" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="620" y="60" class="text-label" fill="#16a34a">بله</text>
+
+                <rect x="600" y="150" width="160" height="50" rx="5" class="action-box"/>
+                <text x="680" y="180" text-anchor="middle" font-weight="bold">کلاس بساز</text>
+
+                <rect x="580" y="220" width="200" height="70" rx="5" class="note-box-svg"/>
+                <text x="680" y="245" text-anchor="middle" font-size="11">مثال: Student, Car</text>
+                <text x="680" y="265" text-anchor="middle" font-size="11" fill="#15803d">(هم داده دارند هم رفتار)</text>
+
+                <path d="M 220 70 L 120 70 L 120 150" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="160" y="60" class="text-label" fill="#dc2626">خیر</text>
+
+                <polygon points="120,150 240,200 120,250 0,200" class="decision-box"/>
+                <text x="120" y="195" text-anchor="middle" font-size="12" font-weight="bold">آیا مجموعه‌ای از توابع</text>
+                <text x="120" y="215" text-anchor="middle" font-size="12" font-weight="bold">ابزاری و بدون حالت است؟</text>
+
+                <path d="M 240 200 L 320 200 L 320 280" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="270" y="190" class="text-label" fill="#16a34a">بله</text>
+
+                <rect x="250" y="280" width="140" height="60" rx="5" class="action-box"/>
+                <text x="320" y="305" text-anchor="middle" font-size="12" font-weight="bold">کلاس Utility</text>
+                <text x="320" y="325" text-anchor="middle" font-size="11">(متدهای static)</text>
+
+                <rect x="230" y="360" width="180" height="60" rx="5" class="note-box-svg"/>
+                <text x="320" y="385" text-anchor="middle" font-size="11">مثال: Math, Arrays</text>
+                <text x="320" y="405" text-anchor="middle" font-size="11" fill="#15803d">(حالتی ندارند)</text>
+
+                <path d="M 0 200 L -50 200 L -50 300 L 50 300" class="connector" marker-end="url(#arrowHead)" transform="translate(50,0)"/>
+                <text x="20" y="190" class="text-label" fill="#dc2626">خیر</text>
+
+                <rect x="20" y="300" width="160" height="60" rx="5" class="action-box" stroke="#dc2626" fill="#fef2f2"/>
+                <text x="100" y="325" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">نیاز به کلاس جدید نیست</text>
+                <text x="100" y="345" text-anchor="middle" font-size="11" fill="#7f1d1d">از ساختارهای موجود استفاده کن</text>
+            </svg>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
-    <section id="section-6">
+    <section id="exercises">
         <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+
+        <div class="exercise-box">
+            <h3>تمرین 1: تبدیل کد رویه‌ای به OOP</h3>
+            <p>کد رویه‌ای زیر را که اطلاعات کاربر را مدیریت می‌کند، به یک کلاس <code>User</code> شیءگرا تبدیل کنید:</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">// کد رویه‌ای
+public static void printUserDetails(String name, int age) {
+    System.out.println("Name: " + name + ", Age: " + age);
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 2: طراحی کلاس Book</h3>
+            <p>یک کلاس <code>Book</code> طراحی کنید. این کلاس باید چه فیلدهایی (دانش) داشته باشد (مانند <code>title</code>, <code>author</code>, <code>isbn</code>) و چه متدهایی (توانایی) می‌تواند داشته باشد (مانند <code>displayInfo</code>)؟</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 3: شناسایی موجودیت‌ها</h3>
+            <p>در سناریوی زیر، موجودیت‌های اصلی (کاندیداهای کلاس شدن) را شناسایی کنید:</p>
+            <p><em>"یک دانشجو برای ثبت‌نام در یک دوره آموزشی، به وب‌سایت دانشگاه مراجعه می‌کند. هر دوره توسط یک استاد ارائه می‌شود و دارای یک کد منحصر به فرد است. دانشجو می‌تواند چندین دوره را انتخاب کند."</em></p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 4: کدنویسی سیستم کتابخانه</h3>
+            <p>یک سیستم ساده شیءگرا برای کتابخانه طراحی کنید که شامل کلاس‌های <code>Book</code> و <code>Library</code> (شامل آرایه‌ای از کتاب‌ها) باشد.</p>
+        </div>
     </section>
 
-    </main>
+    <section id="summary">
+        <h2>خلاصه بخش هشتم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>تغییر ذهنیت:</strong> از "چگونه انجام دادن" (Procedural) به "چه کسی انجام دهد" (OOP).</li>
+                <li>✅ <strong>موجودیت‌ها:</strong> تمرکز بر اسم‌ها (اشیاء) به جای افعال (توابع).</li>
+                <li>✅ <strong>کپسوله‌سازی:</strong> بسته‌بندی داده و رفتار در یک واحد امن.</li>
+                <li>✅ <strong>پنهان‌سازی پیچیدگی:</strong> ارائه رابط کاربری ساده و مخفی کردن منطق داخلی.</li>
+                <li>✅ <strong>کلاس Utility:</strong> استفاده از متدهای static برای ابزارهای بدون حالت (مانند Math).</li>
+            </ul>
+        </div>
 
-<!-- Scripts -->
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> مبانی UML — نقشه‌کشی دنیای نرم‌افزار</p>
+            <div class="part-navigation">
+                <a href="part07.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part09.html" class="btn-next">بخش بعدی: مبانی UML ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
