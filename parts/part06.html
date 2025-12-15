@@ -4,35 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بخش 6: سازنده‌ها و this | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+
+    <meta name="description" content="آموزش جامع سازنده‌ها (Constructors) در جاوا، کلمه کلیدی this، زنجیره سازنده‌ها و الگوهای طراحی">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
 </head>
 <body class="theme-part06">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>6. سازنده‌ها و this</h1>
+    <h1>6. سازنده‌ها و this: آیین تولد یک شیء</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۱</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۶</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,17 +35,19 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 6</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. سازنده چیست؟</a></li>
+                <li><a href="#section-2" class="nav-link">۲. سازنده پیش‌فرض</a></li>
+                <li><a href="#section-3" class="nav-link">۳. کلمه کلیدی this</a></li>
+                <li><a href="#section-4" class="nav-link">۴. سربارگذاری و this()</a></li>
+                <li><a href="#section-5" class="nav-link">۵. الگوهای خاص سازنده</a></li>
+                <li><a href="#section-6" class="nav-link">۶. اشتباهات رایج</a></li>
+                <li><a href="#exercises" class="nav-link">۷. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
@@ -67,66 +63,389 @@
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+    <section id="intro">
+        <p class="lead">تاکنون، ما یک شیء را با <code>new Student()</code> ایجاد کرده و سپس به صورت دستی و خط به خط، فیلدهای آن را مقداردهی کرده‌ایم. این روش چند مشکل اساسی دارد: پرحرف، مستعد خطا و ایجاد وضعیت نامعتبر موقت.</p>
+        <p><strong>سازنده‌ها (Constructors)</strong> راه‌حل جاوا برای این مشکلات هستند. آن‌ها تضمین می‌کنند که یک شیء در همان لحظه تولد، به یک وضعیت معتبر و کامل برسد.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 6: سازنده‌ها و this آماده شده است.
+        <h2>۱. سازنده (Constructor) چیست؟</h2>
+        <p>یک سازنده، یک <strong>بلوک کد ویژه شبیه به متد</strong> است که وظیفه اصلی آن، <strong>مقداردهی اولیه (Initialize)</strong> یک شیء در لحظه ایجاد آن است.</p>
+
+        <div class="warning-box">
+            <strong>قوانین طلایی تعریف یک سازنده:</strong>
+            <ol>
+                <li>نام سازنده <strong>باید دقیقاً با نام کلاس یکسان باشد</strong>.</li>
+                <li>سازنده <strong>هیچ نوع خروجی (Return Type) ندارد</strong>، حتی <code>void</code>.</li>
+            </ol>
         </div>
-        
-        <h3>نمونه کد:</h3>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 6");
+            <pre><code class="language-java">public class Car {
+    String model;
+
+    // این یک سازنده برای کلاس Car است
+    public Car() {
+        model = "Unknown";
+    }
+}
+
+// نحوه فراخوانی
+Car myCar = new Car(); // سازنده به صورت خودکار فراخوانی می‌شود</code></pre>
+        </div>
+
+        <h3>جدول مقایسه: Constructor vs. Method</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Constructor (سازنده)</th>
+                    <th>Method (متد)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>هدف</strong></td>
+                    <td>مقداردهی اولیه یک شیء</td>
+                    <td>تعریف رفتار یک شیء</td>
+                </tr>
+                <tr>
+                    <td><strong>نام</strong></td>
+                    <td>باید دقیقاً با نام کلاس یکسان باشد</td>
+                    <td>می‌تواند هر نام معتبری (camelCase) باشد</td>
+                </tr>
+                <tr>
+                    <td><strong>نوع خروجی</strong></td>
+                    <td>❌ ندارد (هیچ، حتی <code>void</code>)</td>
+                    <td>✅ دارد (باید مشخص شود، <code>void</code> هم مجاز است)</td>
+                </tr>
+                <tr>
+                    <td><strong>فراخوانی</strong></td>
+                    <td>ضمنی، هنگام استفاده از <code>new</code></td>
+                    <td>صریح، با استفاده از نام متد</td>
+                </tr>
+                <tr>
+                    <td><strong>وراثت</strong></td>
+                    <td>❌ به ارث برده نمی‌شود</td>
+                    <td>✅ به ارث برده می‌شود (مگر <code>private</code>)</td>
+                </tr>
+                <tr>
+                    <td><strong>سربارگذاری</strong></td>
+                    <td>✅ امکان‌پذیر است</td>
+                    <td>✅ امکان‌پذیر است</td>
+                </tr>
+                <tr>
+                    <td><strong>فراخوانی <code>this()</code></strong></td>
+                    <td>✅ می‌تواند سازنده دیگری را فراخوانی کند</td>
+                    <td>❌ نمی‌تواند</td>
+                </tr>
+                <tr>
+                    <td><strong>مثال</strong></td>
+                    <td><code>public Student(String n) { ... }</code></td>
+                    <td><code>public void study() { ... }</code></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="section-2">
+        <h2>۲. سازنده پیش‌فرض (Default Constructor)</h2>
+        <p><strong>قانون مهم:</strong> اگر شما در کلاس خود <strong>هیچ سازنده‌ای</strong> ننویسید، کامپایلر جاوا به صورت خودکار یک سازنده پیش‌فرض (بدون پارامتر و با بدنه خالی) برای شما ایجاد می‌کند.</p>
+
+        <p><strong>نقطه کور:</strong> لحظه‌ای که شما <strong>حتی یک سازنده</strong> در کلاس خود بنویسید، کامپایلر دیگر سازنده پیش‌فرض را برای شما ایجاد <strong>نمی‌کند</strong>.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class Person {
+    String name;
+
+    // ما یک سازنده با پارامتر تعریف کرده‌ایم
+    public Person(String n) {
+        this.name = n;
+    }
+}
+
+// Person p1 = new Person(); // ❌ خطای کامپایل! سازنده پیش‌فرض دیگر وجود ندارد.
+Person p2 = new Person("سارا"); // ✅ صحیح</code></pre>
+        </div>
+    </section>
+
+    <section id="section-3">
+        <h2>۳. کلمه کلیدی <code>this</code>: حل ابهام و ارجاع به خود</h2>
+        <p>وقتی نام پارامتر یک سازنده با نام یک فیلد کلاس یکسان باشد، مشکلی به نام <strong>سایه‌افکنی (Shadowing)</strong> رخ می‌دهد. کلمه کلیدی <code>this</code> یک ارجاع به <strong>شیء فعلی</strong> است و این مشکل را حل می‌کند.</p>
+        <ul>
+            <li><code>this.name</code>: به فیلد <code>name</code> <strong>متعلق به این شیء</strong> اشاره دارد.</li>
+            <li><code>name</code>: به پارامتر <code>name</code> اشاره دارد.</li>
+        </ul>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class Employee {
+    String name;
+
+    public Employee(String name) {
+        // مقدار پارامتر name را در فیلد name این شیء قرار بده.
+        this.name = name;
+    }
+}</code></pre>
+        </div>
+
+        <h3>جدول کاربردهای کلیدی <code>this</code></h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>کاربرد</th>
+                    <th>توضیح</th>
+                    <th>مثال</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>this.field</code></td>
+                    <td>دسترسی به فیلد کلاس برای رفع ابهام (Shadowing)</td>
+                    <td><code>this.name = name;</code></td>
+                </tr>
+                <tr>
+                    <td><code>this.method()</code></td>
+                    <td>فراخوانی متد دیگری از همان کلاس</td>
+                    <td><code>this.displayInfo();</code></td>
+                </tr>
+                <tr>
+                    <td><code>this()</code></td>
+                    <td>فراخوانی سازنده دیگری از همان کلاس (Constructor Chaining)</td>
+                    <td><code>this(name, 18);</code></td>
+                </tr>
+                <tr>
+                    <td><code>return this;</code></td>
+                    <td>برگرداندن شیء فعلی برای فعال کردن زنجیره متد (Method Chaining)</td>
+                    <td><code>return this;</code></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="section-4">
+        <h2>۴. سربارگذاری سازنده (Constructor Overloading) و <code>this()</code></h2>
+        <p>همانند متدها، سازنده‌ها نیز می‌توانند <strong>سربارگذاری (Overload)</strong> شوند. برای جلوگیری از تکرار کد، می‌توانیم از داخل یک سازنده، سازنده دیگری را با <code>this()</code> فراخوانی کنیم.</p>
+
+        <div class="warning-box">
+            <strong>قانون طلایی <code>this()</code>:</strong> فراخوانی <code>this()</code> <strong>باید اولین دستور</strong> در بدنه سازنده باشد.
+        </div>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class Pizza {
+    String size;
+    boolean hasCheese;
+    boolean hasPepperoni;
+
+    // سازنده اصلی (Designated Constructor)
+    public Pizza(String size, boolean hasCheese, boolean hasPepperoni) {
+        this.size = size;
+        this.hasCheese = hasCheese;
+        this.hasPepperoni = hasPepperoni;
+    }
+
+    // این سازنده، سازنده اصلی را با مقدار پیش‌فرض false فراخوانی می‌کند
+    public Pizza(String size, boolean hasCheese) {
+        this(size, hasCheese, false); // <- فراخوانی سازنده اصلی
+    }
+
+    // این سازنده، سازنده دوم را فراخوانی می‌کند
+    public Pizza(String size) {
+        this(size, true); // <- فراخوانی سازنده دوم
     }
 }</code></pre>
         </div>
     </section>
 
-    <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
-    </section>
-
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. الگوهای خاص سازنده</h2>
+
+        <h3>الف) سازنده کپی (Copy Constructor)</h3>
+        <p>یک سازنده که یک شیء دیگر از همان کلاس را به عنوان ورودی می‌گیرد و یک کپی از آن ایجاد می‌کند.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class Student {
+    private String name;
+    private int age;
+
+    // سازنده معمولی
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Copy Constructor
+    public Student(Student other) {
+        this.name = other.name;
+        this.age = other.age;
+    }
+
+    public static void main(String[] args) {
+        Student original = new Student("Ali", 20);
+        Student copy = new Student(original); // یک کپی کامل از original
+    }
+}</code></pre>
+        </div>
+
+        <h3>ب) زنجیره متد (Method Chaining)</h3>
+        <p>الگویی که در آن متدها خود شیء (<code>this</code>) را برمی‌گردانند تا بتوان فراخوانی‌ها را به صورت زنجیروار به هم متصل کرد.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class FluentBuilder {
+    private String text = "";
+
+    public FluentBuilder append(String s) {
+        this.text += s;
+        return this;  // برگرداندن خود شیء برای فراخوانی بعدی
+    }
+
+    @Override
+    public String toString() {
+        return text;
+    }
+
+    public static void main(String[] args) {
+        FluentBuilder sb = new FluentBuilder();
+
+        // فراخوانی زنجیروار متدها
+        sb.append("Hello").append(" ").append("World!");
+
+        System.out.println(sb); // خروجی: Hello World!
+    }
+}</code></pre>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
     <section id="section-6">
-        <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+        <h2>۶. اشتباهات رایج</h2>
+
+        <h3>الف) فراموش کردن <code>this</code> در سازنده</h3>
+        <p>این کار منجر به سایه‌افکنی (Shadowing) می‌شود و فیلد کلاس مقداردهی نمی‌شود.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public Employee(String name) {
+    // ❌ غلط: پارامتر به خودش تخصیص داده می‌شود. فیلد name همچنان null است.
+    name = name;
+}</code></pre>
+        </div>
+
+        <h3>ب) فراخوانی <code>this()</code> در جای اشتباه</h3>
+        <p>فراخوانی <code>this()</code> برای زنجیره سازنده باید اولین دستور در سازنده باشد.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public Pizza(String size) {
+    System.out.println("Creating pizza...");
+    // ❌ خطای کامپایل: فراخوانی this() باید اولین دستور باشد
+    this(size, true);
+}</code></pre>
+        </div>
+
+        <h3>ج) تعریف سازنده با نوع خروجی</h3>
+        <p>اگر برای سازنده نوع خروجی (حتی <code>void</code>) تعریف کنید، کامپایلر آن را به عنوان یک متد معمولی در نظر می‌گیرد، نه یک سازنده.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class MyClass {
+    // ❌ غلط: این یک متد است، نه یک سازنده!
+    public void MyClass() {
+        System.out.println("This is a method, not a constructor!");
+    }
+}
+
+// new MyClass(); // این کد، متد بالا را فراخوانی نمی‌کند!</code></pre>
+        </div>
     </section>
 
-    </main>
+    <section id="exercises">
+        <h2>۷. تمرین‌های عملی</h2>
 
-<!-- Scripts -->
+        <div class="exercise-box">
+            <h3>تمرین 1: سازنده‌های کلاس Person</h3>
+            <p>یک کلاس <code>Person</code> با فیلدهای <code>name</code> (String) و <code>age</code> (int) بنویسید. سه سازنده برای آن سربارگذاری کنید:</p>
+            <ol>
+                <li>یک سازنده پیش‌فرض که <code>name</code> را "Unknown" و <code>age</code> را <code>0</code> قرار دهد.</li>
+                <li>یک سازنده که فقط <code>name</code> را بگیرد و <code>age</code> را <code>0</code> قرار دهد.</li>
+                <li>یک سازنده که هم <code>name</code> و هم <code>age</code> را بگیرد.</li>
+            </ol>
+            <p>از <code>this()</code> برای جلوگیری از تکرار کد استفاده کنید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 2: زنجیره سازنده برای Rectangle</h3>
+            <p>یک کلاس <code>Rectangle</code> با فیلدهای <code>width</code> و <code>height</code> بنویسید. یک سازنده اصلی <code>Rectangle(int width, int height)</code> ایجاد کنید. سپس یک سازنده دیگر برای ساخت مربع <code>Rectangle(int side)</code> بنویسید که سازنده اصلی را با <code>width</code> و <code>height</code> یکسان فراخوانی کند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 3: پیاده‌سازی Copy Constructor</h3>
+            <p>یک کلاس <code>Book</code> با فیلدهای <code>title</code> و <code>author</code> بسازید. یک سازنده معمولی و یک Copy Constructor برای آن پیاده‌سازی کنید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 4: زنجیره متد برای BankAccount</h3>
+            <p>یک کلاس <code>BankAccount</code> با فیلد <code>balance</code> بسازید. متدهای <code>deposit(double amount)</code> و <code>withdraw(double amount)</code> را طوری پیاده‌سازی کنید که <code>this</code> را برگردانند تا بتوان فراخوانی‌ها را به صورت زنجیره‌ای انجام داد.</p>
+            <pre><code class="language-java">account.deposit(100).withdraw(20).deposit(50);</code></pre>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 5: اشکال‌یابی</h3>
+            <p>اشکال کد زیر چیست و چرا فیلد <code>model</code> به درستی مقداردهی نمی‌شود؟</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">public class Car {
+    private String model;
+
+    public void Car(String model) {
+        this.model = model;
+    }
+
+    public static void main(String[] args) {
+        Car myCar = new Car(); // چرا سازنده فراخوانی نمی‌شود؟
+        System.out.println(myCar.model); // خروجی null است
+    }
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="summary">
+        <h2>خلاصه بخش ششم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>سازنده (Constructor):</strong> بلوک کد ویژه‌ای برای مقداردهی اولیه شیء که نامش با کلاس یکسان است و نوع خروجی ندارد.</li>
+                <li>✅ <strong>سازنده پیش‌فرض:</strong> اگر هیچ سازنده‌ای ننویسید، کامپایلر یک سازنده پیش‌فرض برایتان می‌سازد.</li>
+                <li>✅ <strong>this:</strong> ارجاعی به شیء فعلی؛ برای رفع ابهام بین فیلد و پارامتر استفاده می‌شود.</li>
+                <li>✅ <strong>this():</strong> برای فراخوانی یک سازنده دیگر از همان کلاس (Constructor Chaining) استفاده می‌شود و باید اولین دستور باشد.</li>
+                <li>✅ <strong>سربارگذاری سازنده:</strong> ایجاد چندین سازنده با لیست پارامترهای متفاوت برای انعطاف در ساخت شیء.</li>
+                <li>✅ <strong>return this:</strong> الگویی قدرتمند برای ایجاد APIهای روان و زنجیره‌ای (Method Chaining).</li>
+            </ul>
+        </div>
+
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> پکیج‌بندی حرفه‌ای و سطوح دسترسی جامع</p>
+            <div class="part-navigation">
+                <a href="part05.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part07.html" class="btn-next">بخش بعدی: پکیج‌بندی ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
