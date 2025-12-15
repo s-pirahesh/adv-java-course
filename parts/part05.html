@@ -4,35 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بخش 5: متدها | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+
+    <meta name="description" content="آموزش جامع متدها در جاوا - تعریف رفتار، Overloading و Pass-by-Value">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل اختصاصی برای دیاگرام‌های این بخش */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .method-frame {
+            fill: #f0fdf4;
+            stroke: #16a34a;
+            stroke-width: 2px;
+        }
+        .stack-frame-label {
+            font-weight: bold;
+            fill: #14532d;
+            font-size: 14px;
+        }
+        .variable-box {
+            fill: #fff;
+            stroke: #cbd5e1;
+        }
+    </style>
 </head>
 <body class="theme-part05">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>5. متدها</h1>
+    <h1>5. متدها: تعریف رفتار اشیاء</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۱</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۵</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,17 +57,18 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 5</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. آناتومی متد</a></li>
+                <li><a href="#section-2" class="nav-link">۲. Pass-by-Value</a></li>
+                <li><a href="#section-3" class="nav-link">۳. سربارگذاری (Overloading)</a></li>
+                <li><a href="#section-4" class="nav-link">۴. آرگومان‌های متغیر (Varargs)</a></li>
+                <li><a href="#section-5" class="nav-link">۵. اشتباهات رایج</a></li>
+                <li><a href="#exercises" class="nav-link">۶. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
@@ -67,66 +84,437 @@
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+    <section id="intro">
+        <p class="lead">اگر فیلدها "ویژگی‌ها" و "دانش" یک شیء هستند (اسم‌ها)، متدها "توانایی‌ها" و "اعمال" آن شیء هستند (فعل‌ها). آن‌ها قطعه کدهایی هستند که یک وظیفه مشخص را انجام می‌دهند و باعث می‌شوند اشیاء ما کارهایی را انجام دهند، به پیام‌ها پاسخ دهند و با یکدیگر تعامل کنند.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 5: متدها آماده شده است.
+        <h2>۱. آناتومی یک متد: امضا و بدنه</h2>
+
+        <p>هر متد در جاوا از دو بخش اصلی تشکیل شده است: <strong>امضای متد (Method Signature)</strong> و <strong>بدنه متد (Method Body)</strong>.</p>
+
+        <div class="code-block-container" dir="ltr">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">[Access Modifier] [static] [final] ReturnType methodName([Parameter List]) { ... }</code></pre>
         </div>
-        
-        <h3>نمونه کد:</h3>
+
+        <h3>الف) امضای متد (Method Signature)</h3>
+        <p>این بخش، هویت متد را مشخص می‌کند و به کامپایلر می‌گوید "این متد چیست و چگونه باید با آن صحبت کرد". امضا شامل موارد زیر است:</p>
+
+        <ol>
+            <li><strong>سطح دسترسی (Access Modifier - اختیاری):</strong> چه کسی مجاز به فراخوانی این متد است؟
+                <ul>
+                    <li><code>public</code>: همه کلاس‌ها.</li>
+                    <li><code>protected</code>: کلاس‌های داخل همان پکیج و زیرکلاس‌ها.</li>
+                    <li><code>private</code>: فقط خودِ همان کلاس.</li>
+                    <li>(default/package-private): کلاس‌های داخل همان پکیج.</li>
+                </ul>
+            </li>
+            <li><strong>کلمات کلیدی دیگر (اختیاری):</strong>
+                <ul>
+                    <li><code>static</code>: نشان می‌دهد متد به کلاس تعلق دارد، نه به یک شیء خاص.</li>
+                    <li><code>final</code>: نشان می‌دهد متد قابل بازنویسی (Override) در کلاس‌های فرزند نیست.</li>
+                </ul>
+            </li>
+            <li><strong>نوع خروجی (Return Type):</strong> متد پس از اتمام کار، چه نوع داده‌ای را به عنوان نتیجه به فراخواننده "برمی‌گرداند"؟
+                <ul>
+                    <li>اگر متد مقداری را برنمی‌گرداند، از کلمه کلیدی <code>void</code> (به معنی "هیچ") استفاده می‌کنیم.</li>
+                    <li>در غیر این صورت، نوع داده دقیق (مانند <code>int</code>, <code>String</code>, <code>double[]</code> یا حتی یک نوع کلاسی مانند <code>Student</code>) باید مشخص شود.</li>
+                </ul>
+            </li>
+            <li><strong>نام متد (Method Name):</strong> نامی که برای فراخوانی متد استفاده می‌شود. طبق قرارداد، نام متدها با حرف کوچک شروع شده و از قاعده <strong>camelCase</strong> پیروی می‌کند (مثلاً <code>calculateTotalPrice</code>).</li>
+            <li><strong>لیست پارامترها (Parameter List):</strong> داده‌های ورودی که متد برای انجام کار خود به آن‌ها نیاز دارد. این لیست درون پرانتز <code>()</code> قرار می‌گیرد.</li>
+        </ol>
+
+        <h3>ب) بدنه متد (Method Body)</h3>
+        <p>این بخش که درون آکولاد <code>{...}</code> قرار دارد، شامل دستورات اجرایی جاوا است که منطق و عملکرد واقعی متد را پیاده‌سازی می‌کنند.</p>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
+            <pre><code class="language-java">public class MathHelper {
+    public double calculateAverage(int number1, int number2) { // <- امضای متد
+        // v-- بدنه متد --v
+        int sum = number1 + number2;
+        double average = (double) sum / 2.0;
+        return average; // <- برگرداندن نتیجه
+        // ^-- بدنه متد --^
+    }
+}</code></pre>
+        </div>
+
+        <h3>جدول مقایسه: Parameter vs Argument</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Parameter (پارامتر)</th>
+                    <th>Argument (آرگومان)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>تعریف</strong></td>
+                    <td>متغیر در امضای متد</td>
+                    <td>مقدار واقعی پاس داده شده</td>
+                </tr>
+                <tr>
+                    <td><strong>مکان</strong></td>
+                    <td>در <strong>تعریف</strong> متد</td>
+                    <td>در <strong>فراخوانی</strong> متد</td>
+                </tr>
+                <tr>
+                    <td><strong>هدف</strong></td>
+                    <td>دریافت داده ورودی</td>
+                    <td>فراهم کردن داده ورودی</td>
+                </tr>
+                <tr>
+                    <td><strong>مثال</strong></td>
+                    <td><code>void print(String <strong>message</strong>)</code></td>
+                    <td><code>print(<strong>"Hello, World!"</strong>)</code></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="section-2">
+        <h2>۲. پاس دادن آرگومان‌ها: Pass-by-Value</h2>
+
+        <p>جاوا <strong>همیشه</strong> از مکانیزم <strong>"پاس با مقدار" (Pass-by-Value)</strong> استفاده می‌کند. اما این عبارت بسته به نوع داده، رفتار متفاوتی دارد.</p>
+
+        <h3>الف) برای انواع اولیه (Primitives)</h3>
+        <p>یک <strong>کپی از مقدار واقعی</strong> آرگومان به پارامتر متد داده می‌شود. هر تغییری روی پارامتر در داخل متد، <strong>هیچ تأثیری</strong> روی متغیر اصلی در خارج از متد نخواهد داشت.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public void tryToChange(int value) {
+    value = 100; // این تغییر فقط روی کپی محلی "value" اعمال می‌شود.
+}
+// ...
+int myAge = 25;
+tryToChange(myAge);
+System.out.println(myAge); // خروجی: 25</code></pre>
+        </div>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <text x="50" y="30" font-weight="bold" fill="#374151" font-size="16">Stack Memory</text>
+
+                <rect x="50" y="50" width="300" height="200" rx="10" class="method-frame" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+                <text x="70" y="80" class="stack-frame-label" fill="#1e40af">main() Frame</text>
+
+                <rect x="70" y="100" width="260" height="60" rx="5" class="variable-box"/>
+                <text x="200" y="125" text-anchor="middle" font-family="monospace" font-size="14">int myAge = 25</text>
+                <text x="200" y="145" text-anchor="middle" font-size="12" fill="#64748b">(مقدار اصلی)</text>
+
+                <rect x="450" y="50" width="300" height="200" rx="10" class="method-frame" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+                <text x="470" y="80" class="stack-frame-label" fill="#1e40af">tryToChange() Frame</text>
+
+                <rect x="470" y="100" width="260" height="60" rx="5" class="variable-box"/>
+                <text x="600" y="125" text-anchor="middle" font-family="monospace" font-size="14">int value = 25</text>
+                <text x="600" y="145" text-anchor="middle" font-size="12" fill="#64748b">(کپی مقدار)</text>
+
+                <rect x="470" y="170" width="260" height="60" rx="5" class="variable-box" stroke-dasharray="5,5" fill="#fefce8"/>
+                <text x="600" y="195" text-anchor="middle" font-family="monospace" font-size="14">value = 100</text>
+                <text x="600" y="215" text-anchor="middle" font-size="12" fill="#b45309">(تغییر فقط اینجا)</text>
+
+                <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#64748b" />
+                    </marker>
+                </defs>
+                <path d="M 330 130 Q 390 130 460 130" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                <text x="395" y="120" text-anchor="middle" font-size="12" fill="#374151">Copy Value</text>
+            </svg>
+        </div>
+
+        <h3>ب) برای انواع ارجاعی (References)</h3>
+        <p>در اینجا نیز یک <strong>کپی از مقدار</strong> پاس داده می‌شود، اما مقدار یک متغیر ارجاعی، <strong>خودِ آدرس حافظه</strong> است. بنابراین، یک <strong>کپی از آدرس حافظه</strong> به پارامتر متد داده می‌شود.</p>
+
+        <p><strong>پیامد:</strong></p>
+        <ul>
+            <li>پارامتر داخل متد و متغیر خارج از متد، هر دو به <strong>یک شیء یکسان</strong> در حافظه Heap اشاره می‌کنند.</li>
+            <li>شما <strong>نمی‌توانید</strong> ارجاع اصلی را تغییر دهید (یعنی متغیر اصلی را وادار به اشاره به شیء جدید کنید).</li>
+            <li>اما <strong>می‌توانید</strong> از طریق کپی ارجاع، به شیء اصلی دسترسی پیدا کرده و <strong>وضعیت داخلی (فیلدهای) آن را تغییر دهید</strong>.</li>
+        </ul>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">class Balloon {
+    String color;
+    public Balloon(String color) { this.color = color; }
+}
+
+public void tryToChange(Balloon b) {
+    // 1. تغییر محتوای شیء اصلی (موفقیت‌آمیز)
+    b.color = "Red";
+
+    // 2. تلاش برای تغییر ارجاع (بی‌تأثیر بر بیرون)
+    b = new Balloon("Green");
+}
+// ...
+Balloon myBalloon = new Balloon("Blue");
+tryToChange(myBalloon);
+System.out.println(myBalloon.color); // خروجی: Red</code></pre>
+        </div>
+    </section>
+
+    <section id="section-3">
+        <h2>۳. سربارگذاری متد (Method Overloading)</h2>
+
+        <p>سربارگذاری به ما اجازه می‌دهد تا چندین متد با <strong>نام یکسان</strong> در یک کلاس داشته باشیم، به شرطی که <strong>لیست پارامترهای آن‌ها متفاوت باشد</strong> (از نظر تعداد یا نوع).</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class Printer {
+    public void print(String message) { /* ... */ }
+    public void print(int number) { /* ... */ } // Overload
+    public void print(String prefix, int number) { /* ... */ } // Overload
+}</code></pre>
+        </div>
+
+        <h3>جدول مقایسه: Overloading vs Overriding</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Overloading (سربارگذاری)</th>
+                    <th>Overriding (بازنویسی)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>هدف</strong></td>
+                    <td>ارائه چند نسخه از یک متد با ورودی‌های متفاوت</td>
+                    <td>تغییر رفتار یک متد از کلاس والد</td>
+                </tr>
+                <tr>
+                    <td><strong>محل تعریف</strong></td>
+                    <td>در <strong>یک کلاس</strong></td>
+                    <td>در <strong>کلاس فرزند</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>امضای متد</strong></td>
+                    <td><strong>باید متفاوت</strong> باشد (نام یکسان)</td>
+                    <td><strong>باید دقیقاً یکسان</strong> باشد</td>
+                </tr>
+                <tr>
+                    <td><strong>نوع خروجی</strong></td>
+                    <td>می‌تواند متفاوت باشد</td>
+                    <td>باید یکسان (یا زیرنوع) باشد</td>
+                </tr>
+                <tr>
+                    <td><strong>زمان تشخیص</strong></td>
+                    <td>Compile-Time (Static Polymorphism)</td>
+                    <td>Run-Time (Dynamic Polymorphism)</td>
+                </tr>
+                <tr>
+                    <td><strong>ارتباط</strong></td>
+                    <td>هیچ ارتباطی با وراثت ندارد</td>
+                    <td>کاملاً وابسته به وراثت است</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="section-4">
+        <h2>۴. آرگومان‌های متغیر (Variable Arguments - Varargs)</h2>
+
+        <p>قابلیتی برای نوشتن متدی که تعداد نامشخصی از آرگومان‌ها را بپذیرد. جاوا به صورت خودکار آرگومان‌های ورودی را در یک <strong>آرایه</strong> قرار می‌دهد.</p>
+        <p>نحوه تعریف: با سه نقطه (<code>...</code>) بعد از نوع داده آخرین پارامتر.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public int sum(int... numbers) { // numbers یک آرایه int[] است
+    int total = 0;
+    for (int num : numbers) {
+        total += num;
+    }
+    return total;
+}</code></pre>
+        </div>
+
+        <div class="warning-box">
+            <strong>قوانین Varargs:</strong>
+            <ol>
+                <li>در هر متد، فقط <strong>یک</strong> پارامتر Varargs می‌تواند وجود داشته باشد.</li>
+                <li>پارامتر Varargs باید <strong>آخرین</strong> پارامتر در لیست باشد.</li>
+            </ol>
+        </div>
+
+        <h3>مثال عملی Varargs:</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class VarargsDemo {
+    // این متد می‌تواند صفر یا چند String را بپذیرد
+    public static void printAll(String... messages) {
+        System.out.print("Printing " + messages.length + " messages: ");
+        for (String msg : messages) {
+            System.out.print(msg + " | ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
-        System.out.println("Part 5");
+        printAll("Hello");                      // 1 message
+        printAll("Hello", "World");             // 2 messages
+        printAll("A", "B", "C", "D");           // 4 messages
+        printAll();                             // 0 messages
     }
 }</code></pre>
         </div>
     </section>
 
-    <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
-    </section>
-
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. اشتباهات رایج</h2>
+
+        <h3>الف) فراموش کردن دستور <code>return</code></h3>
+        <p>اگر متدی <code>void</code> نباشد، باید حتماً در تمام مسیرهای ممکن، مقداری را <code>return</code> کند.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// ❌ غلط: اگر number زوج باشد، چیزی برنمی‌گرداند
+public String checkNumber(int number) {
+    if (number > 0) {
+        return "Positive";
+    }
+    // خطای کامپایل: missing return statement
+}
+
+// ✅ صحیح
+public String checkNumber(int number) {
+    if (number > 0) {
+        return "Positive";
+    } else {
+        return "Not Positive";
+    }
+}</code></pre>
+        </div>
+
+        <h3>ب) تلاش برای Overloading فقط با نوع خروجی</h3>
+        <p>داشتن دو متد با امضای یکسان (نام و پارامترهای یکسان) و فقط نوع خروجی متفاوت، مجاز نیست.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// ❌ خطای کامپایل: متد از قبل تعریف شده است
+public class BadOverload {
+    public int getValue() { return 10; }
+    public String getValue() { return "Hello"; }
+}</code></pre>
+        </div>
+
+        <h3>ج) قرار دادن Varargs در جای اشتباه</h3>
+        <p>پارامتر Varargs باید همیشه آخرین پارامتر در لیست باشد.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// ❌ خطای کامپایل
+public void wrongOrder(String... messages, int count) {
+    // ...
+}
+
+// ✅ صحیح
+public void correctOrder(int count, String... messages) {
+    // ...
+}</code></pre>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
-    <section id="section-6">
+    <section id="exercises">
         <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+
+        <div class="exercise-box">
+            <h3>تمرین 1: محاسبه BMI</h3>
+            <p>یک متد <code>static</code> به نام <code>calculateBMI</code> بنویسید که <code>weight</code> (به کیلوگرم) و <code>height</code> (به متر) را به عنوان <code>double</code> دریافت کرده و BMI ( <code>weight / (height * height)</code> ) را به عنوان <code>double</code> برگرداند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 2: سربارگذاری متد <code>max</code></h3>
+            <p>در یک کلاس، سه نسخه از متد <code>max</code> را سربارگذاری کنید:</p>
+            <ul>
+                <li>یکی برای یافتن ماکزیمم بین <strong>دو</strong> عدد <code>int</code>.</li>
+                <li>یکی برای یافتن ماکزیمم بین <strong>سه</strong> عدد <code>int</code>.</li>
+                <li>یکی برای یافتن ماکزیمم بین <strong>چهار</strong> عدد <code>int</code>.</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 3: میانگین با Varargs</h3>
+            <p>یک متد <code>static</code> به نام <code>calculateAverage</code> بنویسید که با استفاده از Varargs، بتواند میانگین تعداد نامشخصی از اعداد <code>double</code> را محاسبه و برگرداند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 4: پیش‌بینی خروجی Pass-by-Value</h3>
+            <p>خروجی کد زیر را پیش‌بینی کنید:</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">public static void main(String[] args) {
+    int x = 10;
+    StringBuilder sb = new StringBuilder("Hello");
+
+    modify(x, sb);
+
+    System.out.println("x = " + x);
+    System.out.println("sb = " + sb.toString());
+}
+
+public static void modify(int num, StringBuilder builder) {
+    num = 20;
+    builder.append(" World");
+    builder = new StringBuilder("New");
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 5: طراحی کلاس Calculator</h3>
+            <p>یک کلاس <code>Calculator</code> طراحی کنید که شامل متدهای زیر باشد:</p>
+            <ul>
+                <li><code>add(double a, double b)</code></li>
+                <li><code>subtract(double a, double b)</code></li>
+                <li><code>multiply(double a, double b)</code></li>
+                <li><code>divide(double a, double b)</code> (اگر مخرج صفر بود، 0.0 برگرداند)</li>
+            </ul>
+        </div>
     </section>
 
-    </main>
+    <section id="summary">
+        <h2>خلاصه بخش پنجم</h2>
 
-<!-- Scripts -->
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>متدها:</strong> بلوک‌های کد قابل استفاده مجدد که رفتار شیء را تعریف می‌کنند.</li>
+                <li>✅ <strong>امضا:</strong> هویت متد (نام + لیست پارامترها).</li>
+                <li>✅ <strong>Pass-by-Value:</strong> کپی مقدار برای Primitives، کپی آدرس برای References.</li>
+                <li>✅ <strong>Overloading:</strong> نام یکسان، پارامترهای متفاوت، در یک کلاس.</li>
+                <li>✅ <strong>Overriding:</strong> نام و پارامترهای یکسان، در کلاس فرزند.</li>
+                <li>✅ <strong>Varargs (<code>...</code>):</strong> پذیرش تعداد نامشخصی از آرگومان‌ها به عنوان یک آرایه.</li>
+                <li>✅ <strong>Return:</strong> متدهای non-void باید همیشه مقداری را برگردانند.</li>
+            </ul>
+        </div>
+
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> Constructors (سازنده‌ها) — تولد یک شیء</p>
+            <div class="part-navigation">
+                <a href="part04.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part06.html" class="btn-next">بخش بعدی: سازنده‌ها و this ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
