@@ -3,130 +3,448 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بخش 18: Collections Framework | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+    <title>بخش 18: چارچوب کلکسیون‌ها (Collections Framework) | برنامه‌سازی پیشرفته</title>
+
+    <meta name="description" content="آموزش جامع Java Collections Framework، شامل List, Set, Map, Generics و تفاوت ArrayList با LinkedList">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+    <link href="[https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css](https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css)" rel="stylesheet"/>
+
+    <style>
+        /* استایل‌های اختصاصی جداول مقایسه */
+        .comparison-table th {
+            background-color: #be185d; /* pink-700 */
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #fce7f3; /* pink-100 */
+        }
+        .code-annotation {
+            font-size: 0.9em;
+            color: #d97706; /* amber-600 */
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body class="theme-part18">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>18. Collections Framework</h1>
+    <h1>18. چارچوب کلکسیون‌ها: جعبه ابزار داده‌ها</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۴</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۱۸</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
-            <img src="../assets/images/university_logo.png" alt="لوگو دانشگاه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
+            <img src="../assets/images/university_logo.png" alt="لوگو دانشگاه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22[http://www.w3.org/2000/svg%22](http://www.w3.org/2000/svg%22) width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22%3E%3C/rect%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
         </a>
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 18</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. آرایه vs کلکسیون</a></li>
+                <li><a href="#section-2" class="nav-link">۲. Generics</a></li>
+                <li><a href="#section-3" class="nav-link">۳. سه رابط اصلی</a></li>
+                <li><a href="#section-4" class="nav-link">۴. پیاده‌سازی‌ها (List, Set, Map)</a></li>
+                <li><a href="#section-5" class="nav-link">۵. اشتباهات رایج</a></li>
+                <li><a href="#exercises" class="nav-link">۶. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۴</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part14.html" class="nav-link">بخش ۱۴: چندریختی</a></li>
+                <li><a href="part15.html" class="nav-link">بخش ۱۵: کلاس‌های انتزاعی</a></li>
+                <li><a href="part16.html" class="nav-link">بخش ۱۶: رابط‌ها</a></li>
+                <li><a href="part17.html" class="nav-link">بخش ۱۷: تکامل طراحی</a></li>
+                <li><a href="part18.html" class="nav-link active">بخش ۱۸: کلکسیون‌ها</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">تا به حال، برای ذخیره گروهی از داده‌ها، تنها ابزار ما <strong>آرایه‌ها (Arrays)</strong> بوده‌اند. آرایه‌ها قدرتمند و سریع هستند، اما یک محدودیت بزرگ و فلج‌کننده دارند: <strong>اندازه ثابت (Fixed Size)</strong>. شما در همان لحظه ساخت یک آرایه، باید اندازه آن را مشخص کنید و این اندازه دیگر هرگز قابل تغییر نیست.</p>
+        <p>در دنیای واقعی، ما به ندرت از قبل می‌دانیم که دقیقاً به چه تعداد دانشجو، محصول یا کاربر نیاز داریم. ما به ساختارهای داده‌ای نیاز داریم که بتوانند به صورت <strong>پویا (Dynamic)</strong> رشد کرده و کوچک شوند.</p>
+        <p><strong>چارچوب کلکسیون‌های جاوا (Java Collections Framework)</strong> مجموعه‌ای قدرتمند و استاندارد از کلاس‌ها و رابط‌ها برای نمایش و مدیریت گروهی از اشیاء است. این چارچوب، ابزارهای تست‌شده، بهینه و قابل استفاده مجددی را برای حل تقریباً هر مشکلی در زمینه ذخیره‌سازی داده‌ها فراهم می‌کند.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 18: Collections Framework آماده شده است.
-        </div>
-        
-        <h3>نمونه کد:</h3>
-        <div class="code-block-container">
-            <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 18");
-    }
-}</code></pre>
+        <h2>۱. آرایه در مقابل کلکسیون: یک مقایسه حیاتی</h2>
+
+        <div class="table-container">
+            <table class="comparison-table">
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Array (آرایه)</th>
+                    <th>Collection (کلکسیون)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>اندازه (Size)</strong></td>
+                    <td><strong>ثابت:</strong> در زمان ساخت تعیین می‌شود و قابل تغییر نیست.</td>
+                    <td><strong>پویا (Dynamic):</strong> می‌تواند بر اساس نیاز، رشد یا کوچک شود.</td>
+                </tr>
+                <tr>
+                    <td><strong>نوع داده</strong></td>
+                    <td>هم انواع اولیه (<code>int</code>) و هم اشیاء (<code>String</code>).</td>
+                    <td><strong>فقط اشیاء:</strong> نمی‌تواند انواع اولیه را مستقیماً نگه دارد (باید از Wrapper classes مثل <code>Integer</code> استفاده کرد).</td>
+                </tr>
+                <tr>
+                    <td><strong>ذخیره‌سازی</strong></td>
+                    <td>حافظه پیوسته (Contiguous).</td>
+                    <td>ساختارهای مختلف (آرایه، لیست پیوندی، جدول هش).</td>
+                </tr>
+                <tr>
+                    <td><strong>متدها</strong></td>
+                    <td>تقریباً هیچ متد مفیدی ندارد (فقط فیلد <code>length</code>).</td>
+                    <td>مجموعه‌ای غنی از متدها برای افزودن، حذف، جستجو و ...</td>
+                </tr>
+                <tr>
+                    <td><strong>کارایی</strong></td>
+                    <td>برای دسترسی مستقیم با اندیس بسیار سریع است.</td>
+                    <td>کارایی بستگی به نوع پیاده‌سازی دارد (مثلاً <code>ArrayList</code> در مقابل <code>LinkedList</code>).</td>
+                </tr>
+                <tr>
+                    <td><strong>الگوریتم‌ها</strong></td>
+                    <td>نیاز به پیاده‌سازی دستی الگوریتم‌ها (مرتب‌سازی، جستجو).</td>
+                    <td>کلاس <code>Collections</code> ابزارهای آماده برای الگوریتم‌های رایج فراهم می‌کند.</td>
+                </tr>
+                <tr>
+                    <td><strong>Generics</strong></td>
+                    <td>پشتیبانی می‌کند، اما در ذات خود Type-safe نیست.</td>
+                    <td>به شدت بر <strong>Generics</strong> برای تامین امنیت نوع (Type Safety) تکیه دارد.</td>
+                </tr>
+                <tr>
+                    <td><strong>سلسله‌مراتب</strong></td>
+                    <td>یک شیء ساده در جاوا است.</td>
+                    <td>یک چارچوب کامل با رابط‌ها و کلاس‌های تو در تو است.</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
     <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
+        <h2>۲. Generics: ناجی امنیت نوع (Type Safety)</h2>
+
+        <p>قبل از جاوا ۵، کلکسیون‌ها اشیاء را از نوع <code>Object</code> نگه می‌داشتند. این موضوع دو مشکل بزرگ ایجاد می‌کرد:</p>
+        <ol>
+            <li><strong>عدم امنیت نوع:</strong> شما می‌توانستید هر نوع شیئی را در یک لیست قرار دهید.</li>
+            <li><strong>نیاز به Cast:</strong> هنگام بازیابی داده، باید آن را به نوع اصلی‌اش Downcast می‌کردید.</li>
+        </ol>
+        <p><strong>Generics</strong> (که با <code>&lt;&gt;</code> مشخص می‌شوند) این مشکل را با اجازه دادن به ما برای تعیین نوع داده‌ای که یک کلکسیون می‌تواند نگه دارد، حل کردند.</p>
+
+        <h3>قبل از Generics (خطرناک):</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// لیستی که هر چیزی را قبول می‌کند!
+List list = new ArrayList();
+list.add("Hello");
+list.add(123); // یک عدد هم اضافه می‌کنیم! (مشکلی پیش نمی‌آید)
+
+// حالا می‌خواهیم رشته را بخوانیم
+String s = (String) list.get(0); // نیاز به Cast
+
+// اینجا فاجعه رخ می‌دهد!
+// String s2 = (String) list.get(1); // RUNTIME ERROR! ClassCastException</code></pre>
+        </div>
+
+        <h3>با Generics (کد امن و تمیز):</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// این لیست "فقط و فقط" رشته نگه می‌دارد
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("Hello");
+// list.add(123); // ❌ خطای کامپایل! کامپایلر جلوی خطای ما را می‌گیرد.
+
+// دیگر نیازی به Cast نیست
+String s = list.get(0);</code></pre>
+        </div>
     </section>
 
     <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
+        <h2>۳. سه رابط اصلی: List, Set, Map</h2>
+
+        <p>چارچوب کلکسیون‌ها سه نوع اصلی از ظروف را ارائه می‌دهد:</p>
+
+        <div class="table-container">
+            <table class="comparison-table">
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th><code>List&lt;E&gt;</code> (لیست)</th>
+                    <th><code>Set&lt;E&gt;</code> (مجموعه)</th>
+                    <th><code>Map&lt;K, V&gt;</code> (نگاشت)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>مفهوم اصلی</strong></td>
+                    <td>یک دنباله <strong>مرتب</strong> از عناصر.</td>
+                    <td>یک مجموعه از عناصر <strong>یکتا</strong>.</td>
+                    <td>مجموعه‌ای از جفت‌های <strong>کلید-مقدار</strong>.</td>
+                </tr>
+                <tr>
+                    <td><strong>عناصر تکراری</strong></td>
+                    <td>✅ <strong>مجاز است.</strong></td>
+                    <td>❌ <strong>مجاز نیست.</strong></td>
+                    <td>کلیدها باید یکتا باشند، مقادیر می‌توانند تکراری باشند.</td>
+                </tr>
+                <tr>
+                    <td><strong>ترتیب</strong></td>
+                    <td>✅ <strong>حفظ می‌شود</strong> (ترتیب درج).</td>
+                    <td>معمولاً <strong>حفظ نمی‌شود</strong>.</td>
+                    <td>معمولاً <strong>حفظ نمی‌شود</strong>.</td>
+                </tr>
+                <tr>
+                    <td><strong>دسترسی</strong></td>
+                    <td>با استفاده از <strong>اندیس عددی</strong> (index) <code>get(int index)</code>.</td>
+                    <td>دسترسی مستقیم وجود ندارد (باید پیمایش شود).</td>
+                    <td>با استفاده از <strong>کلید</strong> <code>get(Object key)</code>.</td>
+                </tr>
+                <tr>
+                    <td><strong>پیاده‌سازی‌های رایج</strong></td>
+                    <td><code>ArrayList</code>, <code>LinkedList</code></td>
+                    <td><code>HashSet</code>, <code>TreeSet</code></td>
+                    <td><code>HashMap</code>, <code>TreeMap</code></td>
+                </tr>
+                <tr>
+                    <td><strong>ساختار <code>null</code></strong></td>
+                    <td>می‌تواند چندین عنصر <code>null</code> داشته باشد.</td>
+                    <td>حداکثر یک عنصر <code>null</code> می‌تواند داشته باشد.</td>
+                    <td>یک کلید <code>null</code> و چندین مقدار <code>null</code> مجاز است.</td>
+                </tr>
+                <tr>
+                    <td><strong>کاربرد</strong></td>
+                    <td>زمانی که ترتیب عناصر مهم است و به دسترسی با اندیس نیاز دارید.</td>
+                    <td>زمانی که می‌خواهید از وجود عناصر تکراری جلوگیری کنید.</td>
+                    <td>زمانی که می‌خواهید داده‌ها را بر اساس یک شناسه یکتا (کلید) ذخیره و بازیابی کنید.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
+        <h2>۴. شیرجه در پیاده‌سازی‌ها</h2>
+
+        <h3>الف) <code>List</code>: <code>ArrayList</code> در مقابل <code>LinkedList</code></h3>
+
+        <div class="table-container">
+            <table class="comparison-table">
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th><code>ArrayList&lt;E&gt;</code></th>
+                    <th><code>LinkedList&lt;E&gt;</code></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>ساختار داخلی</strong></td>
+                    <td>بر پایه یک <strong>آرایه پویا</strong> کار می‌کند.</td>
+                    <td>بر پایه یک <strong>لیست پیوندی دوطرفه</strong> (گره‌ها) کار می‌کند.</td>
+                </tr>
+                <tr>
+                    <td><strong>دسترسی (get)</strong></td>
+                    <td><strong>بسیار سریع (O(1))</strong> چون مستقیماً به اندیس آرایه دسترسی دارد.</td>
+                    <td><strong>کند (O(n))</strong> چون باید از ابتدا یا انتها، گره‌ها را یکی‌یکی طی کند.</td>
+                </tr>
+                <tr>
+                    <td><strong>درج/حذف (ابتدا/انتها)</strong></td>
+                    <td><strong>کند (O(n))</strong> اگر در ابتدا باشد، چون نیاز به شیفت دادن تمام عناصر دارد.</td>
+                    <td><strong>بسیار سریع (O(1))</strong> چون فقط نیاز به تغییر چند اشاره‌گر دارد.</td>
+                </tr>
+                <tr>
+                    <td><strong>درج/حذف (وسط)</strong></td>
+                    <td><strong>کند (O(n))</strong></td>
+                    <td><strong>کند (O(n))</strong> (ابتدا باید به مکان مورد نظر برسد).</td>
+                </tr>
+                <tr>
+                    <td><strong>مصرف حافظه</strong></td>
+                    <td><strong>کمتر:</strong> فقط حافظه خود آرایه را مصرف می‌کند.</td>
+                    <td><strong>بیشتر:</strong> علاوه بر داده، برای هر گره حافظه اضافه برای اشاره‌گرهای <code>next</code> و <code>prev</code> مصرف می‌کند.</td>
+                </tr>
+                <tr>
+                    <td><strong>چه زمانی استفاده شود؟</strong></td>
+                    <td><strong>اکثر موارد.</strong> به خصوص زمانی که عملیات اصلی شما خواندن و پیمایش لیست است.</td>
+                    <td>زمانی که عملیات اصلی شما <strong>درج و حذف مکرر</strong> از ابتدا یا انتهای لیست است.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p><strong>مثال <code>ArrayList</code> (لیست دانشجویان):</strong></p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">List&lt;String&gt; studentNames = new ArrayList&lt;&gt;();
+studentNames.add("علی");
+studentNames.add("سارا");
+studentNames.add("علی"); // تکراری مجاز است
+
+System.out.println("Student at index 1: " + studentNames.get(1)); // خروجی: سارا</code></pre>
+        </div>
+
+        <h3>ب) <code>Set</code>: <code>HashSet</code> برای یکتاسازی</h3>
+        <p><code>HashSet</code> از یک <code>HashMap</code> داخلی برای تضمین یکتایی استفاده می‌کند و ترتیب عناصر را تضمین نمی‌کند.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">Set&lt;Integer&gt; uniqueIds = new HashSet&lt;&gt;();
+uniqueIds.add(101);
+uniqueIds.add(102);
+uniqueIds.add(101); // این مورد اضافه "نمی‌شود" چون از قبل وجود دارد
+
+System.out.println(uniqueIds); // خروجی (ترتیب ممکن است متفاوت باشد): [101, 102]</code></pre>
+        </div>
+
+        <h3>ج) <code>Map</code>: <code>HashMap</code> برای جستجوی سریع</h3>
+        <p><code>HashMap</code> داده‌ها را به صورت جفت‌های کلید-مقدار ذخیره می‌کند و جستجو بر اساس کلید بسیار سریع (نزدیک به O(1)) است.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">Map&lt;String, String&gt; dictionary = new HashMap&lt;&gt;();
+dictionary.put("Book", "کتاب");
+dictionary.put("Home", "خانه");
+
+System.out.println("Translation of 'Book': " + dictionary.get("Book")); // خروجی: کتاب</code></pre>
+        </div>
     </section>
 
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. اشتباهات رایج</h2>
+
+        <h3>الف) استفاده از کلکسیون خام (Raw Type)</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">List names = new ArrayList(); // این یک Code Smell است
+names.add("Test");
+names.add(123); // خطری که کامپایلر به شما هشدار نمی‌دهد
+Integer num = (Integer) names.get(0); // ClassCastException</code></pre>
+        </div>
+        <p><strong>راه حل:</strong> همیشه از Generics استفاده کنید: <code>List&lt;String&gt; names = new ArrayList&lt;&gt;();</code></p>
+
+        <h3>ب) <code>ConcurrentModificationException</code></h3>
+        <p>تلاش برای حذف یک عنصر از یک کلکسیون در حین پیمایش آن با حلقه <code>for-each</code>.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">List&lt;String&gt; fruits = new ArrayList&lt;&gt;(List.of("Apple", "Banana", "Cherry"));
+// ❌ کد زیر ConcurrentModificationException می‌دهد!
+for (String fruit : fruits) {
+    if (fruit.equals("Banana")) {
+        fruits.remove(fruit);
+    }
+}</code></pre>
+        </div>
+        <p><strong>راه حل:</strong> از <code>Iterator</code> استفاده کنید:</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">Iterator&lt;String&gt; iterator = fruits.iterator();
+while (iterator.hasNext()) {
+    if (iterator.next().equals("Banana")) {
+        iterator.remove(); // ✅ صحیح
+    }
+}</code></pre>
+        </div>
+
+        <h3>ج) استفاده از <code>==</code> به جای <code>.equals()</code></h3>
+        <p><code>==</code> آدرس حافظه دو شیء را مقایسه می‌کند، نه محتوای آن‌ها را.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add(new String("test"));
+
+// ❌ غلط: این مقایسه به احتمال زیاد false است
+if (list.get(0) == "test") { ... }
+
+// ✅ صحیح: محتوای رشته‌ها را مقایسه می‌کند
+if (list.get(0).equals("test")) { ... }</code></pre>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
-    <section id="section-6">
+    <section id="exercises">
         <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+
+        <div class="exercise-box">
+            <h3>تمرین ۱: مدیریت کتاب‌ها با <code>ArrayList</code></h3>
+            <p>یک کلاس <code>Book</code> با فیلدهای <code>title</code> و <code>author</code> بسازید. سپس یک <code>ArrayList&lt;Book&gt;</code> ایجاد کرده، چند کتاب به آن اضافه کنید و در نهایت عنوان تمام کتاب‌ها را در خروجی چاپ کنید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۲: حذف ایمیل‌های تکراری با <code>HashSet</code></h3>
+            <p>یک <code>ArrayList&lt;String&gt;</code> از آدرس‌های ایمیل دارید که ممکن است شامل موارد تکراری باشد. تابعی بنویسید که این لیست را به عنوان ورودی گرفته و یک <code>List</code> جدید بدون موارد تکراری برگرداند (از <code>HashSet</code> برای این کار استفاده کنید).</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۳: دفترچه تلفن با <code>HashMap</code></h3>
+            <p>یک <code>HashMap&lt;String, String&gt;</code> برای ساخت یک دفترچه تلفن ساده استفاده کنید که نام شخص (کلید) را به شماره تلفن او (مقدار) نگاشت می‌کند. چند مخاطب اضافه کرده و سپس شماره تلفن یک شخص خاص را جستجو و چاپ کنید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۴: مقایسه عملکرد (مفهومی)</h3>
+            <p>فرض کنید ۱ میلیون عنصر دارید. برای سناریوهای زیر، <code>ArrayList</code> بهتر است یا <code>LinkedList</code>؟ چرا؟</p>
+            <ol>
+                <li>نیاز دارید به صورت تصادفی به عناصر مختلف در لیست دسترسی پیدا کنید.</li>
+                <li>نیاز دارید به طور مداوم عناصری را به ابتدای لیست اضافه کنید.</li>
+            </ol>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۵: پیاده‌سازی پشته (Stack) با <code>LinkedList</code></h3>
+            <p>یک کلاس <code>MyStack&lt;E&gt;</code> بسازید که از یک <code>LinkedList&lt;E&gt;</code> داخلی برای پیاده‌سازی یک پشته استفاده کند. متدهای <code>push(E item)</code>، <code>pop()</code> و <code>peek()</code> را پیاده‌سازی کنید (از متدهای <code>addLast</code>, <code>removeLast</code>, <code>getLast</code> در <code>LinkedList</code> استفاده کنید).</p>
+        </div>
     </section>
 
-    </main>
+    <section id="summary">
+        <h2>خلاصه بخش هجدهم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>کلکسیون‌ها:</strong> ساختارهای داده پویا برای مدیریت گروهی از اشیاء.</li>
+                <li>✅ <strong>Generics (<code>&lt;&gt;</code>):</strong> برای تضمین امنیت نوع (Type Safety) و حذف نیاز به Cast ضروری هستند.</li>
+                <li>✅ <strong>`List`:</strong> دنباله‌ای مرتب که عناصر تکراری را می‌پذیرد. <code>ArrayList</code> برای دسترسی سریع، <code>LinkedList</code> برای درج/حذف سریع.</li>
+                <li>✅ <strong>`Set`:</strong> مجموعه‌ای از عناصر یکتا. <code>HashSet</code> برای اطمینان از عدم وجود تکرار ایده‌آل است.</li>
+                <li>✅ <strong>`Map`:</strong> مجموعه‌ای از جفت‌های کلید-مقدار برای جستجو و بازیابی سریع بر اساس کلید. <code>HashMap</code> پیاده‌سازی رایج آن است.</li>
+                <li>✅ <strong>`Iterator`:</strong> راه امن برای حذف عناصر از یک کلکسیون در حین پیمایش.</li>
+                <li>✅ <strong>`equals()`:</strong> همیشه برای مقایسه محتوای اشیاء در کلکسیون‌ها از <code>.equals()</code> استفاده کنید، نه از <code>==</code>.</li>
+                <li>✅ <strong>Wrapper Classes:</strong> برای ذخیره انواع اولیه (primitive) در کلکسیون‌ها، از کلاس‌های پوششی مانند <code>Integer</code>, <code>Double</code> و ... استفاده کنید.</li>
+            </ul>
+        </div>
 
-<!-- Scripts -->
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> مدیریت استثناها (Exception Handling) — برخورد با شرایط غیرمنتظره</p>
+            <div class="part-navigation">
+                <a href="part17.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part19.html" class="btn-next">بخش بعدی: مدیریت استثناها ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="[https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js](https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js)"></script>
+<script src="[https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js](https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js)"></script>
 
 </body>
 </html>
