@@ -4,35 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بخش 12: Upcasting و Downcasting | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+
+    <meta name="description" content="آموزش جامع Casting در جاوا: Upcasting، Downcasting، عملگر instanceof و مدیریت ClassCastException">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل‌های اختصاصی دیاگرام‌های حافظه */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+        }
+        .stack-box {
+            fill: #eef2ff;
+            stroke: #4338ca;
+            stroke-width: 2px;
+        }
+        .heap-box {
+            fill: #f0fdf4;
+            stroke: #15803d;
+            stroke-width: 2px;
+        }
+        .object-rect {
+            fill: #ffffff;
+            stroke: #334155;
+            stroke-width: 2px;
+        }
+        .ref-arrow {
+            stroke: #4f46e5;
+            stroke-width: 2px;
+            fill: none;
+        }
+        .method-block {
+            fill: #f1f5f9;
+            stroke: #94a3b8;
+            font-size: 11px;
+        }
+        .blocked-method {
+            fill: #fef2f2;
+            stroke: #ef4444;
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body class="theme-part12">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>12. Upcasting و Downcasting</h1>
+    <h1>12. Upcasting و Downcasting: هنر تغییر دید</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۳</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۱۲</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,92 +72,398 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 12</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. Upcasting (نگاه از بالا)</a></li>
+                <li><a href="#section-2" class="nav-link">۲. Downcasting (نگاه از پایین)</a></li>
+                <li><a href="#section-3" class="nav-link">۳. جدول مقایسه جامع</a></li>
+                <li><a href="#section-4" class="nav-link">۴. نمودار حافظه Casting</a></li>
+                <li><a href="#section-5" class="nav-link">۵. اپراتور instanceof</a></li>
+                <li><a href="#section-6" class="nav-link">۶. اشتباهات رایج</a></li>
+                <li><a href="#exercises" class="nav-link">۷. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۳</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part11.html" class="nav-link">بخش ۱۱: ارث‌بری</a></li>
+                <li><a href="part12.html" class="nav-link active">بخش ۱۲: Casting</a></li>
+                <li><a href="part13.html" class="nav-link">بخش ۱۳: بازنویسی متدها</a></li>
+                <li><a href="part14.html" class="nav-link">بخش ۱۴: چندریختی</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">در بخش قبل، قدرت ارث‌بری را برای ایجاد سلسله‌مراتب (IS-A) دیدیم. اکنون به یکی از قدرتمندترین و در عین حال ظریف‌ترین مفاهیم مرتبط با ارث‌بری می‌پردازیم: <strong>Casting (تبدیل نوع)</strong>. Casting به ما اجازه می‌دهد که یک شیء را از طریق یک "لنز" یا "دید" متفاوت ببینیم.</p>
+        <p>تصور کنید به یک بیمارستان می‌روید. برای پذیرش، شما یک <code>Person</code> (شخص) هستید. اما برای پزشک، شما یک <code>Patient</code> (بیمار) هستید. پزشک دیدگاه خود را از "شخص" به "بیمار" تغییر می‌دهد تا بتواند کارهای تخصصی (مانند تجویز دارو) را انجام دهد. این جوهره Casting در OOP است.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 12: Upcasting و Downcasting آماده شده است.
-        </div>
-        
-        <h3>نمونه کد:</h3>
+        <h2>۱. Upcasting: نگاه از پایین به بالا (فرزند به والد)</h2>
+        <p><strong>Upcasting</strong> یعنی گرفتن یک ارجاع از نوع فرزند و قرار دادن آن در یک متغیر از نوع والد.</p>
+        <ul>
+            <li><code>Dog</code> → <code>Animal</code></li>
+            <li><code>Manager</code> → <code>Employee</code></li>
+            <li><code>Circle</code> → <code>Shape</code></li>
+        </ul>
+        <p>این عمل <strong>همیشه امن</strong> و <strong>همیشه ضمنی (Implicit)</strong> است، چون هر فرزند "هست یک" والد. جاوا این کار را بدون هیچ شکایتی انجام می‌دهد.</p>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 12");
-    }
+            <pre><code class="language-java">// Dog IS-A Animal, so this is perfectly legal.
+Dog myDog = new Dog("Buddy");
+Animal myAnimal = myDog; // Implicit Upcasting</code></pre>
+        </div>
+
+        <h3>اثر Upcasting</h3>
+        <p>وقتی شما شیء <code>Dog</code> را از طریق یک رفرنس <code>Animal</code> نگاه می‌کنید، شما به طور موقت توانایی دیدن متدهای <strong>اختصاصی</strong> <code>Dog</code> (مانند <code>bark()</code>) را از دست می‌دهید. شما فقط به متدهایی دسترسی دارید که در کلاس <code>Animal</code> تعریف شده‌اند.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">myAnimal.eat();      // ✅ Ok, eat() is in Animal
+myAnimal.sleep();    // ✅ Ok, sleep() is in Animal
+// myAnimal.bark();  // ❌ Compile Error! The 'Animal' reference doesn't know what bark() is.</code></pre>
+        </div>
+
+        <h3>چرا Upcasting مفید است؟</h3>
+        <p>این ویژگی، اساس <strong>چندریختی (Polymorphism)</strong> است. به ما اجازه می‌دهد تا کدی بنویسیم که با انواع مختلفی از اشیاء به صورت یکپارچه کار کند.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// این آرایه می‌تواند هر نوع حیوانی را نگه دارد!
+Animal[] zoo = new Animal[3];
+zoo[0] = new Dog("Rex");      // Upcast
+zoo[1] = new Cat("Whiskers"); // Upcast
+zoo[2] = new Lion("Simba");   // Upcast
+
+for (Animal a : zoo) {
+    a.eat(); // ما نمی‌دانیم دقیقاً چه حیوانی است، اما می‌دانیم که می‌تواند غذا بخورد.
 }</code></pre>
         </div>
     </section>
 
     <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
+        <h2>۲. Downcasting: نگاه از بالا به پایین (والد به فرزند)</h2>
+        <p><strong>Downcasting</strong> عمل برعکس است: گرفتن یک ارجاع از نوع والد و تلاش برای تبدیل آن به نوع فرزند.</p>
+        <ul>
+            <li><code>Animal</code> → <code>Dog</code></li>
+            <li><code>Employee</code> → <code>Manager</code></li>
+        </ul>
+        <p>این عمل <strong>بالقوه خطرناک</strong> است و باید <strong>همیشه به صورت صریح (Explicit)</strong> انجام شود. چرا خطرناک است؟ چون یک <code>Animal</code> لزوماً یک <code>Dog</code> نیست؛ ممکن است یک <code>Cat</code> باشد!</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">Animal myAnimal = new Dog("Buddy"); // An Animal reference pointing to a Dog object
+
+// Explicit Downcasting:
+// "Hey Compiler, I swear this animal is a Dog. Let me treat it as one."
+Dog myDog = (Dog) myAnimal;
+
+// Now we have access to Dog-specific methods again!
+myDog.bark(); // ✅ Ok!</code></pre>
+        </div>
+
+        <div class="warning-box">
+            <strong>خطر بزرگ: <code>ClassCastException</code></strong><br>
+            اگر به کامپایلر دروغ بگویید، او در زمان اجرا مچ شما را می‌گیرد!
+        </div>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">Animal anotherAnimal = new Cat("Mitty");
+
+// You promise the compiler this is a Dog...
+Dog anotherDog = (Dog) anotherAnimal; // Compiles fine, but...
+
+// RUNTIME ERROR! Throws java.lang.ClassCastException
+// The JVM checks and says: "You lied! This object is a Cat, not a Dog."</code></pre>
+        </div>
     </section>
 
     <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
+        <h2>۳. مقایسه جامع: Upcasting در مقابل Downcasting</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Upcasting</th>
+                    <th>Downcasting</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>تعریف</strong></td>
+                    <td>تبدیل نوع از <strong>فرزند</strong> به <strong>والد</strong>.</td>
+                    <td>تبدیل نوع از <strong>والد</strong> به <strong>فرزند</strong>.</td>
+                </tr>
+                <tr>
+                    <td><strong>جهت</strong></td>
+                    <td>به سمت بالا (خاص به عام).</td>
+                    <td>به سمت پایین (عام به خاص).</td>
+                </tr>
+                <tr>
+                    <td><strong>امنیت</strong></td>
+                    <td><strong>همیشه امن (Safe):</strong> هر فرزندی یک والد است.</td>
+                    <td><strong>بالقوه ناامن (Unsafe):</strong> هر والدی لزوماً آن فرزند نیست.</td>
+                </tr>
+                <tr>
+                    <td><strong>نحوه اجرا</strong></td>
+                    <td><strong>ضمنی (Implicit):</strong> خودکار توسط کامپایلر.</td>
+                    <td><strong>صریح (Explicit):</strong> باید با <code>(Type)</code> نوشته شود.</td>
+                </tr>
+                <tr>
+                    <td><strong>زمان بررسی</strong></td>
+                    <td>زمان کامپایل (Compile-time).</td>
+                    <td>زمان اجرا (Runtime).</td>
+                </tr>
+                <tr>
+                    <td><strong>نتیجه خطا</strong></td>
+                    <td>خطای کامپایل.</td>
+                    <td><code>ClassCastException</code>.</td>
+                </tr>
+                <tr>
+                    <td><strong>دسترسی</strong></td>
+                    <td><strong>محدود می‌شود:</strong> متدهای اختصاصی فرزند دیده نمی‌شوند.</td>
+                    <td><strong>گسترش می‌یابد:</strong> متدهای اختصاصی فرزند قابل دسترسی می‌شوند.</td>
+                </tr>
+                <tr>
+                    <td><strong>کاربرد اصلی</strong></td>
+                    <td>چندریختی (Polymorphism) و کدنویسی عمومی.</td>
+                    <td>دسترسی به رفتارهای خاص یک زیرکلاس.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
+        <h2>۴. نمودار حافظه Casting: تغییر رفرنس، نه شیء</h2>
+        <p>یک نکته حیاتی: Casting <strong>هرگز</strong> خود شیء را در حافظه Heap تغییر نمی‌دهد. شیء همان چیزی است که با <code>new</code> ساخته شده. Casting فقط نوع "برچسب" یا "دید" متغیر ارجاعی (Reference) را در حافظه Stack تغییر می‌دهد.</p>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#4f46e5" />
+                    </marker>
+                </defs>
+
+                <rect x="50" y="50" width="300" height="300" rx="10" class="stack-box" fill="#eff6ff" stroke="#3b82f6"/>
+                <text x="160" y="80" font-weight="bold" fill="#1e3a8a">حافظه Stack (دیدگاه‌ها)</text>
+
+                <rect x="70" y="100" width="260" height="50" rx="5" fill="white" stroke="#93c5fd"/>
+                <text x="80" y="120" font-size="12" font-family="monospace">Animal ref1 = 0x123 (Upcast)</text>
+                <text x="80" y="135" font-size="10" fill="#64748b">دسترسی: فقط متدهای Animal</text>
+
+                <rect x="70" y="170" width="260" height="50" rx="5" fill="white" stroke="#93c5fd"/>
+                <text x="80" y="190" font-size="12" font-family="monospace">Dog ref2 = 0x123 (Original)</text>
+                <text x="80" y="205" font-size="10" fill="#64748b">دسترسی: همه متدها (bark, eat)</text>
+
+                <rect x="70" y="240" width="260" height="50" rx="5" fill="white" stroke="#93c5fd"/>
+                <text x="80" y="260" font-size="12" font-family="monospace">Dog ref3 = (Dog) ref1 (Downcast)</text>
+                <text x="80" y="275" font-size="10" fill="#64748b">دسترسی: بازگشت دسترسی کامل</text>
+
+                <rect x="450" y="50" width="300" height="300" rx="10" class="heap-box" fill="#f0fdf4" stroke="#16a34a"/>
+                <text x="550" y="80" font-weight="bold" fill="#14532d">حافظه Heap (شیء واقعی)</text>
+
+                <rect x="470" y="120" width="260" height="180" rx="5" class="object-rect"/>
+                <text x="550" y="145" font-weight="bold" fill="#0f172a">شیء واقعی (Dog)</text>
+                <text x="560" y="160" font-size="12" fill="#64748b">آدرس: 0x123</text>
+
+                <line x1="470" y1="170" x2="730" y2="170" stroke="#cbd5e1"/>
+
+                <text x="480" y="190" font-size="12" font-weight="bold" fill="#334155">بخش Animal:</text>
+                <text x="490" y="210" font-size="11" fill="#475569">- name: "Buddy"</text>
+                <text x="490" y="225" font-size="11" fill="#475569">- eat()</text>
+
+                <line x1="470" y1="235" x2="730" y2="235" stroke="#cbd5e1" stroke-dasharray="4"/>
+
+                <text x="480" y="255" font-size="12" font-weight="bold" fill="#334155">بخش Dog:</text>
+                <text x="490" y="275" font-size="11" fill="#475569">- breed: "Golden"</text>
+                <text x="490" y="290" font-size="11" fill="#475569">- bark()</text>
+
+                <path d="M 330 125 L 470 150" class="ref-arrow" marker-end="url(#arrowHead)"/>
+                <path d="M 330 195 L 470 150" class="ref-arrow" marker-end="url(#arrowHead)"/>
+                <path d="M 330 265 L 470 150" class="ref-arrow" marker-end="url(#arrowHead)"/>
+
+            </svg>
+        </div>
+        <p><strong>تحلیل نمودار:</strong> هر سه رفرنس (<code>ref1</code>, <code>ref2</code>, <code>ref3</code>) به <strong>یک شیء واحد</strong> در Heap اشاره می‌کنند. تفاوت فقط در این است که کامپایلر به هر کدام اجازه دسترسی به چه متدهایی را می‌دهد.</p>
     </section>
 
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. تور نجات: اپراتور <code>instanceof</code></h2>
+        <p>برای جلوگیری از <code>ClassCastException</code>، جاوا یک اپراتور به نام <code>instanceof</code> را فراهم کرده است. این اپراتور قبل از انجام Downcast، چک می‌کند که آیا شیء مورد نظر واقعاً از آن نوع هست یا نه.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public void processAnimal(Animal a) {
+    // همیشه قبل از Downcast، نوع واقعی را چک کن
+    if (a instanceof Dog) {
+        System.out.println("Processing a Dog...");
+        // چون چک کردیم، این Downcast 100% امن است
+        Dog d = (Dog) a;
+        d.bark();
+    } else if (a instanceof Cat) {
+        System.out.println("Processing a Cat...");
+        Cat c = (Cat) a;
+        c.meow();
+    } else {
+        System.out.println("Processing an unknown animal...");
+        a.eat();
+    }
+}</code></pre>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
     <section id="section-6">
-        <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+        <h2>۶. اشتباهات رایج و تله‌های طراحی</h2>
+
+        <h3>الف) Downcast کردن بدون چک <code>instanceof</code></h3>
+        <p>این رایج‌ترین اشتباه است و منجر به کدی شکننده می‌شود.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// کد شکننده
+public void forceBark(Animal a) {
+    // این کد فرض می‌کند که همیشه یک Dog به آن پاس داده می‌شود
+    Dog d = (Dog) a; // اگر یک Cat بیاید چه؟ -> BOOM! ClassCastException
+    d.bark();
+}</code></pre>
+        </div>
+
+        <h3>ب) درک نکردن <code>ClassCastException</code></h3>
+        <p>این استثنا زمانی رخ می‌دهد که شما تلاش می‌کنید یک شیء را به نوعی تبدیل کنید که در سلسله‌مراتب IS-A آن قرار ندارد.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">Object o = "Hello";
+Integer i = (Integer) o; // ClassCastException: String IS-NOT-A Integer.</code></pre>
+        </div>
+
+        <h3>ج) سوءاستفاده از <code>instanceof</code> (Code Smell)</h3>
+        <p>اگر متدی دارید که پر از <code>if-else-if</code> با <code>instanceof</code> است، این معمولاً نشانه‌ای از طراحی ضعیف است. این یعنی شما به جای استفاده از قدرت چندریختی (Polymorphism)، در حال نوشتن کد رویه‌ای (Procedural) در یک محیط شیءگرا هستید.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// طراحی بد
+public void feed(Animal a) {
+    if (a instanceof Dog) { /* give bones */ }
+    else if (a instanceof Cat) { /* give fish */ }
+    else if (a instanceof Lion) { /* give meat */ }
+}</code></pre>
+        </div>
+        <p><strong>راه حل بهتر:</strong> متد <code>eat()</code> را در هر فرزند طوری بازنویسی (Override) کنید که غذای مناسب خودش را بخورد و سپس فقط <code>a.eat()</code> را صدا بزنید (در بخش چندریختی بررسی می‌شود).</p>
     </section>
 
-    </main>
+    <section id="exercises">
+        <h2>۷. تمرین‌های عملی</h2>
 
-<!-- Scripts -->
+        <div class="exercise-box">
+            <h3>تمرین ۱: قدرت Upcasting</h3>
+            <ol>
+                <li>یک سلسله‌مراتب از کلاس‌های <code>Publication</code> (والد)، <code>Book</code> (فرزند) و <code>Magazine</code> (فرزند) بسازید.</li>
+                <li>در <code>main</code>، یک آرایه از نوع <code>Publication</code> ایجاد کنید.</li>
+                <li>یک شیء <code>Book</code> و یک شیء <code>Magazine</code> را در این آرایه قرار دهید (Upcasting).</li>
+                <li>در یک حلقه <code>for</code>، روی آرایه حرکت کرده و یک متد مشترک (مثلاً <code>printInfo()</code>) را برای هر کدام صدا بزنید.</li>
+            </ol>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۲: Downcasting امن</h3>
+            <p>با استفاده از سلسله‌مراتب تمرین ۱، متدی بنویسید به نام <code>getSpecificDetails(Publication p)</code>. این متد باید:</p>
+            <ol>
+                <li>چک کند که آیا <code>p</code> یک <code>Book</code> است یا <code>Magazine</code>.</li>
+                <li>اگر <code>Book</code> بود، آن را Downcast کرده و متد خاص کتاب (مثلاً <code>getAuthor()</code>) را صدا بزند.</li>
+                <li>اگر <code>Magazine</code> بود، آن را Downcast کرده و متد خاص مجله (مثلاً <code>getIssueNumber()</code>) را صدا بزند.</li>
+            </ol>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۳: پیش‌بینی خطا</h3>
+            <p>کد زیر در کدام خط و به چه دلیلی خطا می‌دهد؟ (خطای کامپایل یا خطای زمان اجرا؟)</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">class Fruit {}
+class Apple extends Fruit {}
+class Orange extends Fruit {}
+
+public class Test {
+    public static void main(String[] args) {
+        Fruit f = new Apple();      // Line 1
+        Apple a = (Apple) f;        // Line 2
+        Orange o = (Orange) f;      // Line 3
+        Fruit f2 = new Fruit();     // Line 4
+        Apple a2 = (Apple) f2;      // Line 5
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۴: طراحی متد چندریختی (Polymorphic)</h3>
+            <p>یک متد <code>performAction(Employee e)</code> طراحی کنید. <code>Employee</code> دو فرزند <code>Manager</code> و <code>Developer</code> دارد.</p>
+            <ul>
+                <li>اگر <code>e</code> یک <code>Manager</code> باشد، متد <code>approveVacation()</code> را صدا بزنید.</li>
+                <li>اگر <code>e</code> یک <code>Developer</code> باشد، متد <code>writeCode()</code> را صدا بزنید.</li>
+                <li>از <code>instanceof</code> و Downcasting امن استفاده کنید.</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۵: تحلیل و ریفکتور کد</h3>
+            <p>کد زیر را تحلیل کنید. مشکل طراحی آن چیست؟ چگونه می‌توان آن را با استفاده بهتر از مفاهیم OOP (و بدون <code>instanceof</code>) بهبود داد؟</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">class Drawer {
+    public void draw(Shape s) {
+        if (s instanceof Circle) {
+            System.out.println("Drawing a circle.");
+        } else if (s instanceof Rectangle) {
+            System.out.println("Drawing a rectangle.");
+        }
+    }
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="summary">
+        <h2>خلاصه بخش دوازدهم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>Upcasting:</strong> تبدیل فرزند به والد. همیشه امن و ضمنی است. برای دستیابی به چندریختی استفاده می‌شود.</li>
+                <li>✅ <strong>Downcasting:</strong> تبدیل والد به فرزند. بالقوه خطرناک و باید صریح باشد. برای دسترسی به رفتارهای خاص فرزند استفاده می‌شود.</li>
+                <li>✅ <strong>instanceof:</strong> اپراتور امنیتی برای چک کردن نوع واقعی یک شیء قبل از Downcast.</li>
+                <li>✅ <strong>ClassCastException:</strong> خطای زمان اجرا که در صورت Downcast نامعتبر رخ می‌دهد.</li>
+                <li>✅ <strong>Casting:</strong> فقط "دید" یا "نوع رفرنس" را تغییر می‌دهد، نه خود شیء واقعی در حافظه.</li>
+            </ul>
+        </div>
+
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> بازنویسی متدها — تغییر رفتار موروثی</p>
+            <div class="part-navigation">
+                <a href="part11.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part13.html" class="btn-next">بخش بعدی: بازنویسی متدها ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
