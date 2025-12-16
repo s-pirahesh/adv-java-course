@@ -18,7 +18,7 @@
             font-family: 'Vazirmatn', sans-serif;
             /* تنظیمات پس‌زمینه */
             background-color: #667eea;
-            background-image: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url('assets/images/course-bg-light.jpg');
+            background-image: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url('assets/images/course-bg.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -35,7 +35,8 @@
 
         .phase-card {
             transition: all 0.3s ease;
-            border: 2px solid transparent;
+            /* ضخامت را به 3px افزایش دادم تا رنگ بهتر دیده شود */
+            border: 3px solid transparent;
         }
 
         .phase-card:hover {
@@ -43,11 +44,12 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
-        .phase-card.phase-1 { border-color: #14B8A6; }
-        .phase-card.phase-2 { border-color: #0EA5E9; }
-        .phase-card.phase-3 { border-color: #8B5CF6; }
-        .phase-card.phase-4 { border-color: #10B981; }
-        .phase-card.phase-5 { border-color: #F59E0B; }
+        /* رنگ‌بندی بردرها بر اساس فاز */
+        .phase-card.phase-1 { border-color: #14B8A6; } /* Teal */
+        .phase-card.phase-2 { border-color: #0EA5E9; } /* Sky */
+        .phase-card.phase-3 { border-color: #8B5CF6; } /* Violet */
+        .phase-card.phase-4 { border-color: #10B981; } /* Emerald */
+        .phase-card.phase-5 { border-color: #F59E0B; } /* Amber */
 
         .part-link {
             transition: all 0.2s ease;
@@ -61,8 +63,8 @@
         }
 
         .part-link.completed {
-            background: #ECFDF5;
-            border-right: 4px solid #10B981;
+            background: #F0FDF4; /* رنگ پس‌زمینه تکمیل شده عمومی */
+            border-right: 4px solid; /* رنگ بردر توسط JS تنظیم می‌شود */
         }
 
         .part-link.locked {
@@ -178,6 +180,7 @@
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
         }
 
+        /* استایل دکمه منابع ویژه */
         .resources-btn {
             display: inline-flex;
             align-items: center;
@@ -309,6 +312,15 @@
         {num: 5, title: 'موضوعات پیشرفته', desc: 'Collections, Exceptions و Enums'}
     ];
 
+    // نگاشت رنگ‌های Tailwind برای هر فاز
+    const phaseColors = {
+        1: 'teal',    // #14B8A6
+        2: 'sky',     // #0EA5E9
+        3: 'violet',  // #8B5CF6
+        4: 'emerald', // #10B981
+        5: 'amber'    // #F59E0B
+    };
+
     // --- توابع کمکی ---
     const toPersian = (num) => {
         const p = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
@@ -328,8 +340,6 @@
             completed.push(partNum);
             localStorage.setItem('completedParts', JSON.stringify(completed));
         }
-        // نیازی به رفرش نیست چون کاربر به صفحه جدید می‌رود
-        // وقتی برگردد، صفحه رفرش شده و وضعیت آپدیت می‌شود
     }
 
     function isPartCompleted(partNum) {
@@ -337,14 +347,13 @@
     }
 
     function isUnlocked() {
-        // اگر حالت "دسترسی آزاد" فعال باشد
         return localStorage.getItem('unlocked') === 'true';
     }
 
     function isPartAccessible(partNum) {
-        if (isUnlocked()) return true; // اگر قفل باز است، همه چیز آزاد است
-        if (partNum === 1) return true; // بخش ۱ همیشه باز است
-        return isPartCompleted(partNum - 1); // بخش X باز است اگر X-1 تکمیل شده باشد
+        if (isUnlocked()) return true;
+        if (partNum === 1) return true;
+        return isPartCompleted(partNum - 1);
     }
 
     // --- کنترل‌های UI ---
@@ -358,7 +367,7 @@
             localStorage.removeItem('unlocked');
         }
         updateToggleUI(newState);
-        generatePhases(); // بازسازی لیست برای اعمال قفل/باز
+        generatePhases();
     }
 
     function updateToggleUI(unlocked) {
@@ -383,7 +392,6 @@
     function resetProgress() {
         if (confirm('آیا مطمئن هستید؟ تمام تیک‌های سبز حذف می‌شوند و باید از اول شروع کنید.')) {
             localStorage.removeItem('completedParts');
-            // localStorage.removeItem('unlocked'); // تنظیمات قفل را نگه می‌داریم
             location.reload();
         }
     }
@@ -411,6 +419,8 @@
         PHASES.forEach(phase => {
             const phaseParts = PARTS.filter(p => p.phase === phase.num);
             const phaseDiv = document.createElement('div');
+            const color = phaseColors[phase.num]; // دریافت رنگ فاز
+
             phaseDiv.className = `glass-card rounded-2xl shadow-xl p-6 md:p-8 phase-card phase-${phase.num}`;
 
             const completedCount = phaseParts.filter(p => isPartCompleted(p.num)).length;
@@ -425,13 +435,24 @@
                 const completedClass = completed ? 'completed' : '';
                 const lockedClass = !accessible ? 'locked' : '';
 
-                // اینجا onclick اضافه شده تا وقتی کاربر کلیک کرد، ذخیره شود
+                // رنگ آیکون داخلی بر اساس رنگ فاز
+                // اگر تکمیل شده باشد، از رنگ فاز استفاده می‌کند، در غیر این صورت خاکستری
+                const iconBg = completed ? `bg-${color}-500` : 'bg-gray-300';
+                const iconText = completed ? 'text-white' : 'text-gray-600';
+
+                // تنظیم رنگ بردر سمت راست برای حالت تکمیل شده به صورت inline style
+                // چون کلاس‌های Tailwind dynamic در CDN ممکن است کار نکنند، استایل دستی امن‌تر است
+                const borderStyle = completed ? `border-right-color: var(--color-${color});` : '';
+
                 partsHTML += `
                 <a href="parts/part${String(part.num).padStart(2, '0')}.html"
                    onclick="markPartComplete(${part.num})"
+                   style="${completed ? `border-right-color: ${getHexColor(color)};` : ''}"
                    class="part-link ${completedClass} ${lockedClass} block p-4 bg-white rounded-lg border border-gray-200">
                     <div class="flex items-center gap-3">
-                        <span class="flex-shrink-0 w-8 h-8 ${completed ? 'bg-teal-500' : 'bg-gray-300'} ${completed ? 'text-white' : 'text-gray-600'} rounded-lg flex items-center justify-center font-bold text-sm">${toPersian(part.num)}</span>
+                        <span class="flex-shrink-0 w-8 h-8 ${iconBg} ${iconText} rounded-lg flex items-center justify-center font-bold text-sm transition-colors">
+                            ${toPersian(part.num)}
+                        </span>
                         <span class="text-sm font-medium text-gray-700">${part.title}</span>
                     </div>
                 </a>
@@ -440,9 +461,13 @@
 
             partsHTML += '</div>';
 
+            // بج وضعیت (مثلاً "2 / 4 بخش")
+            const badgeBg = completedCount > 0 ? `bg-${color}-100` : 'bg-gray-100';
+            const badgeText = completedCount > 0 ? `text-${color}-700` : 'text-gray-500';
+
             phaseDiv.innerHTML = `
             <div class="flex items-center gap-4 mb-6">
-                <div class="w-16 h-16 bg-teal-500 rounded-xl flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                <div class="w-16 h-16 bg-${color}-500 rounded-xl flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                     ${toPersian(phase.num)}
                 </div>
                 <div class="flex-1">
@@ -450,7 +475,7 @@
                     <p class="text-gray-600 mt-1">${phase.desc}</p>
                 </div>
                 <div class="text-left">
-                    <span class="inline-block px-4 py-2 ${completedCount > 0 ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-500'} rounded-lg font-bold text-sm">
+                    <span class="inline-block px-4 py-2 ${badgeBg} ${badgeText} rounded-lg font-bold text-sm">
                         ${toPersian(completedCount)} / ${toPersian(totalCount)} بخش ${completedCount === totalCount ? '✓' : ''}
                     </span>
                 </div>
@@ -462,13 +487,24 @@
         });
     }
 
+    // تابع کمکی برای تبدیل نام رنگ به کد هگز (برای استایل خطی)
+    function getHexColor(colorName) {
+        const map = {
+            'teal': '#14B8A6',
+            'sky': '#0EA5E9',
+            'violet': '#8B5CF6',
+            'emerald': '#10B981',
+            'amber': '#F59E0B'
+        };
+        return map[colorName] || '#14B8A6';
+    }
+
     // --- شروع برنامه ---
     window.addEventListener('load', () => {
         updateToggleUI(isUnlocked());
         generatePhases();
         updateProgress();
 
-        // انیمیشن ساده برای لود شدن
         setTimeout(() => {
             const completed = getCompletedParts().length;
             const percentage = Math.round((completed / 20) * 100);
