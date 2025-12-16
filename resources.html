@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منابع تکمیلی | برنامه‌سازی پیشرفته</title>
+
+    <meta name="description" content="مجموعه اسلایدها، ویدیوها و اینفوگرافیک‌های آموزشی درس برنامه‌سازی پیشرفته جاوا">
+
+    <link rel="stylesheet" href="assets/css/themes.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <style>
+        /* استایل‌های اختصاصی صفحه منابع */
+        .resources-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-family: 'Vazirmatn', sans-serif;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: #3b82f6;
+        }
+
+        .tab-btn.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f1f5f9;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-thumb {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .thumb-slides { background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%); }
+        .thumb-video { background: linear-gradient(135deg, #fee2e2 0%, #fca5a5 100%); }
+        .thumb-infographic { background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%); }
+
+        .type-icon {
+            width: 64px;
+            height: 64px;
+            opacity: 0.8;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            display: block;
+            text-align: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-slides { background-color: #f59e0b; color: white; }
+        .btn-slides:hover { background-color: #d97706; }
+
+        .btn-video { background-color: #ef4444; color: white; }
+        .btn-video:hover { background-color: #dc2626; }
+
+        .btn-infographic { background-color: #3b82f6; color: white; }
+        .btn-infographic:hover { background-color: #2563eb; }
+
+        .part-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #334155;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<header id="top-header">
+    <button id="menu-toggle">☰</button>
+    <h1>منابع تکمیلی آموزشی</h1>
+    <div class="breadcrumb">
+        <a href="index.html">خانه</a>
+        <span>></span>
+        <span>منابع</span>
+    </div>
+</header>
+
+<nav id="sidebar">
+    <div class="sidebar-profile">
+        <a href="index.html" title="بازگشت به صفحه اصلی">
+            <img src="assets/images/university_logo.png" alt="لوگو دانشگاه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
+        </a>
+        <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
+        <p>مدرس: سید سجاد پیراهش</p>
+    </div>
+
+    <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">🏠 بازگشت به درس‌ها</a></li>
+        <li><a href="#slides" class="nav-link" onclick="switchTab('slides')">📑 اسلایدها</a></li>
+        <li><a href="#videos" class="nav-link" onclick="switchTab('videos')">🎥 ویدیوها</a></li>
+        <li><a href="#infographics" class="nav-link" onclick="switchTab('infographics')">📊 اینفوگرافیک‌ها</a></li>
+    </ul>
+</nav>
+
+<main id="main-content">
+    <div class="resources-container">
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('slides')">📑 اسلایدها (20)</button>
+            <button class="tab-btn" onclick="switchTab('videos')">🎥 ویدیوها (20)</button>
+            <button class="tab-btn" onclick="switchTab('infographics')">📊 اینفوگرافیک‌ها (20)</button>
+        </div>
+
+        <!-- بخش اسلایدها -->
+        <div id="slides" class="tab-content active">
+            <!-- آیتم‌ها توسط جاوااسکریپت تولید می‌شوند -->
+        </div>
+
+        <!-- بخش ویدیوها -->
+        <div id="videos" class="tab-content">
+            <!-- آیتم‌ها توسط جاوااسکریپت تولید می‌شوند -->
+        </div>
+
+        <!-- بخش اینفوگرافیک‌ها -->
+        <div id="infographics" class="tab-content">
+            <!-- آیتم‌ها توسط جاوااسکریپت تولید می‌شوند -->
+        </div>
+
+    </div>
+</main>
+
+<script>
+    // داده‌های بخش‌ها (عنوان‌ها از ایندکس اصلی)
+    const parts = [
+        "بخش ۱: از پارادایم تا بایت‌کد", "بخش ۲: انواع داده و حافظه", "بخش ۳: static و final", "بخش ۴: آرایه‌ها",
+        "بخش ۵: متدها", "بخش ۶: سازنده‌ها", "بخش ۷: پکیج‌بندی", "بخش ۸: تفکر شیءگرا",
+        "بخش ۹: مبانی UML", "بخش ۱۰: روابط در UML", "بخش ۱۱: ارث‌بری", "بخش ۱۲: Casting",
+        "بخش ۱۳: بازنویسی متدها", "بخش ۱۴: چندریختی", "بخش ۱۵: کلاس‌های انتزاعی", "بخش ۱۶: رابط‌ها",
+        "بخش ۱۷: تکامل طراحی", "بخش ۱۸: کلکسیون‌ها", "بخش ۱۹: مدیریت استثناها", "بخش ۲۰: Enums"
+    ];
+
+    // تابع تولید کارت
+    function createCard(type, partIndex, title) {
+        let typeClass, btnClass, btnText, icon, downloadLink;
+
+        const partNum = String(partIndex + 1).padStart(2, '0');
+
+        if (type === 'slides') {
+            typeClass = 'thumb-slides';
+            btnClass = 'btn-slides';
+            btnText = 'مشاهده اسلاید';
+            downloadLink = `assets/downloads/slides/slide-part${partNum}.pdf`;
+            icon = '<svg class="type-icon" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M14 9h4"/><path d="M14 15h4"/><path d="M9 9H5"/></svg>';
+        } else if (type === 'videos') {
+            typeClass = 'thumb-video';
+            btnClass = 'btn-video';
+            btnText = 'تماشای ویدیو';
+            downloadLink = `assets/downloads/videos/video-part${partNum}.mp4`;
+            icon = '<svg class="type-icon" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>';
+        } else {
+            typeClass = 'thumb-infographic';
+            btnClass = 'btn-infographic';
+            btnText = 'مشاهده گرافیک';
+            downloadLink = `assets/downloads/infographics/info-part${partNum}.png`;
+            icon = '<svg class="type-icon" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>';
+        }
+
+        return `
+            <div class="resource-card">
+                <div class="card-thumb ${typeClass}">
+                    <span class="part-badge">Part ${partIndex + 1}</span>
+                    ${icon}
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">${title}</h3>
+                    <p class="card-desc">محتوای آموزشی تکمیلی برای تسلط بر ${title}.</p>
+                    <a href="${downloadLink}" target="_blank" class="card-btn ${btnClass}">${btnText}</a>
+                </div>
+            </div>
+        `;
+    }
+
+    // پر کردن تب‌ها
+    function populateTabs() {
+        const slidesContainer = document.getElementById('slides');
+        const videosContainer = document.getElementById('videos');
+        const infoContainer = document.getElementById('infographics');
+
+        parts.forEach((title, index) => {
+            slidesContainer.innerHTML += createCard('slides', index, title);
+            videosContainer.innerHTML += createCard('videos', index, title);
+            infoContainer.innerHTML += createCard('infographics', index, title);
+        });
+    }
+
+    // تغییر تب
+    window.switchTab = function(tabId) {
+        // مخفی کردن همه محتوا
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        // غیرفعال کردن همه دکمه‌ها
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+        // فعال کردن تب انتخاب شده
+        document.getElementById(tabId).classList.add('active');
+        // پیدا کردن دکمه مربوطه و فعال کردن آن (روش ساده)
+        const buttons = document.querySelectorAll('.tab-btn');
+        if(tabId === 'slides') buttons[0].classList.add('active');
+        if(tabId === 'videos') buttons[1].classList.add('active');
+        if(tabId === 'infographics') buttons[2].classList.add('active');
+    }
+
+    // اجرا در شروع
+    populateTabs();
+
+    // کدهای اصلی سایت (منو موبایل و ...)
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    }
+</script>
+
+</body>
+</html>
