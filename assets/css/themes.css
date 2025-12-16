@@ -126,7 +126,7 @@ body.theme-part08 {
     --code-block-bg: #082F49;
 }
 
-body.theme-part09a {
+body.theme-part09 {
     --primary-color: #0369A1;
     --secondary-color: #0284C7;
     --accent-color: #7DD3FC;
@@ -141,7 +141,7 @@ body.theme-part09a {
     --code-block-bg: #082F49;
 }
 
-body.theme-part09b {
+body.theme-part10 {
     --primary-color: #0EA5E9;
     --secondary-color: #38BDF8;
     --accent-color: #7DD3FC;
@@ -158,7 +158,7 @@ body.theme-part09b {
 
 /* Phase 3: ارث‌بری و چندریختی (Purple/Indigo Family) - Parts 10-13 */
 
-body.theme-part10 {
+body.theme-part11 {
     --primary-color: #4F46E5;
     --secondary-color: #6366F1;
     --accent-color: #A5B4FC;
@@ -173,7 +173,7 @@ body.theme-part10 {
     --code-block-bg: #1E1B4B;
 }
 
-body.theme-part11 {
+body.theme-part12 {
     --primary-color: #6366F1;
     --secondary-color: #818CF8;
     --accent-color: #A5B4FC;
@@ -188,7 +188,7 @@ body.theme-part11 {
     --code-block-bg: #1E1B4B;
 }
 
-body.theme-part12 {
+body.theme-part13 {
     --primary-color: #7C3AED;
     --secondary-color: #8B5CF6;
     --accent-color: #C4B5FD;
@@ -203,7 +203,7 @@ body.theme-part12 {
     --code-block-bg: #2E1065;
 }
 
-body.theme-part13 {
+body.theme-part14 {
     --primary-color: #8B5CF6;
     --secondary-color: #A78BFA;
     --accent-color: #C4B5FD;
@@ -220,7 +220,7 @@ body.theme-part13 {
 
 /* Phase 4: انتزاع (Green/Lime Family) - Parts 14-16 */
 
-body.theme-part14 {
+body.theme-part15 {
     --primary-color: #059669;
     --secondary-color: #10B981;
     --accent-color: #6EE7B7;
@@ -235,7 +235,7 @@ body.theme-part14 {
     --code-block-bg: #064E3B;
 }
 
-body.theme-part15 {
+body.theme-part16 {
     --primary-color: #10B981;
     --secondary-color: #34D399;
     --accent-color: #6EE7B7;
@@ -250,7 +250,7 @@ body.theme-part15 {
     --code-block-bg: #064E3B;
 }
 
-body.theme-part16 {
+body.theme-part17 {
     --primary-color: #65A30D;
     --secondary-color: #84CC16;
     --accent-color: #BEF264;
@@ -267,7 +267,7 @@ body.theme-part16 {
 
 /* Phase 5: موضوعات پیشرفته (Red/Orange Family) - Parts 17-19 */
 
-body.theme-part17 {
+body.theme-part18 {
     --primary-color: #DC2626;
     --secondary-color: #EF4444;
     --accent-color: #FCA5A5;
@@ -282,7 +282,7 @@ body.theme-part17 {
     --code-block-bg: #7F1D1D;
 }
 
-body.theme-part18 {
+body.theme-part19 {
     --primary-color: #EA580C;
     --secondary-color: #F97316;
     --accent-color: #FDBA74;
@@ -297,7 +297,7 @@ body.theme-part18 {
     --code-block-bg: #7C2D12;
 }
 
-body.theme-part19 {
+body.theme-part20 {
     --primary-color: #D97706;
     --secondary-color: #F59E0B;
     --accent-color: #FCD34D;
