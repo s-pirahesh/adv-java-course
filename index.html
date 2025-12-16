@@ -16,7 +16,7 @@
     <style>
         body {
             font-family: 'Vazirmatn', sans-serif;
-            /* تنظیمات پس‌زمینه جدید */
+            /* تنظیمات پس‌زمینه */
             background-color: #667eea;
             background-image: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url('assets/images/course-bg-light.jpg');
             background-size: cover;
@@ -51,6 +51,8 @@
 
         .part-link {
             transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .part-link:hover {
@@ -64,9 +66,22 @@
         }
 
         .part-link.locked {
-            opacity: 0.5;
+            opacity: 0.6;
             pointer-events: none;
             cursor: not-allowed;
+            background-color: #f3f4f6;
+            filter: grayscale(1);
+        }
+
+        /* آیکون قفل برای حالت Locked */
+        .part-link.locked::after {
+            content: '🔒';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0.5;
         }
 
         .checkpoint-badge {
@@ -83,7 +98,7 @@
             transition: width 1s ease-out;
         }
 
-        /* Toggle Switch Styles */
+        /* Control Panel Styles */
         .control-panel {
             display: flex;
             gap: 1rem;
@@ -146,17 +161,6 @@
             transform: translateX(-28px);
         }
 
-        .toggle-icon {
-            font-size: 1.25rem;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-label {
-            font-weight: 600;
-            color: #374151;
-            font-size: 0.95rem;
-        }
-
         .reset-btn {
             padding: 0.75rem 1.25rem;
             background: linear-gradient(135deg, #ef4444, #dc2626);
@@ -174,7 +178,6 @@
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
         }
 
-        /* استایل دکمه منابع ویژه */
         .resources-btn {
             display: inline-flex;
             align-items: center;
@@ -212,7 +215,6 @@
                     <p class="text-xl text-gray-600 mb-4">مدرس: سید سجاد پیراهش</p>
                     <p class="text-gray-500 mb-6">دانشگاه آزاد اسلامی واحد تبریز</p>
 
-                    <!-- دکمه منابع تکمیلی -->
                     <a href="resources.html" class="resources-btn">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
@@ -220,7 +222,7 @@
                         <span>اسلایدها، ویدیوها و اینفوگرافیک‌های درس</span>
                     </a>
                 </div>
-                <!-- لوگوی دانشگاه -->
+                <!-- لوگو دانشگاه -->
                 <div class="text-center">
                     <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-xl overflow-hidden p-2">
                         <img src="assets/images/university_logo.png" alt="لوگو دانشگاه" class="w-full h-full object-contain" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
@@ -228,7 +230,7 @@
                 </div>
             </div>
 
-            <!-- Overall Progress -->
+            <!-- Progress Bar -->
             <div class="mt-8 pt-6 border-t border-gray-200">
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-sm font-semibold text-gray-700">پیشرفت کلی</span>
@@ -247,18 +249,18 @@
                     <div class="toggle-switch" id="toggleSwitch">
                         <div class="toggle-slider"></div>
                     </div>
-                    <span class="toggle-label" id="toggleLabel">دسترسی ترتیبی</span>
+                    <span class="toggle-label" id="toggleLabel">دسترسی ترتیبی (قفل مرحله‌ای)</span>
                 </div>
 
                 <button class="reset-btn" onclick="resetProgress()">
-                    🔄 شروع مجدد
+                    🔄 شروع مجدد دوره
                 </button>
             </div>
         </header>
 
-        <!-- Phases -->
+        <!-- Phases Container -->
         <div class="space-y-6" id="phasesContainer">
-            <!-- Will be generated by JavaScript -->
+            <!-- Content generated by JS -->
         </div>
 
         <!-- Footer -->
@@ -266,11 +268,8 @@
             <p class="text-gray-600 mb-2">
                 <strong>📚 تعداد کل بخش‌ها:</strong> ۲۰ بخش آموزشی + ۵ Checkpoint عملی
             </p>
-            <p class="text-gray-600 mb-4">
-                <strong>⏱️ زمان تخمینی:</strong> حدود ۵۰ ساعت مطالعه و تمرین
-            </p>
             <p class="text-sm text-gray-500">
-                © ۱۴۰۴ - دانشگاه آزاد اسلامی واحد تبریز - تمامی حقوق محفوظ است
+                © ۱۴۰۴ - دانشگاه آزاد اسلامی واحد تبریز
             </p>
         </footer>
 
@@ -278,7 +277,7 @@
 </div>
 
 <script>
-    // Course data
+    // --- داده‌های درس ---
     const PARTS = [
         {num: 1, title: 'از پارادایم تا بایت‌کد', phase: 1},
         {num: 2, title: 'انواع داده و حافظه', phase: 1},
@@ -295,7 +294,7 @@
         {num: 13, title: 'بازنویسی متدها', phase: 3},
         {num: 14, title: 'چندریختی', phase: 3},
         {num: 15, title: 'کلاس‌های انتزاعی', phase: 4},
-        {num: 16, title: 'رابط‌ها', phase: 4},
+        {num: 16, title: 'رابط‌ها (Interfaces)', phase: 4},
         {num: 17, title: 'تکامل طراحی', phase: 4},
         {num: 18, title: 'Collections Framework', phase: 5},
         {num: 19, title: 'مدیریت استثناها', phase: 5},
@@ -310,16 +309,27 @@
         {num: 5, title: 'موضوعات پیشرفته', desc: 'Collections, Exceptions و Enums'}
     ];
 
-    // Persian numbers
+    // --- توابع کمکی ---
     const toPersian = (num) => {
         const p = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
         return String(num).split('').map(d => p[d] || d).join('');
     };
 
-    // LocalStorage functions
+    // --- مدیریت LocalStorage ---
     function getCompletedParts() {
         const stored = localStorage.getItem('completedParts');
         return stored ? JSON.parse(stored) : [];
+    }
+
+    // این تابع زمانی که کاربر روی لینک کلیک می‌کند فراخوانی می‌شود
+    function markPartComplete(partNum) {
+        let completed = getCompletedParts();
+        if (!completed.includes(partNum)) {
+            completed.push(partNum);
+            localStorage.setItem('completedParts', JSON.stringify(completed));
+        }
+        // نیازی به رفرش نیست چون کاربر به صفحه جدید می‌رود
+        // وقتی برگردد، صفحه رفرش شده و وضعیت آپدیت می‌شود
     }
 
     function isPartCompleted(partNum) {
@@ -327,31 +337,28 @@
     }
 
     function isUnlocked() {
+        // اگر حالت "دسترسی آزاد" فعال باشد
         return localStorage.getItem('unlocked') === 'true';
     }
 
     function isPartAccessible(partNum) {
-        if (isUnlocked()) return true;
-        if (partNum === 1) return true;
-        return isPartCompleted(partNum - 1);
+        if (isUnlocked()) return true; // اگر قفل باز است، همه چیز آزاد است
+        if (partNum === 1) return true; // بخش ۱ همیشه باز است
+        return isPartCompleted(partNum - 1); // بخش X باز است اگر X-1 تکمیل شده باشد
     }
 
-    // Toggle lock/unlock
+    // --- کنترل‌های UI ---
     function toggleLock() {
         const currentState = isUnlocked();
         const newState = !currentState;
 
         if (newState) {
-            // Unlocking
             localStorage.setItem('unlocked', 'true');
-            updateToggleUI(true);
         } else {
-            // Locking
             localStorage.removeItem('unlocked');
-            updateToggleUI(false);
         }
-
-        generatePhases();
+        updateToggleUI(newState);
+        generatePhases(); // بازسازی لیست برای اعمال قفل/باز
     }
 
     function updateToggleUI(unlocked) {
@@ -364,25 +371,23 @@
             container.classList.add('unlocked');
             switchEl.classList.add('active');
             icon.textContent = '🔓';
-            label.textContent = 'دسترسی آزاد';
+            label.textContent = 'دسترسی آزاد (همه باز)';
         } else {
             container.classList.remove('unlocked');
             switchEl.classList.remove('active');
             icon.textContent = '🔒';
-            label.textContent = 'دسترسی ترتیبی';
+            label.textContent = 'دسترسی ترتیبی (قفل)';
         }
     }
 
-    // Reset progress
     function resetProgress() {
-        if (confirm('آیا مطمئن هستید که می‌خواهید پیشرفت خود را از نو شروع کنید؟')) {
+        if (confirm('آیا مطمئن هستید؟ تمام تیک‌های سبز حذف می‌شوند و باید از اول شروع کنید.')) {
             localStorage.removeItem('completedParts');
-            localStorage.removeItem('unlocked');
+            // localStorage.removeItem('unlocked'); // تنظیمات قفل را نگه می‌داریم
             location.reload();
         }
     }
 
-    // Update progress bar
     function updateProgress() {
         const completed = getCompletedParts().length;
         const total = 20;
@@ -398,7 +403,7 @@
             `✅ ${toPersian(checkpoints)} Checkpoint تکمیل شده از ۵`;
     }
 
-    // Generate phases
+    // --- تولید محتوا ---
     function generatePhases() {
         const container = document.getElementById('phasesContainer');
         container.innerHTML = '';
@@ -408,21 +413,25 @@
             const phaseDiv = document.createElement('div');
             phaseDiv.className = `glass-card rounded-2xl shadow-xl p-6 md:p-8 phase-card phase-${phase.num}`;
 
-            const completed = phaseParts.filter(p => isPartCompleted(p.num)).length;
-            const total = phaseParts.length;
+            const completedCount = phaseParts.filter(p => isPartCompleted(p.num)).length;
+            const totalCount = phaseParts.length;
 
             let partsHTML = '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">';
 
             phaseParts.forEach(part => {
                 const accessible = isPartAccessible(part.num);
-                const completedClass = isPartCompleted(part.num) ? 'completed' : '';
+                const completed = isPartCompleted(part.num);
+
+                const completedClass = completed ? 'completed' : '';
                 const lockedClass = !accessible ? 'locked' : '';
 
+                // اینجا onclick اضافه شده تا وقتی کاربر کلیک کرد، ذخیره شود
                 partsHTML += `
                 <a href="parts/part${String(part.num).padStart(2, '0')}.html"
+                   onclick="markPartComplete(${part.num})"
                    class="part-link ${completedClass} ${lockedClass} block p-4 bg-white rounded-lg border border-gray-200">
                     <div class="flex items-center gap-3">
-                        <span class="flex-shrink-0 w-8 h-8 ${isPartCompleted(part.num) ? 'bg-teal-500' : 'bg-gray-300'} ${isPartCompleted(part.num) ? 'text-white' : 'text-gray-600'} rounded-lg flex items-center justify-center font-bold text-sm">${toPersian(part.num)}</span>
+                        <span class="flex-shrink-0 w-8 h-8 ${completed ? 'bg-teal-500' : 'bg-gray-300'} ${completed ? 'text-white' : 'text-gray-600'} rounded-lg flex items-center justify-center font-bold text-sm">${toPersian(part.num)}</span>
                         <span class="text-sm font-medium text-gray-700">${part.title}</span>
                     </div>
                 </a>
@@ -441,8 +450,8 @@
                     <p class="text-gray-600 mt-1">${phase.desc}</p>
                 </div>
                 <div class="text-left">
-                    <span class="inline-block px-4 py-2 ${completed > 0 ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-500'} rounded-lg font-bold text-sm">
-                        ${toPersian(completed)} / ${toPersian(total)} بخش ${completed > 0 ? '✓' : ''}
+                    <span class="inline-block px-4 py-2 ${completedCount > 0 ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-500'} rounded-lg font-bold text-sm">
+                        ${toPersian(completedCount)} / ${toPersian(totalCount)} بخش ${completedCount === totalCount ? '✓' : ''}
                     </span>
                 </div>
             </div>
@@ -453,12 +462,13 @@
         });
     }
 
-    // Initialize
+    // --- شروع برنامه ---
     window.addEventListener('load', () => {
         updateToggleUI(isUnlocked());
         generatePhases();
         updateProgress();
 
+        // انیمیشن ساده برای لود شدن
         setTimeout(() => {
             const completed = getCompletedParts().length;
             const percentage = Math.round((completed / 20) * 100);
