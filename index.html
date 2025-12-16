@@ -6,77 +6,83 @@
     <meta name="description" content="محتوای آموزشی جامع درس برنامه‌سازی پیشرفته (جاوا) - دانشگاه آزاد تبریز">
     <meta name="author" content="سید سجاد پیراهش">
     <title>برنامه‌سازی پیشرفته (جاوا) - دانشگاه آزاد تبریز</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* تنظیمات پس‌زمینه جدید */
+            background-color: #667eea;
+            background-image: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url('assets/images/course-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
             min-height: 100vh;
         }
-        
+
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        
+
         .phase-card {
             transition: all 0.3s ease;
             border: 2px solid transparent;
         }
-        
+
         .phase-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-        
+
         .phase-card.phase-1 { border-color: #14B8A6; }
         .phase-card.phase-2 { border-color: #0EA5E9; }
         .phase-card.phase-3 { border-color: #8B5CF6; }
         .phase-card.phase-4 { border-color: #10B981; }
         .phase-card.phase-5 { border-color: #F59E0B; }
-        
+
         .part-link {
             transition: all 0.2s ease;
         }
-        
+
         .part-link:hover {
             transform: translateX(-5px);
             background: #F3F4F6;
         }
-        
+
         .part-link.completed {
             background: #ECFDF5;
             border-right: 4px solid #10B981;
         }
-        
+
         .part-link.locked {
             opacity: 0.5;
             pointer-events: none;
             cursor: not-allowed;
         }
-        
+
         .checkpoint-badge {
             background: linear-gradient(135deg, #F59E0B, #EF4444);
             animation: pulse 2s ease-in-out infinite;
         }
-        
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-        
+
         .progress-bar {
             transition: width 1s ease-out;
         }
-        
+
         /* Toggle Switch Styles */
         .control-panel {
             display: flex;
@@ -88,7 +94,7 @@
             padding-top: 1.5rem;
             border-top: 1px solid #e5e7eb;
         }
-        
+
         .toggle-container {
             display: flex;
             align-items: center;
@@ -100,16 +106,16 @@
             transition: all 0.3s ease;
             user-select: none;
         }
-        
+
         .toggle-container:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        
+
         .toggle-container.unlocked {
             background: linear-gradient(135deg, #d1fae5, #a7f3d0);
         }
-        
+
         .toggle-switch {
             position: relative;
             width: 56px;
@@ -119,11 +125,11 @@
             transition: all 0.3s ease;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
-        
+
         .toggle-switch.active {
             background: linear-gradient(135deg, #10b981, #059669);
         }
-        
+
         .toggle-slider {
             position: absolute;
             top: 2px;
@@ -135,22 +141,22 @@
             transition: all 0.3s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
-        
+
         .toggle-switch.active .toggle-slider {
             transform: translateX(-28px);
         }
-        
+
         .toggle-icon {
             font-size: 1.25rem;
             transition: all 0.3s ease;
         }
-        
+
         .toggle-label {
             font-weight: 600;
             color: #374151;
             font-size: 0.95rem;
         }
-        
+
         .reset-btn {
             padding: 0.75rem 1.25rem;
             background: linear-gradient(135deg, #ef4444, #dc2626);
@@ -162,10 +168,31 @@
             transition: all 0.3s ease;
             font-size: 0.95rem;
         }
-        
+
         .reset-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        /* استایل دکمه منابع ویژه */
+        .resources-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .resources-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.3);
         }
     </style>
 </head>
@@ -173,7 +200,7 @@
 
 <div class="min-h-screen flex items-center justify-center p-4 md:p-8">
     <div class="w-full max-w-7xl">
-        
+
         <!-- Header -->
         <header class="glass-card rounded-2xl shadow-2xl p-8 md:p-12 mb-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -182,16 +209,25 @@
                         برنامه‌سازی پیشرفته
                         <span class="text-purple-600">(جاوا)</span>
                     </h1>
-                    <p class="text-xl text-gray-600 mb-2">مدرس: سید سجاد پیراهش</p>
-                    <p class="text-gray-500">دانشگاه آزاد اسلامی واحد تبریز</p>
+                    <p class="text-xl text-gray-600 mb-4">مدرس: سید سجاد پیراهش</p>
+                    <p class="text-gray-500 mb-6">دانشگاه آزاد اسلامی واحد تبریز</p>
+
+                    <!-- دکمه منابع تکمیلی -->
+                    <a href="resources.html" class="resources-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                        </svg>
+                        <span>اسلایدها، ویدیوها و اینفوگرافیک‌های درس</span>
+                    </a>
                 </div>
+                <!-- لوگوی دانشگاه -->
                 <div class="text-center">
-                    <div class="w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-5xl font-bold shadow-xl">
-                        J
+                    <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-xl overflow-hidden p-2">
+                        <img src="assets/images/university_logo.png" alt="لوگو دانشگاه" class="w-full h-full object-contain" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
                     </div>
                 </div>
             </div>
-            
+
             <!-- Overall Progress -->
             <div class="mt-8 pt-6 border-t border-gray-200">
                 <div class="flex items-center justify-between mb-2">
@@ -203,7 +239,7 @@
                 </div>
                 <p class="text-xs text-gray-500 mt-2 text-center" id="checkpointText">✅ ۰ Checkpoint تکمیل شده از ۵</p>
             </div>
-            
+
             <!-- Control Panel -->
             <div class="control-panel">
                 <div class="toggle-container" id="toggleContainer" onclick="toggleLock()">
@@ -213,7 +249,7 @@
                     </div>
                     <span class="toggle-label" id="toggleLabel">دسترسی ترتیبی</span>
                 </div>
-                
+
                 <button class="reset-btn" onclick="resetProgress()">
                     🔄 شروع مجدد
                 </button>
@@ -242,148 +278,148 @@
 </div>
 
 <script>
-// Course data
-const PARTS = [
-    {num: 1, title: 'از پارادایم تا بایت‌کد', phase: 1},
-    {num: 2, title: 'انواع داده و حافظه', phase: 1},
-    {num: 3, title: 'static و final', phase: 1},
-    {num: 4, title: 'آرایه‌ها', phase: 1},
-    {num: 5, title: 'متدها', phase: 1},
-    {num: 6, title: 'سازنده‌ها و this', phase: 1},
-    {num: 7, title: 'پکیج‌بندی', phase: 1},
-    {num: 8, title: 'تفکر شیءگرا', phase: 2},
-    {num: 9, title: 'مبانی UML', phase: 2},
-    {num: 10, title: 'روابط در UML', phase: 2},
-    {num: 11, title: 'ارث‌بری', phase: 3},
-    {num: 12, title: 'Upcasting و Downcasting', phase: 3},
-    {num: 13, title: 'بازنویسی متدها', phase: 3},
-    {num: 14, title: 'چندریختی', phase: 3},
-    {num: 15, title: 'کلاس‌های انتزاعی', phase: 4},
-    {num: 16, title: 'رابط‌ها', phase: 4},
-    {num: 17, title: 'تکامل طراحی', phase: 4},
-    {num: 18, title: 'Collections Framework', phase: 5},
-    {num: 19, title: 'مدیریت استثناها', phase: 5},
-    {num: 20, title: 'Enum Types', phase: 5}
-];
+    // Course data
+    const PARTS = [
+        {num: 1, title: 'از پارادایم تا بایت‌کد', phase: 1},
+        {num: 2, title: 'انواع داده و حافظه', phase: 1},
+        {num: 3, title: 'static و final', phase: 1},
+        {num: 4, title: 'آرایه‌ها', phase: 1},
+        {num: 5, title: 'متدها', phase: 1},
+        {num: 6, title: 'سازنده‌ها و this', phase: 1},
+        {num: 7, title: 'پکیج‌بندی', phase: 1},
+        {num: 8, title: 'تفکر شیءگرا', phase: 2},
+        {num: 9, title: 'مبانی UML', phase: 2},
+        {num: 10, title: 'روابط در UML', phase: 2},
+        {num: 11, title: 'ارث‌بری', phase: 3},
+        {num: 12, title: 'Upcasting و Downcasting', phase: 3},
+        {num: 13, title: 'بازنویسی متدها', phase: 3},
+        {num: 14, title: 'چندریختی', phase: 3},
+        {num: 15, title: 'کلاس‌های انتزاعی', phase: 4},
+        {num: 16, title: 'رابط‌ها', phase: 4},
+        {num: 17, title: 'تکامل طراحی', phase: 4},
+        {num: 18, title: 'Collections Framework', phase: 5},
+        {num: 19, title: 'مدیریت استثناها', phase: 5},
+        {num: 20, title: 'Enum Types', phase: 5}
+    ];
 
-const PHASES = [
-    {num: 1, title: 'مبانی و پایه‌ها', desc: 'آشنایی با مفاهیم پایه جاوا و ساختارهای داده'},
-    {num: 2, title: 'تفکر شیءگرا', desc: 'یادگیری اصول طراحی شیءگرا و UML'},
-    {num: 3, title: 'ارث‌بری و چندریختی', desc: 'مفاهیم پیشرفته OOP'},
-    {num: 4, title: 'انتزاع', desc: 'Abstract Classes و Interfaces'},
-    {num: 5, title: 'موضوعات پیشرفته', desc: 'Collections, Exceptions و Enums'}
-];
+    const PHASES = [
+        {num: 1, title: 'مبانی و پایه‌ها', desc: 'آشنایی با مفاهیم پایه جاوا و ساختارهای داده'},
+        {num: 2, title: 'تفکر شیءگرا', desc: 'یادگیری اصول طراحی شیءگرا و UML'},
+        {num: 3, title: 'ارث‌بری و چندریختی', desc: 'مفاهیم پیشرفته OOP'},
+        {num: 4, title: 'انتزاع', desc: 'Abstract Classes و Interfaces'},
+        {num: 5, title: 'موضوعات پیشرفته', desc: 'Collections, Exceptions و Enums'}
+    ];
 
-// Persian numbers
-const toPersian = (num) => {
-    const p = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-    return String(num).split('').map(d => p[d] || d).join('');
-};
+    // Persian numbers
+    const toPersian = (num) => {
+        const p = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        return String(num).split('').map(d => p[d] || d).join('');
+    };
 
-// LocalStorage functions
-function getCompletedParts() {
-    const stored = localStorage.getItem('completedParts');
-    return stored ? JSON.parse(stored) : [];
-}
-
-function isPartCompleted(partNum) {
-    return getCompletedParts().includes(partNum);
-}
-
-function isUnlocked() {
-    return localStorage.getItem('unlocked') === 'true';
-}
-
-function isPartAccessible(partNum) {
-    if (isUnlocked()) return true;
-    if (partNum === 1) return true;
-    return isPartCompleted(partNum - 1);
-}
-
-// Toggle lock/unlock
-function toggleLock() {
-    const currentState = isUnlocked();
-    const newState = !currentState;
-    
-    if (newState) {
-        // Unlocking
-        localStorage.setItem('unlocked', 'true');
-        updateToggleUI(true);
-    } else {
-        // Locking
-        localStorage.removeItem('unlocked');
-        updateToggleUI(false);
+    // LocalStorage functions
+    function getCompletedParts() {
+        const stored = localStorage.getItem('completedParts');
+        return stored ? JSON.parse(stored) : [];
     }
-    
-    generatePhases();
-}
 
-function updateToggleUI(unlocked) {
-    const container = document.getElementById('toggleContainer');
-    const switchEl = document.getElementById('toggleSwitch');
-    const icon = document.getElementById('toggleIcon');
-    const label = document.getElementById('toggleLabel');
-    
-    if (unlocked) {
-        container.classList.add('unlocked');
-        switchEl.classList.add('active');
-        icon.textContent = '🔓';
-        label.textContent = 'دسترسی آزاد';
-    } else {
-        container.classList.remove('unlocked');
-        switchEl.classList.remove('active');
-        icon.textContent = '🔒';
-        label.textContent = 'دسترسی ترتیبی';
+    function isPartCompleted(partNum) {
+        return getCompletedParts().includes(partNum);
     }
-}
 
-// Reset progress
-function resetProgress() {
-    if (confirm('آیا مطمئن هستید که می‌خواهید پیشرفت خود را از نو شروع کنید؟')) {
-        localStorage.removeItem('completedParts');
-        localStorage.removeItem('unlocked');
-        location.reload();
+    function isUnlocked() {
+        return localStorage.getItem('unlocked') === 'true';
     }
-}
 
-// Update progress bar
-function updateProgress() {
-    const completed = getCompletedParts().length;
-    const total = 20;
-    const percentage = Math.round((completed / total) * 100);
-    
-    document.getElementById('progressText').textContent = 
-        `${toPersian(completed)} از ${toPersian(total)} بخش (${toPersian(percentage)}٪)`;
-    
-    document.getElementById('progressBar').style.width = percentage + '%';
-    
-    const checkpoints = Math.floor(completed / 4);
-    document.getElementById('checkpointText').textContent = 
-        `✅ ${toPersian(checkpoints)} Checkpoint تکمیل شده از ۵`;
-}
+    function isPartAccessible(partNum) {
+        if (isUnlocked()) return true;
+        if (partNum === 1) return true;
+        return isPartCompleted(partNum - 1);
+    }
 
-// Generate phases
-function generatePhases() {
-    const container = document.getElementById('phasesContainer');
-    container.innerHTML = '';
-    
-    PHASES.forEach(phase => {
-        const phaseParts = PARTS.filter(p => p.phase === phase.num);
-        const phaseDiv = document.createElement('div');
-        phaseDiv.className = `glass-card rounded-2xl shadow-xl p-6 md:p-8 phase-card phase-${phase.num}`;
-        
-        const completed = phaseParts.filter(p => isPartCompleted(p.num)).length;
-        const total = phaseParts.length;
-        
-        let partsHTML = '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">';
-        
-        phaseParts.forEach(part => {
-            const accessible = isPartAccessible(part.num);
-            const completedClass = isPartCompleted(part.num) ? 'completed' : '';
-            const lockedClass = !accessible ? 'locked' : '';
-            
-            partsHTML += `
-                <a href="parts/part${String(part.num).padStart(2, '0')}.html" 
+    // Toggle lock/unlock
+    function toggleLock() {
+        const currentState = isUnlocked();
+        const newState = !currentState;
+
+        if (newState) {
+            // Unlocking
+            localStorage.setItem('unlocked', 'true');
+            updateToggleUI(true);
+        } else {
+            // Locking
+            localStorage.removeItem('unlocked');
+            updateToggleUI(false);
+        }
+
+        generatePhases();
+    }
+
+    function updateToggleUI(unlocked) {
+        const container = document.getElementById('toggleContainer');
+        const switchEl = document.getElementById('toggleSwitch');
+        const icon = document.getElementById('toggleIcon');
+        const label = document.getElementById('toggleLabel');
+
+        if (unlocked) {
+            container.classList.add('unlocked');
+            switchEl.classList.add('active');
+            icon.textContent = '🔓';
+            label.textContent = 'دسترسی آزاد';
+        } else {
+            container.classList.remove('unlocked');
+            switchEl.classList.remove('active');
+            icon.textContent = '🔒';
+            label.textContent = 'دسترسی ترتیبی';
+        }
+    }
+
+    // Reset progress
+    function resetProgress() {
+        if (confirm('آیا مطمئن هستید که می‌خواهید پیشرفت خود را از نو شروع کنید؟')) {
+            localStorage.removeItem('completedParts');
+            localStorage.removeItem('unlocked');
+            location.reload();
+        }
+    }
+
+    // Update progress bar
+    function updateProgress() {
+        const completed = getCompletedParts().length;
+        const total = 20;
+        const percentage = Math.round((completed / total) * 100);
+
+        document.getElementById('progressText').textContent =
+            `${toPersian(completed)} از ${toPersian(total)} بخش (${toPersian(percentage)}٪)`;
+
+        document.getElementById('progressBar').style.width = percentage + '%';
+
+        const checkpoints = Math.floor(completed / 4);
+        document.getElementById('checkpointText').textContent =
+            `✅ ${toPersian(checkpoints)} Checkpoint تکمیل شده از ۵`;
+    }
+
+    // Generate phases
+    function generatePhases() {
+        const container = document.getElementById('phasesContainer');
+        container.innerHTML = '';
+
+        PHASES.forEach(phase => {
+            const phaseParts = PARTS.filter(p => p.phase === phase.num);
+            const phaseDiv = document.createElement('div');
+            phaseDiv.className = `glass-card rounded-2xl shadow-xl p-6 md:p-8 phase-card phase-${phase.num}`;
+
+            const completed = phaseParts.filter(p => isPartCompleted(p.num)).length;
+            const total = phaseParts.length;
+
+            let partsHTML = '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">';
+
+            phaseParts.forEach(part => {
+                const accessible = isPartAccessible(part.num);
+                const completedClass = isPartCompleted(part.num) ? 'completed' : '';
+                const lockedClass = !accessible ? 'locked' : '';
+
+                partsHTML += `
+                <a href="parts/part${String(part.num).padStart(2, '0')}.html"
                    class="part-link ${completedClass} ${lockedClass} block p-4 bg-white rounded-lg border border-gray-200">
                     <div class="flex items-center gap-3">
                         <span class="flex-shrink-0 w-8 h-8 ${isPartCompleted(part.num) ? 'bg-teal-500' : 'bg-gray-300'} ${isPartCompleted(part.num) ? 'text-white' : 'text-gray-600'} rounded-lg flex items-center justify-center font-bold text-sm">${toPersian(part.num)}</span>
@@ -391,11 +427,11 @@ function generatePhases() {
                     </div>
                 </a>
             `;
-        });
-        
-        partsHTML += '</div>';
-        
-        phaseDiv.innerHTML = `
+            });
+
+            partsHTML += '</div>';
+
+            phaseDiv.innerHTML = `
             <div class="flex items-center gap-4 mb-6">
                 <div class="w-16 h-16 bg-teal-500 rounded-xl flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                     ${toPersian(phase.num)}
@@ -412,23 +448,23 @@ function generatePhases() {
             </div>
             ${partsHTML}
         `;
-        
-        container.appendChild(phaseDiv);
-    });
-}
 
-// Initialize
-window.addEventListener('load', () => {
-    updateToggleUI(isUnlocked());
-    generatePhases();
-    updateProgress();
-    
-    setTimeout(() => {
-        const completed = getCompletedParts().length;
-        const percentage = Math.round((completed / 20) * 100);
-        document.getElementById('progressBar').style.width = percentage + '%';
-    }, 300);
-});
+            container.appendChild(phaseDiv);
+        });
+    }
+
+    // Initialize
+    window.addEventListener('load', () => {
+        updateToggleUI(isUnlocked());
+        generatePhases();
+        updateProgress();
+
+        setTimeout(() => {
+            const completed = getCompletedParts().length;
+            const percentage = Math.round((completed / 20) * 100);
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }, 300);
+    });
 </script>
 
 </body>
