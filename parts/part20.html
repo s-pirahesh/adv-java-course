@@ -3,130 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بخش 20: Enum Types | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+    <title>بخش 20: انواع شمارشی (Enums) | برنامه‌سازی پیشرفته</title>
+
+    <meta name="description" content="آموزش جامع انواع شمارشی (Enums) در جاوا، مقایسه با ثابت‌های عددی، متدها و فیلدها در Enum و استفاده از EnumSet و EnumMap">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل‌های اختصاصی بخش Enum */
+        .comparison-table th {
+            background-color: #4b5563; /* gray-600 */
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        .enum-badge {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            border: 1px solid #d1d5db;
+        }
+        .diagram-container svg {
+            font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+        }
+        .enum-box {
+            fill: #f9fafb; /* gray-50 */
+            stroke: #374151; /* gray-700 */
+            stroke-width: 2px;
+        }
+        .constant-box {
+            fill: #fff;
+            stroke: #9ca3af; /* gray-400 */
+            stroke-width: 1px;
+        }
+    </style>
 </head>
 <body class="theme-part20">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>20. Enum Types</h1>
+    <h1>20. انواع شمارشی (Enums): تعریف مجموعه‌ای از ثابت‌های امن</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۴</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۲۰</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
-            <img src="../assets/images/university_logo.png" alt="لوگو دانشگاه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
+            <img src="../assets/images/university_logo.png" alt="لوگو دانشگاه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%2314B8A6%22 width=%22100%22 height=%22100%22%3E%3C/rect%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22%3EJ%3C/text%3E%3C/svg%3E'">
         </a>
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 20</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. Enum چیست؟</a></li>
+                <li><a href="#section-2" class="nav-link">۲. مقایسه با ثابت‌های عددی</a></li>
+                <li><a href="#section-3" class="nav-link">۳. قدرت کلاس بودن Enum</a></li>
+                <li><a href="#section-4" class="nav-link">۴. Enum در switch</a></li>
+                <li><a href="#section-5" class="nav-link">۵. اشتباهات رایج</a></li>
+                <li><a href="#exercises" class="nav-link">۶. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۴</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part14.html" class="nav-link">بخش ۱۴: چندریختی</a></li>
+                <li><a href="part15.html" class="nav-link">بخش ۱۵: کلاس‌های انتزاعی</a></li>
+                <li><a href="part16.html" class="nav-link">بخش ۱۶: رابط‌ها</a></li>
+                <li><a href="part17.html" class="nav-link">بخش ۱۷: تکامل طراحی</a></li>
+                <li><a href="part18.html" class="nav-link">بخش ۱۸: کلکسیون‌ها</a></li>
+                <li><a href="part19.html" class="nav-link">بخش ۱۹: مدیریت استثناها</a></li>
+                <li><a href="part20.html" class="nav-link active">بخش ۲۰: Enums</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">در برنامه‌نویسی، ما اغلب با مفاهیمی روبرو هستیم که مجموعه‌ای ثابت و محدود از مقادیر ممکن را دارند. برای مثال: روزهای هفته، جهت‌های قطب‌نما (شمال، جنوب، شرق، غرب)، یا سطح دسترسی کاربران (ادمین، کاربر عادی، مهمان).</p>
+        <p>در گذشته، برنامه‌نویسان از ثابت‌های عددی (<code>public static final int</code>) استفاده می‌کردند که مشکلاتی مانند عدم امنیت نوع و خوانایی پایین داشت. <strong>انواع شمارشی (Enums)</strong> در جاوا راه‌حلی زیبا، امن و قدرتمند برای این مشکل هستند.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 20: Enum Types آماده شده است.
-        </div>
-        
-        <h3>نمونه کد:</h3>
+        <h2>۱. Enum چیست؟</h2>
+
+        <p>یک <code>enum</code> یک "کلاس ویژه" در جاوا است که مجموعه‌ای از <strong>ثابت‌های نام‌گذاری شده</strong> را نمایش می‌دهد. هر یک از این ثابت‌ها، یک <strong>شیء</strong> از آن enum هستند.</p>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 20");
+            <pre><code class="language-java">public enum Day {
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+}
+
+// استفاده:
+Day today = Day.MONDAY;
+System.out.println("Today is: " + today); // خروجی: Today is: MONDAY
+
+// امنیت نوع در عمل:
+// Day wrongDay = 1; // ❌ خطای کامپایل!</code></pre>
+        </div>
+        <p>با <code>enum</code>، کامپایلر تضمین می‌کند که متغیری از نوع <code>Day</code> فقط می‌تواند یکی از ۷ مقدار تعریف‌شده باشد.</p>
+    </section>
+
+    <section id="section-2">
+        <h2>۲. مقایسه جامع: Enum در مقابل <code>static final int</code></h2>
+
+        <div class="table-container">
+            <table class="comparison-table">
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th><code>public static final int</code></th>
+                    <th><code>enum</code></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>امنیت نوع (Type Safety)</strong></td>
+                    <td>❌ <strong>ندارد.</strong> هر مقدار <code>int</code> قابل قبول است.</td>
+                    <td>✅ <strong>کامل.</strong> فقط نمونه‌های تعریف‌شده مجاز هستند.</td>
+                </tr>
+                <tr>
+                    <td><strong>فضای نام (Namespace)</strong></td>
+                    <td>نام ثابت‌ها فضای نام کلاس را اشغال می‌کند.</td>
+                    <td>فضای نام خود را دارد (`Day.MONDAY`).</td>
+                </tr>
+                <tr>
+                    <td><strong>خوانایی</strong></td>
+                    <td><strong>ضعیف:</strong> مقادیر چاپ‌شده (مثلاً `1`) بی‌معنی هستند.</td>
+                    <td><strong>عالی:</strong> مقادیر چاپ‌شده (مثلاً `MONDAY`) خوانا هستند.</td>
+                </tr>
+                <tr>
+                    <td><strong>استفاده در <code>switch</code></strong></td>
+                    <td><strong>خطرناک:</strong> `default` case ضروری است.</td>
+                    <td><strong>امن:</strong> کامپایلر هشدار می‌دهد اگر موردی جا بیفتد.</td>
+                </tr>
+                <tr>
+                    <td><strong>افزودن رفتار</strong></td>
+                    <td>❌ <strong>غیرممکن.</strong> نمی‌توان به `int` متد اضافه کرد.</td>
+                    <td>✅ <strong>ممکن.</strong> می‌توانند فیلد، سازنده و متد داشته باشند.</td>
+                </tr>
+                <tr>
+                    <td><strong>قابلیت پیمایش</strong></td>
+                    <td>❌ <strong>دشوار.</strong> باید دستی لیست شوند.</td>
+                    <td>✅ <strong>آسان.</strong> متد `values()` همه را برمی‌گرداند.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="section-3">
+        <h2>۳. Enums به عنوان کلاس‌های قدرتمند</h2>
+
+        <p>یک <code>enum</code> فقط یک لیست ساده از اسامی نیست. این یک کلاس کامل است که می‌تواند شامل فیلدها، سازنده و متدها باشد.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public enum Planet {
+    // هر ثابت، یک شیء با داده‌های خاص خود است
+    MERCURY (3.303e+23, 2.4397e6),
+    VENUS   (4.869e+24, 6.0518e6),
+    EARTH   (5.976e+24, 6.37814e6),
+    MARS    (6.421e+23, 3.3972e6);
+
+    // فیلدهای مرتبط با هر سیاره
+    private final double mass;   // in kilograms
+    private final double radius; // in meters
+
+    // سازنده (همیشه private)
+    Planet(double mass, double radius) {
+        this.mass = mass;
+        this.radius = radius;
     }
+
+    // متد برای محاسبه گرانش سطحی
+    public static final double G = 6.67300E-11;
+    public double surfaceGravity() {
+        return G * mass / (radius * radius);
+    }
+}
+
+// استفاده:
+double earthGravity = Planet.EARTH.surfaceGravity();
+System.out.printf("Surface gravity on Earth: %f m/s^2%n", earthGravity);</code></pre>
+        </div>
+    </section>
+
+    <section id="section-4">
+        <h2>۴. استفاده از Enum در بلوک <code>switch</code></h2>
+
+        <p><code>switch</code> با <code>enum</code> بسیار خواناتر و امن‌تر از <code>switch</code> با <code>int</code> یا <code>String</code> است.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public String getDayType(Day day) {
+    String type;
+    switch (day) {
+        case MONDAY:
+        case TUESDAY:
+        case WEDNESDAY:
+        case THURSDAY:
+            type = "Weekday";
+            break;
+        case FRIDAY:
+            type = "Almost weekend!";
+            break;
+        case SATURDAY:
+        case SUNDAY:
+            type = "Weekend";
+            break;
+        default:
+            throw new IllegalStateException("Invalid day: " + day);
+    }
+    return type;
 }</code></pre>
         </div>
     </section>
 
-    <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
-    </section>
-
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. اشتباهات رایج</h2>
+
+        <h3>الف) مقایسه با <code>==</code> در مقابل <code>.equals()</code></h3>
+        <p>برای <code>enum</code> ها، <strong>استفاده از <code>==</code> امن، صحیح و حتی ترجیح داده می‌شود.</strong> زیرا JVM تضمین می‌کند که برای هر ثابت فقط یک نمونه وجود دارد.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">Day today = Day.MONDAY;
+
+// ✅ صحیح و سریع‌تر
+if (today == Day.MONDAY) { ... }
+
+// ✅ صحیح اما کندتر
+if (today.equals(Day.MONDAY)) { ... }</code></pre>
+        </div>
+
+        <h3>ب) تلاش برای <code>extends</code> کردن Enum</h3>
+        <p>یک <code>enum</code> نمی‌تواند کلاسی را ارث‌بری کند (چون به طور ضمنی از <code>java.lang.Enum</code> ارث می‌برد)، اما می‌تواند رابط‌ها (Interface) را پیاده‌سازی کند.</p>
+
+        <h3>ج) استفاده نکردن از کلکسیون‌های بهینه</h3>
+        <p>همیشه <code>EnumSet</code> و <code>EnumMap</code> را به جای پیاده‌سازی‌های عمومی (`HashSet`, `HashMap`) برای `enum` ها ترجیح دهید.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// ❌ کندتر
+Set&lt;Day&gt; weekend = new HashSet&lt;&gt;();
+weekend.add(Day.SATURDAY);
+
+// ✅ بسیار سریع و بهینه (با BitSet داخلی)
+Set&lt;Day&gt; weekendOptimal = EnumSet.of(Day.SATURDAY, Day.SUNDAY);</code></pre>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
-    <section id="section-6">
+    <section id="exercises">
         <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+
+        <div class="exercise-box">
+            <h3>تمرین ۱: <code>enum</code> برای فصول</h3>
+            <p>یک <code>enum</code> به نام <code>Season</code> با چهار مقدار <code>SPRING</code>, <code>SUMMER</code>, <code>AUTUMN</code>, <code>WINTER</code> بسازید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۲: <code>enum</code> با فیلد و متد</h3>
+            <p><code>enum</code> تمرین ۱ را طوری تغییر دهید که هر فصل یک دمای میانگین (مثلاً <code>int averageTemp</code>) داشته باشد. یک سازنده و یک متد <code>getAverageTemp()</code> برای آن بنویسید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۳: <code>enum</code> در <code>switch</code></h3>
+            <p>یک متد بنویسید که یک <code>Season</code> را به عنوان ورودی گرفته و با استفاده از <code>switch</code>، یک فعالیت پیشنهادی برای آن فصل را برگرداند (مثلاً "Skiing" برای <code>WINTER</code>).</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۴: ریفکتور کردن <code>static final</code></h3>
+            <p>کد زیر را با استفاده از <code>enum</code> بازنویسی کنید:</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">public class StatusCodes {
+    public static final int OK = 200;
+    public static final int NOT_FOUND = 404;
+    public static final int INTERNAL_SERVER_ERROR = 500;
+}</code></pre>
+            </div>
+            <p><strong>راهنمایی:</strong> <code>enum HttpStatus</code> با فیلد <code>code</code> بسازید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۵: استفاده از <code>EnumMap</code></h3>
+            <p>یک <code>EnumMap&lt;Day, String&gt;</code> بسازید که هر روز هفته را به یک "وظیفه" (Task) نگاشت کند (مثلاً <code>Day.MONDAY</code> -> <code>"Team Meeting"</code>). سپس وظیفه مربوط به روز چهارشنبه را چاپ کنید.</p>
+        </div>
     </section>
 
-    </main>
+    <section id="summary">
+        <h2>خلاصه بخش بیستم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>enum:</strong> کلاسی برای مجموعه‌ای ثابت از مقادیر که امنیت نوع را تضمین می‌کند.</li>
+                <li>✅ <strong>قدرت کلاس:</strong> Enums می‌توانند فیلد، سازنده و متد داشته باشند.</li>
+                <li>✅ <strong>مقایسه:</strong> استفاده از <code>==</code> برای enum ها صحیح و سریع است.</li>
+                <li>✅ <strong>switch:</strong> استفاده از enum در switch کد را خواناتر و امن‌تر می‌کند.</li>
+                <li>✅ <strong>بهینه‌سازی:</strong> استفاده از <code>EnumSet</code> و <code>EnumMap</code> توصیه می‌شود.</li>
+            </ul>
+        </div>
 
-<!-- Scripts -->
+        <div class="next-section">
+            <p><strong>پایان دوره مقدماتی!</strong></p>
+            <div class="part-navigation">
+                <a href="part19.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="../index.html" class="btn-next">بازگشت به خانه 🏠</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
