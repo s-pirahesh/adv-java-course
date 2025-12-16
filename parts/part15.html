@@ -3,36 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بخش 15: کلاس‌های انتزاعی | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+    <title>بخش 15: کلاس‌های انتزاعی (Abstract Classes) | برنامه‌سازی پیشرفته</title>
+
+    <meta name="description" content="آموزش جامع کلاس‌های انتزاعی در جاوا، متدهای abstract، تفاوت با کلاس‌های معمولی و طراحی نرم‌افزار Paint">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل‌های اختصاصی دیاگرام تصمیم‌گیری */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+        }
+        .decision-box {
+            fill: #fdf4ff; /* purple-50 */
+            stroke: #9333ea; /* purple-600 */
+            stroke-width: 2px;
+        }
+        .action-box {
+            fill: #fff;
+            stroke: #7e22ce; /* purple-700 */
+            stroke-width: 2px;
+        }
+        .connector {
+            stroke: #6b7280;
+            stroke-width: 1.5px;
+            fill: none;
+        }
+        .text-label {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .table-container th {
+            background-color: #7e22ce; /* purple-700 */
+            color: white;
+        }
+        .table-container tr:nth-child(even) {
+            background-color: #f3e8ff; /* purple-100 */
+        }
+    </style>
 </head>
 <body class="theme-part15">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>15. کلاس‌های انتزاعی</h1>
+    <h1>15. کلاس‌های انتزاعی: تعریف قرارداد بدون پیاده‌سازی</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۴</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۱۵</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,92 +68,477 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 15</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. آناتومی کلاس انتزاعی</a></li>
+                <li><a href="#section-2" class="nav-link">۲. مقایسه با کلاس انضمامی</a></li>
+                <li><a href="#section-3" class="nav-link">۳. سناریوی Paint</a></li>
+                <li><a href="#section-4" class="nav-link">۴. درخت تصمیم‌گیری</a></li>
+                <li><a href="#section-5" class="nav-link">۵. اشتباهات رایج</a></li>
+                <li><a href="#exercises" class="nav-link">۶. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۴</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part15.html" class="nav-link">بخش ۱۵: کلاس‌های انتزاعی</a></li>
+                <li><a href="part16.html" class="nav-link active">بخش ۱۶: رابط‌ها</a></li>
+                <li><a href="part17.html" class="nav-link">بخش ۱۷: تکامل طراحی</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">تاکنون در ارث‌بری، ما یک کلاس والد (Superclass) کامل و قابل استفاده داشتیم. اما گاهی اوقات، یک کلاس والد به قدری <strong>مفهومی و انتزاعی</strong> است که ساختن یک شیء مستقیم از آن بی‌معنی است.</p>
+        <p>به کلاس <code>Shape</code> (شکل) فکر کنید. آیا می‌توانید یک شیء از "شکل" بسازید؟ خیر. "شکل" یک مفهوم کلی است. شما می‌توانید یک "دایره"، "مربع" یا "مثلث" بسازید، اما "فقط شکل" وجود خارجی ندارد. با این حال، تمام این اشکال، ویژگی‌ها و رفتارهای مشترکی دارند (مثلاً همه مساحت دارند).</p>
+        <p><strong>کلاس‌های انتزاعی (Abstract Classes)</strong> راه‌حل جاوا برای مدل‌سازی این مفاهیم "ناتمام" هستند. آن‌ها یک <strong>قرارداد</strong> برای کلاس‌های فرزند خود تعریف می‌کنند و می‌گویند: "هر کسی که از من ارث می‌برد، باید این رفتارها را داشته باشد، اما من خودم نمی‌دانم چگونه آن‌ها را پیاده‌سازی کنم."</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 15: کلاس‌های انتزاعی آماده شده است.
+        <h2>۱. آناتومی یک کلاس انتزاعی</h2>
+
+        <p>یک کلاس انتزاعی با کلمه کلیدی <code>abstract</code> مشخص می‌شود و می‌تواند شامل موارد زیر باشد:</p>
+        <ul>
+            <li><strong>متدهای انتزاعی (Abstract Methods):</strong> متدهایی که فقط امضا دارند و بدنه (<code>{}</code>) ندارند. این‌ها "تعهداتی" هستند که فرزندان باید پیاده‌سازی کنند.</li>
+            <li><strong>متدهای انضمامی (Concrete Methods):</strong> متدهای کاملاً عادی با بدنه که پیاده‌سازی مشترک را فراهم می‌کنند.</li>
+            <li><strong>فیلدها (Fields):</strong> مانند هر کلاس دیگری.</li>
+            <li><strong>سازنده‌ها (Constructors):</strong> برای مقداردهی فیلدهای مشترک توسط فرزندان.</li>
+        </ul>
+
+        <div class="warning-box">
+            <strong>قوانین کلیدی:</strong>
+            <ol>
+                <li>شما <strong>نمی‌توانید</strong> از یک کلاس انتزاعی با <code>new</code> شیء بسازید.</li>
+                <li>هر کلاسی که <strong>حتی یک</strong> متد انتزاعی داشته باشد، خودش <strong>باید</strong> <code>abstract</code> تعریف شود.</li>
+                <li>هر کلاس فرزندی که از یک کلاس انتزاعی ارث می‌برد، <strong>باید</strong> تمام متدهای انتزاعی والد را <strong>پیاده‌سازی (Override)</strong> کند، مگر اینکه خود آن فرزند هم <code>abstract</code> باشد.</li>
+            </ol>
         </div>
-        
-        <h3>نمونه کد:</h3>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 15");
+            <pre><code class="language-java">// 1. تعریف کلاس انتزاعی
+public abstract class Animal {
+    private String name;
+
+    // سازنده برای استفاده توسط فرزندان
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    // متد انضمامی (پیاده‌سازی مشترک)
+    public void sleep() {
+        System.out.println(name + " is sleeping...");
+    }
+
+    // متد انتزاعی (قرارداد - بدون بدنه)
+    // "هر حیوانی باید صدایی داشته باشد، اما من نمی‌دانم چه صدایی."
+    public abstract void makeSound();
+}
+
+// 2. پیاده‌سازی توسط کلاس فرزند
+public class Dog extends Animal {
+    public Dog(String name) {
+        super(name);
+    }
+
+    // انجام تعهد: پیاده‌سازی متد انتزاعی
+    @Override
+    public void makeSound() {
+        System.out.println("Woof! Woof!");
     }
 }</code></pre>
         </div>
     </section>
 
     <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
+        <h2>۲. مقایسه جامع: کلاس انضمامی (Concrete) در مقابل کلاس انتزاعی (Abstract)</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Concrete Class (کلاس انضمامی)</th>
+                    <th>Abstract Class (کلاس انتزاعی)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>قابلیت نمونه‌سازی</strong></td>
+                    <td>✅ <strong>می‌توان</strong> با <code>new</code> از آن شیء ساخت.<br><code>new Dog();</code></td>
+                    <td>❌ <strong>نمی‌توان</strong> با <code>new</code> از آن شیء ساخت.<br><code>new Animal();</code> (خطای کامپایل)</td>
+                </tr>
+                <tr>
+                    <td><strong>متدهای انتزاعی</strong></td>
+                    <td>❌ <strong>نمی‌تواند</strong> متد انتزاعی داشته باشد.</td>
+                    <td>✅ <strong>می‌تواند</strong> (و معمولاً دارد) یک یا چند متد انتزاعی داشته باشد.</td>
+                </tr>
+                <tr>
+                    <td><strong>متدهای انضمامی</strong></td>
+                    <td>✅ می‌تواند متدهای کامل با پیاده‌سازی داشته باشد.</td>
+                    <td>✅ می‌تواند متدهای کامل با پیاده‌سازی داشته باشد (برای کد مشترک).</td>
+                </tr>
+                <tr>
+                    <td><strong>فیلدها</strong></td>
+                    <td>✅ می‌تواند فیلدهای <code>static</code> و غیر <code>static</code> داشته باشد.</td>
+                    <td>✅ می‌تواند فیلدهای <code>static</code> و غیر <code>static</code> داشته باشد (برای وضعیت مشترک).</td>
+                </tr>
+                <tr>
+                    <td><strong>سازنده</strong></td>
+                    <td>✅ دارد؛ برای ساختن شیء.</td>
+                    <td>✅ دارد؛ اما فقط برای فراخوانی توسط سازنده کلاس‌های فرزند (<code>super()</code>).</td>
+                </tr>
+                <tr>
+                    <td><strong>کامل بودن</strong></td>
+                    <td><strong>کامل:</strong> یک موجودیت قابل استفاده و مستقل است.</td>
+                    <td><strong>ناتمام:</strong> یک "قالب" یا "قرارداد" برای کلاس‌های دیگر است.</td>
+                </tr>
+                <tr>
+                    <td><strong>هدف اصلی</strong></td>
+                    <td>نمایش یک موجودیت واقعی و قابل استفاده در سیستم.</td>
+                    <td>فراهم کردن یک پایه مشترک برای مجموعه‌ای از کلاس‌های مرتبط و تعریف یک قرارداد.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
+        <h2>۳. سناریوی کامل: نرم‌افزار نقاشی <code>Paint</code></h2>
+
+        <p>بیایید یک مثال جامع را از صفر تا صد پیاده‌سازی کنیم. می‌خواهیم یک ناحیه نقاشی طراحی کنیم که بتواند اشکال مختلف را رسم کند.</p>
+
+        <h3>گام ۱: طراحی کلاس انتزاعی <code>Shape</code></h3>
+        <p>ما می‌دانیم هر شکلی باید مساحت و محیط داشته باشد و باید بتوان آن را رسم کرد. اما فرمول محاسبه برای هر شکل متفاوت است. پس این‌ها متدهای انتزاعی هستند.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public abstract class Shape {
+    protected String color;
+
+    public Shape(String color) {
+        this.color = color;
+    }
+
+    // متدهای انتزاعی: قرارداد برای همه فرزندان
+    public abstract double getArea();
+    public abstract double getPerimeter();
+
+    // متد انضمامی: رفتار مشترک
+    public void displayInfo() {
+        System.out.println("Shape Color: " + this.color);
+        System.out.println("Area: " + getArea()); // از متد پیاده‌سازی شده در فرزند استفاده می‌کند
+        System.out.println("Perimeter: " + getPerimeter());
+    }
+}</code></pre>
+        </div>
+
+        <h3>گام ۲: پیاده‌سازی کلاس‌های انضمامی <code>Circle</code> و <code>Rectangle</code></h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class Circle extends Shape {
+    private double radius;
+
+    public Circle(String color, double radius) {
+        super(color);
+        this.radius = radius;
+    }
+
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+
+    @Override
+    public double getPerimeter() {
+        return 2 * Math.PI * radius;
+    }
+}
+
+public class Rectangle extends Shape {
+    private double width, height;
+
+    public Rectangle(String color, double width, double height) {
+        super(color);
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public double getArea() {
+        return width * height;
+    }
+
+    @Override
+    public double getPerimeter() {
+        return 2 * (width + height);
+    }
+}</code></pre>
+        </div>
+
+        <h3>گام ۳: استفاده در <code>PaintingArea</code> (قدرت چندریختی)</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">import java.util.ArrayList;
+import java.util.List;
+
+public class PaintingArea {
+    public static void main(String[] args) {
+        // ما نمی‌توانیم new Shape() بسازیم، اما می‌توانیم آرایه‌ای از Shape داشته باشیم!
+        List<Shape> myShapes = new ArrayList<>();
+
+        // Upcasting
+        myShapes.add(new Circle("Red", 5.0));
+        myShapes.add(new Rectangle("Blue", 4.0, 6.0));
+        myShapes.add(new Circle("Green", 10.0));
+
+        System.out.println("--- My Painting ---");
+        for (Shape s : myShapes) {
+            s.displayInfo(); // جادو اینجا اتفاق می‌افتد!
+            System.out.println("-----------------");
+        }
+    }
+}</code></pre>
+        </div>
+        <p>در حلقه <code>for</code>، جاوا در زمان اجرا تشخیص می‌دهد که <code>s</code> واقعاً یک <code>Circle</code> است یا <code>Rectangle</code> و نسخه صحیح <code>getArea()</code> را فراخوانی می‌کند. این همان <strong>چندریختی</strong> است که توسط کلاس انتزاعی ممکن شده.</p>
     </section>
 
     <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
+        <h2>۴. چه زمانی باید از کلاس انتزاعی استفاده کنیم؟</h2>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#6b7280" />
+                    </marker>
+                </defs>
+
+                <!-- Q1 -->
+                <polygon points="400,20 580,80 400,140 220,80" class="decision-box"/>
+                <text x="400" y="75" text-anchor="middle" font-size="13" font-weight="bold">آیا نیاز به تعریف رفتار مشترک</text>
+                <text x="400" y="95" text-anchor="middle" font-size="13" font-weight="bold">برای گروهی از کلاس‌ها دارید؟</text>
+
+                <!-- No -> Don't Use -->
+                <path d="M 220 80 L 100 80 L 100 150" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="160" y="70" class="text-label" fill="#dc2626">خیر</text>
+
+                <rect x="20" y="150" width="160" height="60" rx="5" class="action-box" stroke="#dc2626" fill="#fef2f2"/>
+                <text x="100" y="175" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">از ارث‌بری استفاده نکنید</text>
+                <text x="100" y="195" text-anchor="middle" font-size="11" fill="#7f1d1d">به Composition فکر کنید</text>
+
+                <!-- Yes -> Q2 -->
+                <path d="M 580 80 L 680 80 L 680 150" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="620" y="70" class="text-label" fill="#16a34a">بله</text>
+
+                <!-- Q2 -->
+                <polygon points="680,150 800,210 680,270 560,210" class="decision-box"/>
+                <text x="680" y="205" text-anchor="middle" font-size="12" font-weight="bold">آیا کلاس‌ها رابطه IS-A</text>
+                <text x="680" y="225" text-anchor="middle" font-size="12" font-weight="bold">قوی دارند؟</text>
+
+                <!-- No -> Interface -->
+                <path d="M 560 210 L 450 210 L 450 300" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="500" y="200" class="text-label" fill="#dc2626">خیر</text>
+
+                <rect x="380" y="300" width="140" height="60" rx="5" class="action-box"/>
+                <text x="450" y="325" text-anchor="middle" font-size="12" font-weight="bold">شاید Interface</text>
+                <text x="450" y="345" text-anchor="middle" font-size="11">(بخش بعدی)</text>
+
+                <!-- Yes -> Q3 -->
+                <path d="M 680 270 L 680 320" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="690" y="300" class="text-label" fill="#16a34a">بله</text>
+
+                <!-- Q3 -->
+                <polygon points="680,320 800,380 680,440 560,380" class="decision-box"/>
+                <text x="680" y="375" text-anchor="middle" font-size="12" font-weight="bold">آیا کد مشترک</text>
+                <text x="680" y="395" text-anchor="middle" font-size="12" font-weight="bold">دارند؟</text>
+
+                <!-- Yes -> Abstract Class -->
+                <path d="M 560 380 L 300 380 L 300 420" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="430" y="370" class="text-label" fill="#16a34a">بله</text>
+
+                <rect x="230" y="420" width="140" height="50" rx="5" class="action-box" fill="#f0fdf4" stroke="#16a34a"/>
+                <text x="300" y="450" text-anchor="middle" font-size="12" font-weight="bold" fill="#166534">✅ Abstract Class</text>
+
+                <!-- No -> Interface -->
+                <path d="M 680 440 L 680 480 L 450 480 L 450 360" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="600" y="470" class="text-label" fill="#dc2626">خیر (فقط قرارداد)</text>
+            </svg>
+        </div>
+
+        <div class="summary-box">
+            <strong>خلاصه تصمیم:</strong>
+            <ul>
+                <li>اگر مجموعه‌ای از کلاس‌های <strong>مرتبط (IS-A)</strong> دارید،</li>
+                <li>و می‌خواهید <strong>هم قرارداد (متد انتزاعی)</strong> و <strong>هم کد مشترک (متد انضمامی)</strong> را فراهم کنید،</li>
+                <li><strong>کلاس انتزاعی</strong> بهترین انتخاب است.</li>
+            </ul>
+        </div>
     </section>
 
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. اشتباهات رایج</h2>
+
+        <h3>الف) تلاش برای نمونه‌سازی از کلاس انتزاعی</h3>
+        <p>این اصلی‌ترین قانون است. کلاس انتزاعی "ناتمام" است و نمی‌توان از آن شیء ساخت.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// Shape یک کلاس abstract است
+Shape myShape = new Shape("Red"); // ❌ خطای کامپایل!
+// Cannot instantiate the type Shape</code></pre>
+        </div>
+
+        <h3>ب) فراموش کردن پیاده‌سازی متد انتزاعی</h3>
+        <p>اگر یک کلاس انضمامی از یک کلاس انتزاعی ارث ببرد، باید به تمام تعهداتش عمل کند.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public abstract class Vehicle {
+    public abstract void startEngine();
+}
+
+public class Car extends Vehicle {
+    // ❌ خطای کامپایل!
+    // The type Car must implement the inherited abstract method Vehicle.startEngine()
+}</code></pre>
+        </div>
+        <p><strong>راه حل:</strong> متد <code>startEngine()</code> را در <code>Car</code> با <code>@Override</code> پیاده‌سازی کنید.</p>
+
+        <h3>ج) تعریف متد انتزاعی با بدنه</h3>
+        <p>متد انتزاعی یک "سوال" است، نه "پاسخ". داشتن بدنه برای آن بی‌معنی است.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public abstract class MyBase {
+    // ❌ خطای کامپایل!
+    // Abstract methods do not specify a body
+    public abstract void doSomething() {
+        System.out.println("Doing something...");
+    }
+}</code></pre>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
-    <section id="section-6">
+    <section id="exercises">
         <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+
+        <div class="exercise-box">
+            <h3>تمرین ۱: طراحی <code>DatabaseConnector</code></h3>
+            <p>یک کلاس انتزاعی <code>DatabaseConnector</code> طراحی کنید:</p>
+            <ul>
+                <li>فیلد <code>connectionString</code>.</li>
+                <li>متد انضمامی <code>getConnectionInfo()</code> که رشته اتصال را چاپ کند.</li>
+                <li>متدهای انتزاعی <code>connect()</code> و <code>disconnect()</code>.</li>
+            </ul>
+            <p>سپس دو کلاس <code>SQLConnector</code> و <code>MongoConnector</code> را بسازید که از آن ارث برده و متدهای انتزاعی را پیاده‌سازی کنند (فقط با چاپ یک پیام).</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۲: تکمیل کد ناقص</h3>
+            <p>کد زیر را کامل کنید تا بدون خطا کامپایل و اجرا شود.</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">// ----- File: PaymentMethod.java -----
+public abstract class PaymentMethod {
+    public abstract String getProviderName();
+    // TODO: یک متد انتزاعی دیگر به نام processPayment با پارامتر double amount اضافه کنید
+}
+
+// ----- File: CreditCard.java -----
+// TODO: این کلاس باید از PaymentMethod ارث ببرد و متدهای آن را پیاده‌سازی کند
+public class CreditCard {
+    @Override
+    public String getProviderName() { return "Visa"; }
+    // TODO: پیاده‌سازی processPayment
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۳: شناسایی خطا</h3>
+            <p>در کد زیر چه خطاهایی (کامپایل یا منطقی) وجود دارد؟ آن‌ها را پیدا و اصلاح کنید.</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">public abstract class Character {
+    public abstract void attack();
+    public void jump() { System.out.println("Jumping!"); }
+}
+public class Knight extends Character {
+    // بدون پیاده‌سازی attack
+}
+public class Main {
+    public static void main(String[] args) {
+        Character c = new Character(); // خطای ۱؟
+        c.attack();
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۴: تبدیل کلاس انضمامی به انتزاعی (Refactoring)</h3>
+            <p>کلاس <code>Employee</code> زیر طراحی ضعیفی دارد. متد <code>calculatePay</code> آن منطقی نیست. آن را به یک کلاس انتزاعی مناسب تبدیل کنید.</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">// طراحی بد
+public class Employee {
+    private String name;
+    public double calculatePay() {
+        // این منطق برای انواع کارمندان (ساعتی، حقوق‌بگیر) متفاوت است
+        return 0.0; // این مقدار بی‌معنی است
+    }
+}</code></pre>
+            </div>
+            <p><strong>وظیفه:</strong> <code>Employee</code> را <code>abstract</code> کرده و <code>calculatePay</code> را به یک متد <code>abstract</code> تبدیل کنید. سپس دو کلاس <code>SalariedEmployee</code> و <code>HourlyEmployee</code> بسازید که آن را پیاده‌سازی کنند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۵: گسترش نرم‌افزار <code>Paint</code></h3>
+            <p>به مثال <code>Paint</code> که در این بخش کار کردیم، یک شکل جدید به نام <code>Triangle</code> (مثلث) اضافه کنید.</p>
+            <ol>
+                <li>کلاس <code>Triangle</code> را بسازید که از <code>Shape</code> ارث ببرد.</li>
+                <li>فیلدهای لازم (مثلاً <code>base</code> و <code>height</code>) را اضافه کنید.</li>
+                <li>متدهای <code>getArea</code> و <code>getPerimeter</code> را به درستی بازنویسی کنید.</li>
+                <li>در <code>main</code>، یک شی <code>Triangle</code> به لیست اشکال اضافه کرده و نتیجه را مشاهده کنید.</li>
+            </ol>
+        </div>
     </section>
 
-    </main>
+    <section id="summary">
+        <h2>خلاصه بخش پانزدهم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>کلاس انتزاعی:</strong> یک "قالب" یا "کلاس ناتمام" که نمی‌توان از آن شیء ساخت و با کلمه کلیدی <code>abstract</code> مشخص می‌شود.</li>
+                <li>✅ <strong>متد انتزاعی:</strong> متدی بدون بدنه که به عنوان یک <strong>قرارداد</strong> برای کلاس‌های فرزند عمل می‌کند.</li>
+                <li>✅ <strong>هدف اصلی:</strong> فراهم کردن یک پایه مشترک (کد و فیلد) برای یک سلسله‌مراتب و <strong>اجبار</strong> فرزندان به پیاده‌سازی رفتارهای خاص.</li>
+                <li>✅ <strong>ارث‌بری:</strong> کلاس فرزند <strong>باید</strong> تمام متدهای انتزاعی والد را پیاده‌سازی کند، مگر اینکه خودش هم <code>abstract</code> باشد.</li>
+                <li>✅ <strong>سازنده:</strong> کلاس انتزاعی می‌تواند سازنده داشته باشد که فقط توسط <code>super()</code> از فرزندان فراخوانی می‌شود.</li>
+                <li>✅ <strong>کلاس انضمامی (Concrete):</strong> هر کلاسی که <code>abstract</code> نباشد. یک کلاس کاملاً قابل استفاده است.</li>
+            </ul>
+        </div>
 
-<!-- Scripts -->
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> کلاس‌های داخلی (Inner Classes)</p>
+            <div class="part-navigation">
+                <a href="part14.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part16.html" class="btn-next">بخش بعدی: رابط‌ها ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
