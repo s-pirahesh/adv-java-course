@@ -3,36 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بخش 14: چندریختی | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+    <title>بخش 14: چندریختی (Polymorphism) | برنامه‌سازی پیشرفته</title>
+
+    <meta name="description" content="آموزش جامع چندریختی در جاوا، Dynamic Method Dispatch، اصول طراحی شیءگرا و جایگزینی instanceof">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل‌های اختصاصی دیاگرام‌های چندریختی */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+        }
+        .pillar-box {
+            fill: #eff6ff; /* blue-50 */
+            stroke: #2563eb; /* blue-600 */
+            stroke-width: 2px;
+        }
+        .core-box {
+            fill: #f0fdf4; /* green-50 */
+            stroke: #16a34a; /* green-600 */
+            stroke-width: 3px;
+        }
+        .error-path {
+            stroke: #dc2626; /* red-600 */
+            stroke-dasharray: 5,5;
+        }
+        .success-path {
+            stroke: #16a34a; /* green-600 */
+            stroke-width: 2px;
+        }
+        .dispatch-step {
+            fill: #fff;
+            stroke: #4b5563;
+            stroke-width: 1.5px;
+        }
+        .table-container th {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+        }
+        .table-container tr:nth-child(even) {
+            background-color: #dbeafe; /* blue-100 */
+        }
+    </style>
 </head>
 <body class="theme-part14">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>14. چندریختی</h1>
+    <h1>14. چندریختی: اوج قدرت شیءگرایی</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۳</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۱۴</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,92 +72,520 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 14</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. معنای چندریختی</a></li>
+                <li><a href="#section-2" class="nav-link">۲. مشکل بدون چندریختی</a></li>
+                <li><a href="#section-3" class="nav-link">۳. سه شرط اصلی</a></li>
+                <li><a href="#section-4" class="nav-link">۴. انواع چندریختی</a></li>
+                <li><a href="#section-5" class="nav-link">۵. مثال سیستم پرداخت</a></li>
+                <li><a href="#section-6" class="nav-link">۶. دیسپچ پویا (Dynamic Dispatch)</a></li>
+                <li><a href="#section-7" class="nav-link">۷. مثال برنامه رسم</a></li>
+                <li><a href="#section-8" class="nav-link">۸. مزایا</a></li>
+                <li><a href="#section-9" class="nav-link">۹. جایگزینی instanceof</a></li>
+                <li><a href="#section-10" class="nav-link">۱۰. اشتباهات رایج</a></li>
+                <li><a href="#exercises" class="nav-link">۱۱. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۳</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part11.html" class="nav-link">بخش ۱۱: ارث‌بری</a></li>
+                <li><a href="part12.html" class="nav-link">بخش ۱۲: Casting</a></li>
+                <li><a href="part13.html" class="nav-link">بخش ۱۳: بازنویسی متدها</a></li>
+                <li><a href="part14.html" class="nav-link active">بخش ۱۴: چندریختی</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">اگر شخصی از شما بپرسد: "قدرتمندترین ویژگی برنامه‌نویسی شیءگرا چیست؟"، پاسخ یک کلمه است: <strong>Polymorphism (چندریختی)</strong>. این مفهوم، ترکیب Inheritance، Override و Upcasting است و به ما اجازه می‌دهد کدهایی بنویسیم که <strong>انعطاف‌پذیر، قابل توسعه و قابل استفاده مجدد</strong> هستند.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
+        <h2>۱. معنای چندریختی</h2>
+
+        <p><strong>معنای لغوی:</strong></p>
+        <ul>
+            <li>Poly = چند (Many)</li>
+            <li>Morph = شکل (Form)</li>
+            <li>Polymorphism = داشتن چند شکل</li>
+        </ul>
+
+        <p><strong>معنای برنامه‌نویسی:</strong></p>
         <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 14: چندریختی آماده شده است.
+            یک رفرنس از نوع <strong>والد</strong> می‌تواند به اشیاء از انواع مختلف <strong>فرزندان</strong> اشاره کند، و در زمان اجرا، <strong>رفتار مناسب</strong> هر شیء خاص اجرا شود.
         </div>
-        
-        <h3>نمونه کد:</h3>
+        <p>به زبان ساده: چندریختی به ما اجازه می‌دهد یک کد <strong>عمومی</strong> بنویسیم که با <strong>انواع مختلف</strong> اشیاء کار کند، و هر شیء <strong>رفتار مخصوص خودش</strong> را اجرا کند.</p>
+    </section>
+
+    <section id="section-2">
+        <h2>۲. مشکل بدون چندریختی</h2>
+        <p>فرض کنید می‌خواهیم حیوانات مختلف در یک باغ وحش را <strong>غذا بدهیم</strong>. بدون چندریختی، کد ما اینگونه خواهد بود:</p>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
+            <pre><code class="language-java">public class ZooKeeper {
+    public void feedDog(Dog dog) {
+        dog.eat();
+    }
+
+    public void feedCat(Cat cat) {
+        cat.eat();
+    }
+
+    public void feedBird(Bird bird) {
+        bird.eat();
+    }
+
+    // اگر حیوان جدید اضافه شود، باید متد جدید بنویسیم!
+    public void feedLion(Lion lion) {
+        lion.eat();
+    }
+}</code></pre>
+        </div>
+
+        <div class="warning-box">
+            <strong>مشکلات این روش:</strong>
+            <ul>
+                <li>کد تکراری زیاد.</li>
+                <li>عدم انعطاف‌پذیری (برای هر نوع جدید باید کلاس ZooKeeper تغییر کند).</li>
+                <li>نقض اصل Open/Closed.</li>
+            </ul>
+        </div>
+
+        <h3>قدرت چندریختی</h3>
+        <p>حالا همین کد را با چندریختی می‌نویسیم:</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public class ZooKeeper {
+    // یک متد برای همه حیوانات!
+    public void feedAnimal(Animal animal) {
+        animal.eat();  // هر حیوان به روش خودش غذا می‌خورد
+    }
+}
+
+// استفاده:
+ZooKeeper keeper = new ZooKeeper();
+keeper.feedAnimal(new Dog());   // Upcasting
+keeper.feedAnimal(new Lion());  // Upcasting - بدون تغییر در ZooKeeper!</code></pre>
+        </div>
+    </section>
+
+    <section id="section-3">
+        <h2>۳. سه شرط اصلی برای چندریختی</h2>
+        <p>برای اینکه چندریختی کار کند، باید <strong>سه شرط</strong> برقرار باشد:</p>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#16a34a" />
+                    </marker>
+                </defs>
+
+                <!-- Core -->
+                <rect x="250" y="20" width="200" height="60" rx="10" class="core-box"/>
+                <text x="350" y="55" text-anchor="middle" font-weight="bold" font-size="14">Runtime Polymorphism</text>
+
+                <!-- Pillars -->
+                <rect x="50" y="150" width="180" height="80" rx="5" class="pillar-box"/>
+                <text x="140" y="180" text-anchor="middle" font-weight="bold">1. Inheritance</text>
+                <text x="140" y="200" text-anchor="middle" font-size="12" fill="#4b5563">رابطه IS-A</text>
+
+                <rect x="260" y="150" width="180" height="80" rx="5" class="pillar-box"/>
+                <text x="350" y="180" text-anchor="middle" font-weight="bold">2. Override</text>
+                <text x="350" y="200" text-anchor="middle" font-size="12" fill="#4b5563">بازنویسی متد</text>
+
+                <rect x="470" y="150" width="180" height="80" rx="5" class="pillar-box"/>
+                <text x="560" y="180" text-anchor="middle" font-weight="bold">3. Upcasting</text>
+                <text x="560" y="200" text-anchor="middle" font-size="12" fill="#4b5563">رفرنس والد → شیء فرزند</text>
+
+                <!-- Arrows -->
+                <line x1="350" y1="80" x2="140" y2="150" class="success-path" marker-end="url(#arrow)"/>
+                <line x1="350" y1="80" x2="350" y2="150" class="success-path" marker-end="url(#arrow)"/>
+                <line x1="350" y1="80" x2="560" y2="150" class="success-path" marker-end="url(#arrow)"/>
+
+                <!-- Failure Conditions -->
+                <text x="140" y="260" text-anchor="middle" font-size="11" fill="#dc2626">بدون این: رابطه‌ای نیست</text>
+                <text x="350" y="260" text-anchor="middle" font-size="11" fill="#dc2626">بدون این: رفتار ثابت می‌ماند</text>
+                <text x="560" y="260" text-anchor="middle" font-size="11" fill="#dc2626">بدون این: چندریختی رخ نمی‌دهد</text>
+            </svg>
+        </div>
+    </section>
+
+    <section id="section-4">
+        <h2>۴. دو نوع چندریختی در Java</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>نوع</th>
+                    <th>زمان تشخیص</th>
+                    <th>مکانیزم</th>
+                    <th>مثال</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>Compile-time<br>(Static)</strong></td>
+                    <td>زمان کامپایل</td>
+                    <td><strong>Overloading</strong></td>
+                    <td><code>print(int)</code>, <code>print(String)</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Runtime<br>(Dynamic)</strong></td>
+                    <td>زمان اجرا</td>
+                    <td><strong>Overriding + Upcasting</strong></td>
+                    <td><code>Animal a = new Dog();</code><br><code>a.makeSound();</code></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="section-5">
+        <h2>۵. مثال کامل: سیستم پرداخت</h2>
+        <p>این مثال ترکیبی از Inheritance، Override و Upcasting را نشان می‌دهد.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// 1. کلاس پایه
+abstract class Payment {
+    protected double amount;
+
+    public Payment(double amount) { this.amount = amount; }
+
+    // 2. متد انتزاعی برای Override
+    public abstract void process();
+}
+
+// فرزند 1
+class CreditCardPayment extends Payment {
+    public CreditCardPayment(double amount) { super(amount); }
+
+    @Override
+    public void process() {
+        System.out.println("Processing Credit Card: $" + amount);
+    }
+}
+
+// فرزند 2
+class PayPalPayment extends Payment {
+    public PayPalPayment(double amount) { super(amount); }
+
+    @Override
+    public void process() {
+        System.out.println("Processing PayPal: $" + amount);
+    }
+}
+
+// 3. استفاده از چندریختی
+class PaymentProcessor {
+    // این متد با "هر نوع" پرداختی کار می‌کند
+    public void processPayment(Payment payment) {
+        payment.process(); // متد مناسب در Runtime اجرا می‌شود
+    }
+}
+
+// اجرا
+public class Main {
     public static void main(String[] args) {
-        System.out.println("Part 14");
+        PaymentProcessor proc = new PaymentProcessor();
+
+        Payment p1 = new CreditCardPayment(100);
+        Payment p2 = new PayPalPayment(50);
+
+        proc.processPayment(p1); // خروجی: Processing Credit Card...
+        proc.processPayment(p2); // خروجی: Processing PayPal...
     }
 }</code></pre>
         </div>
     </section>
 
-    <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <!-- تمرین‌های عملی -->
     <section id="section-6">
-        <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+        <h2>۶. Dynamic Method Dispatch (ارسال پویای متد)</h2>
+        <p>وقتی کد <code>payment.process()</code> را می‌نویسیم، JVM چگونه تصمیم می‌گیرد کدام متد را فراخوانی کند؟</p>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrowLine" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#6b7280" />
+                    </marker>
+                </defs>
+
+                <rect x="50" y="50" width="150" height="250" rx="5" class="dispatch-step" fill="#f3f4f6"/>
+                <text x="125" y="40" text-anchor="middle" font-weight="bold">Code</text>
+                <text x="125" y="150" text-anchor="middle" font-family="monospace" font-size="12">payment.process()</text>
+
+                <rect x="250" y="50" width="200" height="100" rx="5" class="dispatch-step" fill="#e0e7ff" stroke="#4f46e5"/>
+                <text x="350" y="40" text-anchor="middle" font-weight="bold" fill="#4f46e5">Compiler (Compile-time)</text>
+                <text x="350" y="80" text-anchor="middle" font-size="12">نوع رفرنس چیست؟</text>
+                <text x="350" y="100" text-anchor="middle" font-weight="bold" font-size="12">Payment</text>
+                <text x="350" y="120" text-anchor="middle" font-size="12">آیا process() دارد؟ بله ✅</text>
+
+                <rect x="500" y="180" width="250" height="120" rx="5" class="dispatch-step" fill="#dcfce7" stroke="#16a34a"/>
+                <text x="625" y="170" text-anchor="middle" font-weight="bold" fill="#16a34a">JVM (Runtime)</text>
+                <text x="625" y="210" text-anchor="middle" font-size="12">شیء واقعی در Heap چیست؟</text>
+                <text x="625" y="230" text-anchor="middle" font-weight="bold" font-size="12">CreditCardPayment</text>
+                <text x="625" y="250" text-anchor="middle" font-size="12">آیا Override کرده؟ بله ✅</text>
+                <text x="625" y="280" text-anchor="middle" font-weight="bold" font-size="12" fill="#15803d">-> اجرای متد فرزند</text>
+
+                <line x1="200" y1="100" x2="250" y2="100" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowLine)"/>
+                <line x1="350" y1="150" x2="350" y2="240" x3="500" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowLine)" fill="none"/>
+                <path d="M 350 150 L 350 240 L 500 240" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowLine)" fill="none"/>
+            </svg>
+        </div>
     </section>
 
-    </main>
+    <section id="section-7">
+        <h2>۷. مثال واقعی: برنامه رسم اشکال</h2>
 
-<!-- Scripts -->
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">abstract class Shape {
+    public abstract void draw();
+    public abstract double calculateArea();
+}
+
+class Circle extends Shape {
+    private double radius;
+    public Circle(double r) { this.radius = r; }
+
+    @Override
+    public void draw() { System.out.println("Drawing Circle"); }
+    @Override
+    public double calculateArea() { return Math.PI * radius * radius; }
+}
+
+class Rectangle extends Shape {
+    private double w, h;
+    public Rectangle(double w, double h) { this.w = w; this.h = h; }
+
+    @Override
+    public void draw() { System.out.println("Drawing Rectangle"); }
+    @Override
+    public double calculateArea() { return w * h; }
+}
+
+public class DrawingApp {
+    public static void main(String[] args) {
+        // آرایه چندریختی
+        Shape[] shapes = new Shape[2];
+        shapes[0] = new Circle(5);
+        shapes[1] = new Rectangle(4, 6);
+
+        for (Shape s : shapes) {
+            s.draw(); // هر شکل خودش را می‌کشد
+            System.out.println("Area: " + s.calculateArea());
+        }
+    }
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="section-8">
+        <h2>۸. مزایای چندریختی</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>مزیت</th>
+                    <th>توضیح</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>کد قابل استفاده مجدد</strong></td>
+                    <td>یک متد برای انواع مختلف (مثل <code>processPayment</code>).</td>
+                </tr>
+                <tr>
+                    <td><strong>انعطاف‌پذیری</strong></td>
+                    <td>افزودن نوع جدید بدون تغییر کد قدیم.</td>
+                </tr>
+                <tr>
+                    <td><strong>کد خوانا</strong></td>
+                    <td>منطق واضح و بدون پیچیدگی (حذف <code>if-else</code>).</td>
+                </tr>
+                <tr>
+                    <td><strong>اصل Open/Closed</strong></td>
+                    <td>باز برای توسعه، بسته برای تغییر.</td>
+                </tr>
+                <tr>
+                    <td><strong>کاهش وابستگی</strong></td>
+                    <td>کد به جزئیات وابسته نیست، بلکه به کلاس انتزاعی وابسته است.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="section-9">
+        <h2>۹. چندریختی در مقابل Type Checking</h2>
+        <p>یک اشتباه رایج، استفاده از <code>instanceof</code> به جای چندریختی است.</p>
+
+        <h3>❌ روش بد (بدون چندریختی):</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public void processShape(Shape shape) {
+    if (shape instanceof Circle) {
+        Circle c = (Circle) shape;
+        System.out.println("Processing circle...");
+    } else if (shape instanceof Rectangle) {
+        Rectangle r = (Rectangle) shape;
+        System.out.println("Processing rectangle...");
+    }
+    // مشکل: هر شکل جدید = یک if-else جدید!
+}</code></pre>
+        </div>
+
+        <h3>✅ روش خوب (با چندریختی):</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">public void processShape(Shape shape) {
+    shape.draw();  // هر شکل خودش را می‌کشد
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="section-10">
+        <h2>۱۰. اشتباهات رایج</h2>
+
+        <h3>الف) فراموش کردن <code>@Override</code></h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">class Dog extends Animal {
+    // ❌ اشتباه تایپی، متد جدید ساخته می‌شود نه Override
+    public void makeSoung() {
+        System.out.println("Woof");
+    }
+}
+// animal.makeSound() متد والد را اجرا می‌کند!</code></pre>
+        </div>
+
+        <h3>ب) Downcasting غیرضروری</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// ❌ بد
+if (animal instanceof Dog) {
+    Dog dog = (Dog) animal;
+    dog.makeSound();
+}
+
+// ✅ خوب
+animal.makeSound();</code></pre>
+        </div>
+    </section>
+
+    <section id="exercises">
+        <h2>۱۱. تمرین‌های عملی</h2>
+
+        <div class="exercise-box">
+            <h3>تمرین 1: سیستم حیوانات</h3>
+            <p>کلاس انتزاعی <code>Animal</code> با متدهای <code>makeSound()</code> و <code>move()</code> بسازید. سه کلاس فرزند <code>Dog</code>, <code>Cat</code>, <code>Bird</code> با پیاده‌سازی‌های متفاوت ایجاد کنید. در <code>main</code>، آرایه‌ای از <code>Animal</code> بسازید و چندریختی را نمایش دهید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 2: سیستم حقوق کارمند</h3>
+            <p>کلاس انتزاعی <code>Employee</code> با متد <code>calculateSalary()</code> بسازید. دو فرزند:</p>
+            <ul>
+                <li><code>HourlyEmployee</code>: حقوق = ساعت کار × نرخ ساعتی</li>
+                <li><code>SalariedEmployee</code>: حقوق = حقوق ماهانه ثابت</li>
+            </ul>
+            <p>متدی بنویسید که <code>Employee[]</code> بگیرد و مجموع حقوق را محاسبه کند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 3: بازی دشمنان</h3>
+            <p>کلاس <code>Enemy</code> با متدهای <code>attack()</code> و <code>takeDamage(int amount)</code> بسازید. سه نوع دشمن:</p>
+            <ul>
+                <li><code>Goblin</code>: حمله سریع، آسیب کم</li>
+                <li><code>Orc</code>: حمله آهسته، آسیب زیاد</li>
+                <li><code>Dragon</code>: حمله آتشین، پرواز</li>
+            </ul>
+            <p>کلاس <code>Game</code> بسازید که آرایه‌ای از دشمنان را مدیریت کند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 4: پیش‌بینی خروجی</h3>
+            <p>کد زیر چه خروجی می‌دهد و چرا؟</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">class A {
+    public void m1() { System.out.print("A1 "); }
+    public void m2() { System.out.print("A2 "); }
+}
+class B extends A {
+    @Override
+    public void m1() { System.out.print("B1 "); }
+}
+class C extends B {
+    @Override
+    public void m1() { System.out.print("C1 "); }
+    @Override
+    public void m2() { System.out.print("C2 "); }
+}
+
+A obj1 = new B();
+obj1.m1(); obj1.m2();
+
+A obj2 = new C();
+obj2.m1(); obj2.m2();</code></pre>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 5: سیستم نوتیفیکیشن</h3>
+            <p>کلاس انتزاعی <code>Notification</code> با متد <code>send(String message)</code> بسازید. سه نوع:</p>
+            <ul>
+                <li><code>EmailNotification</code></li>
+                <li><code>SMSNotification</code></li>
+                <li><code>PushNotification</code></li>
+            </ul>
+            <p>کلاس <code>NotificationService</code> با متد <code>sendToAll(Notification[], String)</code> بسازید که پیام را به همه روش‌ها ارسال کند.</p>
+        </div>
+    </section>
+
+    <section id="summary">
+        <h2>خلاصه بخش چهاردهم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>Polymorphism:</strong> یک رفرنس، چند رفتار.</li>
+                <li>✅ <strong>سه شرط اصلی:</strong> Inheritance + Override + Upcasting.</li>
+                <li>✅ <strong>Dynamic Method Dispatch:</strong> JVM در Runtime متد را انتخاب می‌کند.</li>
+                <li>✅ <strong>مزیت اصلی:</strong> کد قابل توسعه، انعطاف‌پذیر و قابل استفاده مجدد.</li>
+                <li>✅ <strong>اصل Open/Closed:</strong> باز برای توسعه، بسته برای تغییر.</li>
+                <li>✅ <strong>اجتناب از instanceof:</strong> استفاده از Override به جای Type Checking.</li>
+            </ul>
+        </div>
+
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> کلاس‌های انتزاعی (Abstract Classes) — تعریف قرارداد بدون پیاده‌سازی</p>
+            <div class="part-navigation">
+                <a href="part13.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part15.html" class="btn-next">بخش بعدی: تکامل طراحی ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
