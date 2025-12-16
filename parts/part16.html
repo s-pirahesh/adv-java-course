@@ -3,36 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بخش 16: رابط‌ها | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+    <title>بخش 16: رابط‌ها (Interfaces) | برنامه‌سازی پیشرفته</title>
+
+    <meta name="description" content="آموزش جامع رابط‌ها (Interfaces) در جاوا، تفاوت با کلاس‌های انتزاعی و وراثت چندگانه">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل‌های اختصاصی دیاگرام تصمیم‌گیری */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+        }
+        .decision-box {
+            fill: #f0fdf4; /* green-50 */
+            stroke: #16a34a; /* green-600 */
+            stroke-width: 2px;
+        }
+        .action-box {
+            fill: #fff;
+            stroke: #15803d; /* green-700 */
+            stroke-width: 2px;
+        }
+        .connector {
+            stroke: #6b7280;
+            stroke-width: 1.5px;
+            fill: none;
+        }
+        .text-label {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .table-container th {
+            background-color: #15803d; /* green-700 */
+            color: white;
+        }
+        .table-container tr:nth-child(even) {
+            background-color: #dcfce7; /* green-100 */
+        }
+    </style>
 </head>
 <body class="theme-part16">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>16. رابط‌ها</h1>
+    <h1>16. رابط‌ها: تعریف قرارداد خالص رفتاری</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۴</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۱۶</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,92 +68,417 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 16</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. Interface چیست؟</a></li>
+                <li><a href="#section-2" class="nav-link">۲. مقایسه با Abstract Class</a></li>
+                <li><a href="#section-3" class="nav-link">۳. وراثت چندگانه</a></li>
+                <li><a href="#section-4" class="nav-link">۴. متدهای default و static</a></li>
+                <li><a href="#section-5" class="nav-link">۵. درخت تصمیم‌گیری</a></li>
+                <li><a href="#section-6" class="nav-link">۶. اشتباهات رایج</a></li>
+                <li><a href="#exercises" class="nav-link">۷. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۴</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part15.html" class="nav-link">بخش ۱۵: کلاس‌های انتزاعی</a></li>
+                <li><a href="part16.html" class="nav-link active">بخش ۱۶: رابط‌ها</a></li>
+                <li><a href="part17.html" class="nav-link">بخش ۱۷: تکامل طراحی</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">در بخش قبل، کلاس‌های انتزاعی را به عنوان "قالب‌های ناتمام" برای یک سلسله‌مراتب <strong>"IS-A"</strong> (هست یک) بررسی کردیم. اما دنیای شیءگرا به راه دیگری برای تعریف قرارداد نیز نیاز دارد. راهی که به وراثت از یک کلاس خاص محدود نباشد.</p>
+        <p>به قابلیت "پرواز کردن" فکر کنید. هم "پرنده" پرواز می‌کند، هم "هواپیما". اما یک هواپیما <strong>یک</strong> پرنده نیست. آن‌ها هیچ ویژگی مشترکی (از نظر فیلد و کد) برای به ارث بردن ندارند. تنها چیزی که بینشان مشترک است، <strong>توانایی (Capability)</strong> پرواز کردن است.</p>
+        <p><strong>رابط‌ها (Interfaces)</strong> در جاوا، راه‌حل نهایی برای تعریف این "توانایی‌ها" یا قراردادهای رفتاری خالص هستند. یک رابط می‌گوید: "من اهمیتی نمی‌دهم تو چه هستی یا از چه خانواده‌ای می‌آیی. اگر می‌خواهی بخشی از باشگاه من باشی، باید این رفتارها را پیاده‌سازی کنی."</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 16: رابط‌ها آماده شده است.
+        <h2>۱. Interface چیست؟ یک قرارداد 100% انتزاعی</h2>
+
+        <p>یک <code>interface</code> یک نوع داده کاملاً انتزاعی است که فقط مجموعه‌ای از امضای متدها (و ثابت‌ها) را تعریف می‌کند. به طور سنتی، یک رابط هیچ پیاده‌سازی‌ای ندارد.</p>
+
+        <div class="warning-box">
+            <strong>قوانین کلیدی:</strong>
+            <ol>
+                <li>یک رابط با کلمه کلیدی <code>interface</code> تعریف می‌شود.</li>
+                <li>یک کلاس با استفاده از کلمه کلیدی <code>implements</code> یک یا چند رابط را پیاده‌سازی می‌کند.</li>
+                <li>کلاسی که یک رابط را پیاده‌سازی می‌کند، <strong>باید</strong> تمام متدهای آن رابط را پیاده‌سازی (Override) کند.</li>
+                <li>تمام متدهای یک رابط به طور پیش‌فرض <code>public</code> و <code>abstract</code> هستند.</li>
+                <li>تمام فیلدهای یک رابط به طور پیش‌فرض <code>public static final</code> هستند (یعنی ثابت‌های سراسری).</li>
+            </ol>
         </div>
-        
-        <h3>نمونه کد:</h3>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 16");
+            <pre><code class="language-java">// 1. تعریف یک "توانایی" یا "قرارداد"
+public interface Clickable {
+    void onClick(); // به طور خودکار public abstract است
+}
+
+// 2. پیاده‌سازی قرارداد در کلاس‌های مختلف
+public class Button implements Clickable {
+    @Override
+    public void onClick() {
+        System.out.println("Button was clicked!");
     }
+}
+
+public class Image implements Clickable {
+    @Override
+    public void onClick() {
+        System.out.println("Image was clicked, opening gallery...");
+    }
+}</code></pre>
+        </div>
+        <p>در اینجا، <code>Button</code> و <code>Image</code> هیچ رابطه "IS-A" با هم ندارند، اما هر دو توانایی "کلیک شدن" را دارند.</p>
+    </section>
+
+    <section id="section-2">
+        <h2>۲. مقایسه جامع: Interface در مقابل Abstract Class</h2>
+
+        <p>این یکی از مهم‌ترین تصمیمات در طراحی شیءگراست. انتخاب اشتباه بین این دو می‌تواند منجر به طراحی شکننده و غیرقابل توسعه شود.</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Interface (رابط)</th>
+                    <th>Abstract Class (کلاس انتزاعی)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>هدف اصلی</strong></td>
+                    <td>تعریف یک <strong>قرارداد رفتاری خالص (Can-Do)</strong> برای کلاس‌های احتمالاً نامرتبط.</td>
+                    <td>تعریف یک <strong>پایه مشترک (Is-A)</strong> برای خانواده‌ای از کلاس‌های مرتبط.</td>
+                </tr>
+                <tr>
+                    <td><strong>وراثت چندگانه</strong></td>
+                    <td>✅ <strong>پشتیبانی می‌کند.</strong> یک کلاس می‌تواند هر تعداد رابط را <code>implements</code> کند.</td>
+                    <td>❌ <strong>پشتیبانی نمی‌کند.</strong> یک کلاس فقط می‌تواند یک کلاس دیگر را <code>extends</code> کند (Single Inheritance).</td>
+                </tr>
+                <tr>
+                    <td><strong>متدهای انضمامی</strong></td>
+                    <td>❌ <strong>سنتی خیر.</strong> (اما از جاوا ۸ با <code>default</code> methods ممکن شده).</td>
+                    <td>✅ <strong>بله.</strong> می‌تواند متدهای کامل با پیاده‌سازی برای به اشتراک‌گذاری کد داشته باشد.</td>
+                </tr>
+                <tr>
+                    <td><strong>فیلدها</strong></td>
+                    <td>✅ فقط <code>public static final</code> (ثابت‌ها).</td>
+                    <td>✅ می‌تواند هر نوع فیلدی داشته باشد (instance, static, final, ...).</td>
+                </tr>
+                <tr>
+                    <td><strong>سازنده</strong></td>
+                    <td>❌ <strong>ندارد.</strong> چون نمی‌توان از آن شیء ساخت.</td>
+                    <td>✅ <strong>دارد.</strong> برای فراخوانی توسط سازنده کلاس‌های فرزند (`super()`).</td>
+                </tr>
+                <tr>
+                    <td><strong>دسترسی متدها</strong></td>
+                    <td>فقط <code>public</code>.</td>
+                    <td>می‌تواند <code>public</code>, <code>protected</code>, یا <code>default</code> باشد.</td>
+                </tr>
+                <tr>
+                    <td><strong>کلمه کلیدی</strong></td>
+                    <td><code>implements</code></td>
+                    <td><code>extends</code></td>
+                </tr>
+                <tr>
+                    <td><strong>چه زمانی استفاده شود؟</strong></td>
+                    <td>وقتی می‌خواهید یک <strong>توانایی</strong> را تعریف کنید که توسط کلاس‌های مختلف قابل پیاده‌سازی است.</td>
+                    <td>وقتی می‌خواهید <strong>کد و وضعیت مشترک</strong> را بین کلاس‌های <strong>نزدیک به هم</strong> به اشتراک بگذارید.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="section-3">
+        <h2>۳. قدرت واقعی: وراثت چندگانه (Multiple Interfaces)</h2>
+
+        <p>مهم‌ترین مزیت رابط‌ها، دور زدن محدودیت وراثت یگانه در جاوا است. یک کلاس فقط می‌تواند یک پدر (Superclass) داشته باشد، اما می‌تواند هر تعداد "نقش" یا "توانایی" (Interface) را بپذیرد.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">// قرارداد اول
+interface Flyable {
+    void fly();
+}
+
+// قرارداد دوم
+interface Swimmable {
+    void swim();
+}
+
+// کلاس Duck هر دو قرارداد را امضا و پیاده‌سازی می‌کند
+class Duck implements Flyable, Swimmable {
+    @Override
+    public void fly() {
+        System.out.println("Duck is flapping its wings and flying.");
+    }
+
+    @Override
+    public void swim() {
+        System.out.println("Duck is paddling in the water.");
+    }
+}
+
+// یک هواپیمای دریایی هم هر دو کار را می‌کند
+class SeaPlane implements Flyable, Swimmable {
+    @Override
+    public void fly() { System.out.println("SeaPlane is soaring through the sky."); }
+
+    @Override
+    public void swim() { System.out.println("SeaPlane is floating on the water."); }
+}
+
+// ماهی فقط شنا می‌کند
+class Fish implements Swimmable {
+    @Override
+    public void swim() { System.out.println("Fish is swimming deep in the ocean."); }
 }</code></pre>
         </div>
     </section>
 
-    <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
-    <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
-    </section>
-
     <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
+        <h2>۴. تکامل رابط‌ها: متدهای <code>default</code> و <code>static</code> (Java 8+)</h2>
+
+        <p>قبل از جاوا ۸، اگر شما متد جدیدی به یک رابط اضافه می‌کردید، تمام کلاس‌هایی که آن را پیاده‌سازی کرده بودند دچار خطای کامپایل می‌شدند. برای حل این مشکل، <code>default</code> methods معرفی شدند.</p>
+        <p><strong><code>default</code> Method:</strong> متدی در رابط که یک پیاده‌سازی پیش‌فرض دارد. کلاس‌های پیاده‌ساز <strong>مجبور نیستند</strong> آن را بازنویسی کنند، اما <strong>می‌توانند</strong> اگر بخواهند.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">interface Vehicle {
+    void startEngine(); // متد انتزاعی سنتی
+
+    // متد پیش‌فرض: یک پیاده‌سازی برای همه فراهم می‌کند
+    default void turnOff() {
+        System.out.println("The vehicle is turning off.");
+    }
+}
+
+class Car implements Vehicle {
+    @Override
+    public void startEngine() {
+        System.out.println("Car engine started with a key.");
+    }
+
+    // می‌تواند turnOff را بازنویسی کند، اما مجبور نیست
+    @Override
+    public void turnOff() {
+        System.out.println("Car is turning off silently.");
+    }
+}
+
+class Truck implements Vehicle {
+    @Override
+    public void startEngine() {
+        System.out.println("Truck engine roared to life!");
+    }
+    // این کلاس از پیاده‌سازی پیش‌فرض turnOff استفاده می‌کند
+}</code></pre>
+        </div>
     </section>
 
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. درخت تصمیم‌گیری نهایی: Interface یا Abstract Class؟</h2>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#6b7280" />
+                    </marker>
+                </defs>
+
+                <!-- Q1 -->
+                <polygon points="400,20 600,80 400,140 200,80" class="decision-box"/>
+                <text x="400" y="75" text-anchor="middle" font-size="13" font-weight="bold">آیا نیاز به تعریف رفتاری دارید که توسط</text>
+                <text x="400" y="95" text-anchor="middle" font-size="13" font-weight="bold">کلاس‌های نامرتبط پیاده‌سازی شود؟</text>
+
+                <!-- Yes -> Interface -->
+                <path d="M 600 80 L 700 80 L 700 150" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="640" y="70" class="text-label" fill="#16a34a">بله</text>
+
+                <rect x="630" y="150" width="140" height="50" rx="5" class="action-box" fill="#f0fdf4" stroke="#16a34a"/>
+                <text x="700" y="180" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">✅ Interface</text>
+
+                <!-- No -> Q2 -->
+                <path d="M 200 80 L 100 80 L 100 150" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="140" y="70" class="text-label" fill="#dc2626">خیر</text>
+
+                <!-- Q2 -->
+                <polygon points="100,150 220,210 100,270 -20,210" class="decision-box" transform="translate(0,0)"/>
+                <text x="100" y="205" text-anchor="middle" font-size="12" font-weight="bold">آیا نیاز به</text>
+                <text x="100" y="225" text-anchor="middle" font-size="12" font-weight="bold">وراثت چندگانه دارید؟</text>
+
+                <!-- Yes -> Interface -->
+                <path d="M 220 210 L 320 210 L 320 280 L 630 280 L 630 180" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="260" y="200" class="text-label" fill="#16a34a">بله</text>
+
+                <!-- No -> Q3 -->
+                <path d="M -20 210 L -120 210 L -120 300 L 50 300" class="connector" marker-end="url(#arrowHead)" transform="translate(150,0)"/>
+                <text x="20" y="200" class="text-label" fill="#dc2626">خیر</text>
+
+                <!-- Q3 -->
+                <polygon points="250,300 450,360 250,420 50,360" class="decision-box"/>
+                <text x="250" y="355" text-anchor="middle" font-size="12" font-weight="bold">آیا کد مشترک</text>
+                <text x="250" y="375" text-anchor="middle" font-size="12" font-weight="bold">(فیلد/متد) دارید؟</text>
+
+                <!-- Yes -> Abstract Class -->
+                <path d="M 450 360 L 550 360 L 550 400" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="490" y="350" class="text-label" fill="#16a34a">بله</text>
+
+                <rect x="480" y="400" width="140" height="50" rx="5" class="action-box" fill="#fefce8" stroke="#ca8a04"/>
+                <text x="550" y="430" text-anchor="middle" font-size="12" font-weight="bold" fill="#854d0e">✅ Abstract Class</text>
+
+                <!-- No -> Interface -->
+                <path d="M 250 420 L 250 460 L 700 460 L 700 200" class="connector" marker-end="url(#arrowHead)"/>
+                <text x="260" y="440" class="text-label" fill="#dc2626">خیر (فقط قرارداد)</text>
+            </svg>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
     <section id="section-6">
-        <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+        <h2>۶. اشتباهات رایج</h2>
+
+        <h3>الف) پیاده‌سازی ناقص</h3>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">interface Runnable {
+    void run();
+    void stop();
+}
+
+// ❌ خطای کامپایل!
+// The type MyProcess must implement the inherited abstract method Runnable.stop()
+public class MyProcess implements Runnable {
+    @Override
+    public void run() { /* ... */ }
+    // متد stop() فراموش شده است
+}</code></pre>
+        </div>
+
+        <h3>ب) تلاش برای تعریف فیلد غیر ثابت</h3>
+        <p>رابط‌ها جای نگهداری "وضعیت" (State) نیستند.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">interface MyConfig {
+    // ❌ خطای کامپایل!
+    // The blank final field MY_PORT may not have been initialized
+    public final int MY_PORT; // باید مقدار اولیه داشته باشد
+
+    // ❌ خطای کامپایل!
+    // Modifier 'private' not allowed here
+    private String connectionString;
+}
+// صحیح: public static final int MY_PORT = 8080;</code></pre>
+        </div>
+
+        <h3>ج) انتخاب ابزار اشتباه</h3>
+        <ul>
+            <li><strong>اشتباه:</strong> ساختن <code>abstract class Flyable</code>. این کار باعث می‌شود کلاس <code>SeaPlane</code> که شاید از <code>Vehicle</code> ارث برده، دیگر نتواند <code>Flyable</code> را <code>extends</code> کند.</li>
+            <li><strong>اشتباه:</strong> ساختن <code>interface Animal</code>. حیوانات فیلدهای مشترک (مثل <code>age</code>) و کدهای مشترک (مثل <code>sleep</code>) دارند که بهتر است در یک کلاس انتزاعی به اشتراک گذاشته شوند.</li>
+        </ul>
     </section>
 
-    </main>
+    <section id="exercises">
+        <h2>۷. تمرین‌های عملی</h2>
 
-<!-- Scripts -->
+        <div class="exercise-box">
+            <h3>تمرین ۱: طراحی <code>Resizable</code></h3>
+            <p>یک رابط <code>Resizable</code> با متد <code>resize(double factor)</code> طراحی کنید. سپس دو کلاس <code>Circle</code> و <code>Square</code> بسازید که این رابط را پیاده‌سازی کنند و اندازه خود را بر اساس ضریب ورودی تغییر دهند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۲: قهرمان چندکاره (Multiple Interfaces)</h3>
+            <ol>
+                <li>رابط <code>Fighter</code> با متد <code>attack()</code>.</li>
+                <li>رابط <code>Mage</code> با متد <code>castSpell()</code>.</li>
+                <li>یک کلاس <code>Spellsword</code> بسازید که هر دو رابط را پیاده‌سازی کند.</li>
+                <li>یک کلاس <code>Warrior</code> بسازید که فقط <code>Fighter</code> را پیاده‌سازی کند.</li>
+            </ol>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۳: ریفکتور از Abstract Class به Interface</h3>
+            <p>کلاس انتزاعی زیر را در نظر بگیرید. چگونه می‌توان آن را به یک رابط و یک کلاس کمکی بهتر تبدیل کرد؟</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">public abstract class Logger {
+    public abstract void log(String message);
+
+    // این متد در همه پیاده‌سازی‌ها یکسان است
+    public void logWithTimestamp(String message) {
+        System.out.println(System.currentTimeMillis() + ": " + message);
+    }
+}</code></pre>
+            </div>
+            <p><strong>راهنمایی:</strong> <code>log</code> را در یک رابط قرار دهید و <code>logWithTimestamp</code> را به عنوان یک <code>default method</code> یا یک کلاس ابزار جداگانه در نظر بگیرید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۴: کدام ابزار برای کدام کار؟</h3>
+            <p>برای هر سناریو، بهترین گزینه (<code>Interface</code> یا <code>Abstract Class</code>) را انتخاب کرده و دلیل خود را بنویسید.</p>
+            <ol>
+                <li>تعریف انواع مختلف کارمندان (<code>Manager</code>, <code>Developer</code>) در یک شرکت.</li>
+                <li>تعریف توانایی "ذخیره شدن در دیتابیس" (<code>Saveable</code>) برای اشیاء مختلف (<code>User</code>, <code>Product</code>, <code>Order</code>).</li>
+                <li>مدل‌سازی انواع مختلف حساب‌های بانکی (<code>Savings</code>, <code>Checking</code>).</li>
+                <li>تعریف توانایی "قابل مرتب‌سازی بودن" (<code>Sortable</code>).</li>
+            </ol>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین ۵: پیاده‌سازی <code>Comparable</code></h3>
+            <p>یک کلاس <code>Person</code> با فیلدهای <code>name</code> (String) و <code>age</code> (int) بسازید.</p>
+            <ol>
+                <li>رابط <code>Comparable&lt;Person&gt;</code> را <code>implements</code> کنید.</li>
+                <li>متد <code>compareTo(Person other)</code> را طوری پیاده‌سازی کنید که اشیاء <code>Person</code> بر اساس سن مرتب شوند.</li>
+                <li>در <code>main</code>، لیستی از <code>Person</code> ها را با <code>Collections.sort()</code> مرتب کرده و نتیجه را چاپ کنید.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section id="summary">
+        <h2>خلاصه بخش شانزدهم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>Interface (رابط):</strong> یک قرارداد 100% انتزاعی از رفتارها (Can-Do).</li>
+                <li>✅ <strong>implements:</strong> کلمه کلیدی برای پیاده‌سازی یک یا چند رابط.</li>
+                <li>✅ <strong>وراثت چندگانه:</strong> یک کلاس می‌تواند چندین رابط را پیاده‌سازی کند.</li>
+                <li>✅ <strong>فیلدها:</strong> به طور خودکار <code>public static final</code> (ثابت) هستند.</li>
+                <li>✅ <strong>default Method:</strong> اجازه می‌دهد به رابط‌ها متد با پیاده‌سازی اضافه کنیم.</li>
+                <li>✅ <strong>Interface vs. Abstract Class:</strong> رابط برای "توانایی" و کلاس انتزاعی برای "هویت" به کار می‌رود.</li>
+            </ul>
+        </div>
+
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> تکامل طراحی — از کلاس انتزاعی به رابط</p>
+            <div class="part-navigation">
+                <a href="part15.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part17.html" class="btn-next">بخش بعدی: تکامل طراحی ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
