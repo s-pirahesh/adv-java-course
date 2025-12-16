@@ -4,35 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بخش 13: بازنویسی متدها | برنامه‌سازی پیشرفته</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="آموزش کامل آرایه‌ها در جاوا - مدیریت مجموعه‌های داده">
-    
-    <!-- Styles -->
+
+    <meta name="description" content="آموزش کامل بازنویسی متدها (Method Overriding) در جاوا، تفاوت آن با Overloading، قوانین طلایی و استفاده از super">
+
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    
-    <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+
+    <style>
+        /* استایل‌های اختصاصی برای دیاگرام دیسپچ */
+        .diagram-container svg {
+            font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+        }
+        .flow-node {
+            fill: #eef2ff; /* indigo-50 */
+            stroke: #4f46e5; /* indigo-600 */
+            stroke-width: 2px;
+        }
+        .decision-node {
+            fill: #fff7ed; /* orange-50 */
+            stroke: #f97316; /* orange-500 */
+            stroke-width: 2px;
+        }
+        .result-node-success {
+            fill: #f0fdf4; /* green-50 */
+            stroke: #16a34a; /* green-600 */
+            stroke-width: 2px;
+        }
+        .result-node-error {
+            fill: #fef2f2; /* red-50 */
+            stroke: #dc2626; /* red-600 */
+            stroke-width: 2px;
+        }
+        .connector {
+            stroke: #64748b;
+            stroke-width: 1.5px;
+            fill: none;
+        }
+        .table-container th {
+            background-color: #4f46e5; /* indigo-600 */
+            color: white;
+        }
+        .table-container tr:nth-child(even) {
+            background-color: #e0e7ff; /* indigo-100 */
+        }
+    </style>
 </head>
 <body class="theme-part13">
 
-<!-- Mobile Header -->
 <div id="overlay"></div>
 
 <header id="top-header">
     <button id="menu-toggle">☰</button>
-    <h1>13. بازنویسی متدها</h1>
+    <h1>13. بازنویسی متدها: تغییر رفتار موروثی</h1>
     <div class="breadcrumb">
         <a href="../index.html">خانه</a>
         <span>></span>
-        <span>Phase 1</span>
+        <span>فاز ۳</span>
         <span>></span>
-        <span>بخش ۴</span>
+        <span>بخش ۱۳</span>
     </div>
 </header>
 
-<!-- Sidebar Navigation -->
 <nav id="sidebar">
     <div class="sidebar-profile">
         <a href="../index.html" title="بازگشت به صفحه اصلی">
@@ -41,92 +74,351 @@
         <h2>برنامه‌سازی پیشرفته (جاوا)</h2>
         <p>مدرس: سید سجاد پیراهش</p>
     </div>
-    
+
     <ul class="nav-menu">
         <li>
             <header class="open">فهرست بخش 13</header>
             <ul class="submenu open">
-                <li><a href="#section-1" class="nav-link">۱. بخش ۱</a></li>
-                <li><a href="#section-2" class="nav-link">۲. بخش ۲</a></li>
-                <li><a href="#section-3" class="nav-link">۳. بخش ۳</a></li>
-                <li><a href="#section-4" class="nav-link">۴. بخش ۴</a></li>
-                <li><a href="#section-5" class="nav-link">۵. بخش ۵</a></li>
-                <li><a href="#section-6" class="nav-link">۶. بخش ۶</a></li>
+                <li><a href="#intro" class="nav-link">مقدمه</a></li>
+                <li><a href="#section-1" class="nav-link">۱. چرا بازنویسی؟</a></li>
+                <li><a href="#section-2" class="nav-link">۲. قوانین طلایی</a></li>
+                <li><a href="#section-3" class="nav-link">۳. Override vs Overload</a></li>
+                <li><a href="#section-4" class="nav-link">۴. استفاده از super</a></li>
+                <li><a href="#section-5" class="nav-link">۵. انتخاب متد (Dispatch)</a></li>
+                <li><a href="#section-6" class="nav-link">۶. متدهای Object</a></li>
+                <li><a href="#exercises" class="nav-link">۷. تمرین‌های عملی</a></li>
             </ul>
         </li>
         <li>
-            <header>بخش‌های فاز ۱</header>
+            <header>بخش‌های فاز ۳</header>
             <ul class="submenu">
-                <li><a href="part01.html" class="nav-link">بخش ۱: از پارادایم تا بایت‌کد</a></li>
-                <li><a href="part02.html" class="nav-link">بخش ۲: انواع داده و حافظه</a></li>
-                <li><a href="part03.html" class="nav-link">بخش ۳: static و final</a></li>
-                <li><a href="part04.html" class="nav-link">بخش ۴: آرایه‌ها</a></li>
-                <li><a href="part05.html" class="nav-link">بخش ۵: متدها</a></li>
-                <li><a href="part06.html" class="nav-link">بخش ۶: سازنده‌ها و this</a></li>
-                <li><a href="part07.html" class="nav-link">بخش ۷: پکیج‌بندی</a></li>
+                <li><a href="part11.html" class="nav-link">بخش ۱۱: ارث‌بری</a></li>
+                <li><a href="part12.html" class="nav-link">بخش ۱۲: Casting</a></li>
+                <li><a href="part13.html" class="nav-link active">بخش ۱۳: بازنویسی متدها</a></li>
+                <li><a href="part14.html" class="nav-link">بخش ۱۴: چندریختی</a></li>
             </ul>
         </li>
     </ul>
-    
+
     <div class="sidebar-footer">
         <a href="../index.html">→ بازگشت به فهرست اصلی</a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main id="main-content">
+
+    <section id="intro">
+        <p class="lead">تا اینجا آموختیم که یک کلاس فرزند می‌تواند تمام فیلدها و متدهای <code>public</code> و <code>protected</code> والد خود را <strong>به ارث ببرد</strong>. اما سوالی که مطرح می‌شود این است: اگر رفتار یک متد موروثی برای فرزند <strong>مناسب نباشد</strong> چه؟ آیا فرزند می‌تواند آن متد را <strong>تغییر</strong> دهد؟ پاسخ: بله! با استفاده از <strong>Override (بازنویسی)</strong>.</p>
+    </section>
+
     <section id="section-1">
-        <h2>۱. مقدمه</h2>
-        <p><strong>این یک template اولیه است.</strong> محتوای اصلی در مرحله بعد از فایل Markdown اضافه خواهد شد.</p>
-        
-        <div class="note-box">
-            <strong>📝 یادآوری:</strong> این بخش برای Part 13: بازنویسی متدها آماده شده است.
-        </div>
-        
-        <h3>نمونه کد:</h3>
+        <h2>۱. چرا به بازنویسی نیاز داریم؟</h2>
+
+        <p>فرض کنید کلاس <code>Animal</code> داریم که یک متد عمومی برای تولید صدا دارد:</p>
+
         <div class="code-block-container">
             <button class="copy-button" onclick="copyCode(this)">کپی</button>
-            <pre><code class="language-java">// محتوا در مرحله بعد اضافه می‌شود
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Part 13");
+            <pre><code class="language-java">class Animal {
+    public void makeSound() {
+        System.out.println("Some generic animal sound");
+    }
+}</code></pre>
+        </div>
+
+        <p>حالا اگر کلاس <code>Dog</code> از <code>Animal</code> ارث ببرد، اگر <code>dog.makeSound()</code> را فراخوانی کنیم، پیام عمومی چاپ می‌شود! در حالی که سگ باید "Woof! Woof!" بگوید.</p>
+        <p><strong>چاره چیست؟</strong> فرزند باید متد <code>makeSound()</code> را <strong>بازنویسی (Override)</strong> کند.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">class Dog extends Animal {
+    @Override  // آنوتیشن اختیاری اما بسیار توصیه‌شده
+    public void makeSound() {
+        System.out.println("Woof! Woof!");
     }
 }</code></pre>
         </div>
     </section>
 
     <section id="section-2">
-        <h2>۲. بخش دوم</h2>
-        <p>محتوای بخش دوم در اینجا قرار می‌گیرد...</p>
+        <h2>۲. قوانین طلایی Override</h2>
+
+        <p>بازنویسی کردن یک متد نیازمند رعایت قوانین مشخصی است. نقض این قوانین منجر به <strong>خطای کامپایل</strong> می‌شود.</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>قانون</th>
+                    <th>توضیح</th>
+                    <th>مثال غلط ❌</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>امضای یکسان</strong></td>
+                    <td>نام متد، تعداد و نوع پارامترها باید دقیقاً یکسان باشند</td>
+                    <td>والد: <code>eat()</code> → فرزند: <code>eat(int x)</code></td>
+                </tr>
+                <tr>
+                    <td><strong>دسترسی برابر یا بیشتر</strong></td>
+                    <td>نمی‌توان دسترسی را <strong>محدودتر</strong> کرد</td>
+                    <td>والد: <code>public</code> → فرزند: <code>private</code></td>
+                </tr>
+                <tr>
+                    <td><strong>استثناهای برابر یا کمتر</strong></td>
+                    <td>فرزند نمی‌تواند استثنای <strong>جدید</strong> یا <strong>عمومی‌تر</strong> پرتاب کند</td>
+                    <td>والد: <code>IOException</code> → فرزند: <code>Exception</code></td>
+                </tr>
+                <tr>
+                    <td><strong>متد <code>static</code></strong></td>
+                    <td>قابل Override نیست (فقط Hide می‌شود)</td>
+                    <td><code>static void test()</code></td>
+                </tr>
+                <tr>
+                    <td><strong>متد <code>final</code></strong></td>
+                    <td>قابل Override نیست (ممنوع شده)</td>
+                    <td><code>final void method()</code></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>آنوتیشن <code>@Override</code></h3>
+        <p>این آنوتیشن به کامپایلر می‌گوید: "این متد قرار است یک متد والد را Override کند". اگر اشتباه تایپی داشته باشید (مثلاً <code>makeSoung</code>)، کامپایلر خطا می‌دهد و شما را آگاه می‌کند.</p>
     </section>
 
     <section id="section-3">
-        <h2>۳. بخش سوم</h2>
-        <p>محتوای بخش سوم در اینجا قرار می‌گیرد...</p>
+        <h2>۳. Override در مقابل Overload: تفاوت اساسی</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>معیار</th>
+                    <th>Override (بازنویسی)</th>
+                    <th>Overload (سربارگذاری)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>تعریف</strong></td>
+                    <td>نوشتن مجدد متد والد در فرزند</td>
+                    <td>چند متد با نام یکسان در یک کلاس</td>
+                </tr>
+                <tr>
+                    <td><strong>محل</strong></td>
+                    <td>در <strong>کلاس فرزند</strong></td>
+                    <td>در <strong>یک کلاس</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>امضا</strong></td>
+                    <td>باید <strong>دقیقاً یکسان</strong> باشد</td>
+                    <td>باید <strong>متفاوت</strong> باشد</td>
+                </tr>
+                <tr>
+                    <td><strong>زمان تشخیص</strong></td>
+                    <td><strong>Runtime</strong> (Dynamic Binding)</td>
+                    <td><strong>Compile-time</strong> (Static Binding)</td>
+                </tr>
+                <tr>
+                    <td><strong>هدف</strong></td>
+                    <td>تغییر رفتار متد موروثی</td>
+                    <td>ارائه چند نسخه با ورودی متفاوت</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Covariant Return Type (نوع بازگشتی زیرنوع)</h3>
+        <p>از Java 5 به بعد، فرزند می‌تواند در هنگام Override کردن، نوع خروجی متد را به یک <strong>زیرنوع (Subtype)</strong> تغییر دهد.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">class Animal {
+    public Animal reproduce() { return new Animal(); }
+}
+
+class Dog extends Animal {
+    @Override
+    public Dog reproduce() { // Dog زیرنوع Animal است -> مجاز
+        return new Dog();
+    }
+}</code></pre>
+        </div>
     </section>
 
     <section id="section-4">
-        <h2>۴. بخش چهارم</h2>
-        <p>محتوای بخش چهارم در اینجا قرار می‌گیرد...</p>
+        <h2>۴. استفاده از <code>super</code> برای فراخوانی متد والد</h2>
+
+        <p>گاهی اوقات می‌خواهیم رفتار متد والد را <strong>حفظ</strong> کنیم و چیزی به آن <strong>اضافه</strong> کنیم. در این حالت از <code>super.methodName()</code> استفاده می‌کنیم.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">class Employee {
+    public void calculateBonus() {
+        System.out.println("Base bonus: $500");
+    }
+}
+
+class Manager extends Employee {
+    @Override
+    public void calculateBonus() {
+        super.calculateBonus();  // اول رفتار والد (500$)
+        System.out.println("Manager bonus: $1000"); // سپس رفتار جدید
+    }
+}</code></pre>
+        </div>
     </section>
 
     <section id="section-5">
-        <h2>۵. بخش پنجم</h2>
-        <p>محتوای بخش پنجم در اینجا قرار می‌گیرد...</p>
+        <h2>۵. چگونه JVM متد را انتخاب می‌کند؟ (Method Dispatch)</h2>
+
+        <p>وقتی <code>animal.makeSound()</code> را صدا می‌زنیم، JVM چگونه تصمیم می‌گیرد کدام نسخه را اجرا کند؟</p>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+                <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#64748b" />
+                    </marker>
+                </defs>
+
+                <!-- Start -->
+                <rect x="50" y="20" width="200" height="50" rx="10" class="flow-node"/>
+                <text x="150" y="50" text-anchor="middle" font-weight="bold">فراخوانی: obj.method()</text>
+
+                <!-- Compile Time -->
+                <rect x="50" y="100" width="200" height="80" rx="10" class="decision-node"/>
+                <text x="150" y="135" text-anchor="middle" font-size="12">آیا متد در نوع</text>
+                <text x="150" y="155" text-anchor="middle" font-size="12">رفرنس (Class) وجود دارد؟</text>
+
+                <path d="M 150 70 L 150 100" class="connector" marker-end="url(#arrow)"/>
+
+                <!-- No -> Error -->
+                <path d="M 250 140 L 350 140" class="connector" marker-end="url(#arrow)"/>
+                <rect x="350" y="115" width="150" height="50" rx="5" class="result-node-error"/>
+                <text x="425" y="145" text-anchor="middle" font-weight="bold" fill="#dc2626">Compile Error</text>
+
+                <!-- Yes -> Runtime -->
+                <path d="M 150 180 L 150 230" class="connector" marker-end="url(#arrow)"/>
+                <rect x="50" y="230" width="200" height="50" rx="10" class="flow-node"/>
+                <text x="150" y="260" text-anchor="middle" font-weight="bold">بررسی Runtime (JVM)</text>
+
+                <!-- Runtime Check -->
+                <rect x="50" y="310" width="200" height="80" rx="10" class="decision-node"/>
+                <text x="150" y="345" text-anchor="middle" font-size="12">آیا شیء واقعی متد را</text>
+                <text x="150" y="365" text-anchor="middle" font-size="12">Override کرده است؟</text>
+
+                <path d="M 150 280 L 150 310" class="connector" marker-end="url(#arrow)"/>
+
+                <!-- Yes -> Child Method -->
+                <path d="M 250 350 L 350 350" class="connector" marker-end="url(#arrow)"/>
+                <rect x="350" y="325" width="180" height="50" rx="5" class="result-node-success"/>
+                <text x="440" y="355" text-anchor="middle" font-weight="bold" fill="#16a34a">اجرای متد فرزند (Child)</text>
+
+                <!-- No -> Parent Method -->
+                <path d="M 150 390 L 150 430 L 350 430" class="connector" marker-end="url(#arrow)"/>
+                <rect x="350" y="405" width="180" height="50" rx="5" class="result-node-success"/>
+                <text x="440" y="435" text-anchor="middle" font-weight="bold" fill="#16a34a">اجرای متد والد (Parent)</text>
+            </svg>
+        </div>
     </section>
 
-    <!-- تمرین‌های عملی -->
     <section id="section-6">
-        <h2>۶. تمرین‌های عملی</h2>
-        <p>تمرین‌ها در مرحله بعد اضافه می‌شوند.</p>
+        <h2>۶. متدهای کلاس <code>Object</code>: مادر تمام کلاس‌ها</h2>
+
+        <p>در جاوا، تمام کلاس‌ها از <code>Object</code> ارث می‌برند. سه متد حیاتی این کلاس که باید بازنویسی شوند عبارتند از:</p>
+
+        <h3>الف) <code>toString()</code></h3>
+        <p>برای نمایش متنی شیء. پیش‌فرض: آدرس حافظه (بی‌معنی). باید طوری بازنویسی شود که اطلاعات مفید برگرداند.</p>
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">@Override
+public String toString() {
+    return "Student{name='" + name + "', id=" + id + "}";
+}</code></pre>
+        </div>
+
+        <h3>ب) <code>equals(Object obj)</code></h3>
+        <p>برای مقایسه محتوایی دو شیء. پیش‌فرض: مقایسه آدرس (مانند <code>==</code>). باید برای مقایسه فیلدها بازنویسی شود.</p>
+
+        <h3>ج) <code>hashCode()</code></h3>
+        <p>برای استفاده در <code>HashMap</code> و <code>HashSet</code>. <strong>قانون طلایی:</strong> اگر <code>equals</code> را بازنویسی کردید، <code>hashCode</code> را هم باید بازنویسی کنید تا قرارداد آن‌ها حفظ شود.</p>
+
+        <div class="code-block-container">
+            <button class="copy-button" onclick="copyCode(this)">کپی</button>
+            <pre><code class="language-java">@Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    Student other = (Student) obj;
+    return id == other.id; // مقایسه بر اساس ID
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(id); // هش بر اساس همان فیلد ID
+}</code></pre>
+        </div>
     </section>
 
-    </main>
+    <section id="exercises">
+        <h2>۷. تمرین‌های عملی</h2>
 
-<!-- Scripts -->
+        <div class="exercise-box">
+            <h3>تمرین 1: Override ساده</h3>
+            <p>کلاس <code>Vehicle</code> با متد <code>startEngine()</code> بسازید. کلاس‌های <code>Car</code> و <code>Motorcycle</code> از آن ارث ببرند و متد را Override کنند تا پیام مخصوص خود را چاپ کنند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 2: استفاده از super</h3>
+            <p>کلاس <code>Shape</code> با متد <code>draw()</code> بسازید. کلاس <code>Circle</code> از آن ارث ببرد و <code>draw()</code> را Override کند، اما ابتدا متد والد را با <code>super</code> فراخوانی کند.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 3: Override متدهای Object</h3>
+            <p>کلاس <code>Book</code> را با فیلدهای <code>title</code>, <code>author</code>, <code>price</code> بسازید و سه متد <code>toString</code>, <code>equals</code> و <code>hashCode</code> را به درستی بازنویسی کنید.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>تمرین 4: اشکال‌یابی</h3>
+            <p>کد زیر چه اشکالاتی دارد؟</p>
+            <div class="code-block-container">
+                <button class="copy-button" onclick="copyCode(this)">کپی</button>
+                <pre><code class="language-java">class Parent {
+    public static void test() { System.out.println("P"); }
+}
+class Child extends Parent {
+    @Override // چرا این خطا می‌دهد؟
+    public static void test() { System.out.println("C"); }
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="summary">
+        <h2>خلاصه بخش سیزدهم</h2>
+        <div class="summary-box">
+            <ul>
+                <li>✅ <strong>Override:</strong> بازنویسی متد والد در فرزند با همان امضا.</li>
+                <li>✅ <strong>@Override:</strong> تضمین صحت بازنویسی توسط کامپایلر.</li>
+                <li>✅ <strong>Runtime Binding:</strong> انتخاب متد در زمان اجرا بر اساس نوع واقعی شیء.</li>
+                <li>✅ <strong>Object Methods:</strong> اهمیت بازنویسی <code>toString</code>, <code>equals</code>, <code>hashCode</code>.</li>
+            </ul>
+        </div>
+
+        <div class="next-section">
+            <p><strong>در بخش بعدی:</strong> چندریختی (Polymorphism) — اوج قدرت شیءگرایی</p>
+            <div class="part-navigation">
+                <a href="part12.html" class="btn-prev">→ بخش قبلی</a>
+                <a href="part14.html" class="btn-next">بخش بعدی: چندریختی ←</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="../assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
 </body>
 </html>
